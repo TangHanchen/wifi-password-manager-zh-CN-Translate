@@ -9,7 +9,6 @@ import java.util.BitSet;
 
 import dev.rikka.tools.refine.RefineAs;
 
-@SuppressWarnings("deprecation")
 @RefineAs(WifiConfiguration.class)
 public class WifiConfigurationHidden {
 

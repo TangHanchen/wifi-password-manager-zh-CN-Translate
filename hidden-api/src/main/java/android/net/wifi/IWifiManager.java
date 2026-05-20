@@ -7,7 +7,6 @@ import android.os.IInterface;
 
 import androidx.annotation.RequiresApi;
 
-@SuppressWarnings("deprecation")
 public interface IWifiManager extends IInterface {
 
     abstract class Stub extends Binder implements IWifiManager {

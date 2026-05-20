@@ -211,7 +211,7 @@ class SettingViewModel(
             val file =
                 FileKit.openFileSaver(
                     suggestedName = "WiFi_${LocalDateTime.now().format(formatter)}",
-                    extension = if (isEncrypted) "$extension.bin" else extension,
+                    defaultExtension = if (isEncrypted) "$extension.bin" else extension,
                 ) ?: return@launch
 
             runCatching {

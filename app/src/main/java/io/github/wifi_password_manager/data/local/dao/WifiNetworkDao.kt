@@ -25,10 +25,6 @@ interface WifiNetworkDao {
 
     @Upsert suspend fun upsertNetworks(networks: List<WifiNetworkEntity>)
 
-    @Upsert suspend fun upsertNetwork(network: WifiNetworkEntity)
-
-    @Query("DELETE FROM wifi_networks WHERE ssid = :ssid") suspend fun deleteNetwork(ssid: Int)
-
     @Query("DELETE FROM wifi_networks WHERE ssid NOT IN (:excludingSsids)")
     suspend fun deleteNetworks(excludingSsids: List<String>)
 

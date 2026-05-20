@@ -1,6 +1,6 @@
 package io.github.wifi_password_manager.data.local.entity
 
-import androidx.room.Entity
+import androidx.room3.Entity
 import io.github.wifi_password_manager.domain.model.WifiNetwork
 
 @Entity(tableName = "wifi_networks", primaryKeys = ["ssid", "securityTypes"])

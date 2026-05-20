@@ -30,7 +30,7 @@ materialComponents = "1.14.0"
 navigation3 = "1.1.1"
 qrose = "1.1.2"
 refine = "4.4.0"
-room = "2.8.4"
+room3 = "3.0.0-alpha05"
 shizuku = "13.1.5"
 stabilityAnalyzer = "0.7.5"
 stub = "4.4.0"
@@ -85,9 +85,8 @@ qrose = { module = "io.github.alexzhirkevich:qrose", version.ref = "qrose" }
 refine-annotation = { group = "dev.rikka.tools.refine", name = "annotation", version.ref = "refine" }
 refine-annotation-processor = { group = "dev.rikka.tools.refine", name = "annotation-processor", version.ref = "refine" }
 refine-runtime = { group = "dev.rikka.tools.refine", name = "runtime", version.ref = "refine" }
-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room3-compiler = { group = "androidx.room3", name = "room3-compiler", version.ref = "room3" }
+room3-runtime = { group = "androidx.room3", name = "room3-runtime", version.ref = "room3" }
 shizuku-api = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
 shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref = "shizuku" }
 stub = { module = "dev.rikka.hidden:stub", version.ref = "stub" }
@@ -103,5 +102,5 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktfmt-gradle = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
 refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
-room = { id = "androidx.room", version.ref = "room" }
+room3 = { id = "androidx.room3", version.ref = "room3" }
 stability-analyzer = { id = "com.github.skydoves.compose.stability.analyzer", version.ref = "stabilityAnalyzer" }

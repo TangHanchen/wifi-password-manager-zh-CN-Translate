@@ -1,9 +1,10 @@
 package io.github.wifi_password_manager.data.local
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import androidx.room.migration.Migration
+import androidx.room3.Database
+import androidx.room3.RoomDatabase
+import androidx.room3.TypeConverters
+import androidx.room3.migration.Migration
+import androidx.sqlite.execSQL
 import io.github.wifi_password_manager.data.local.dao.WifiNetworkDao
 import io.github.wifi_password_manager.data.local.entity.WifiNetworkEntity
 import io.github.wifi_password_manager.data.local.entity.WifiNetworkFtsEntity
@@ -17,8 +18,8 @@ abstract class AppDatabase : RoomDatabase() {
         const val DATABASE_NAME = "app.db"
 
         val MIGRATION_1_2 =
-            Migration(1, 2) { db ->
-                db.apply {
+            Migration(1, 2) { connection ->
+                connection.apply {
                     execSQL(
                         """
                         CREATE TABLE IF NOT EXISTS `wifi_networks_new` (

@@ -65,6 +65,12 @@
     <string name="show_password">Показать пароль</string>
     <string name="hide_password">Скрыть пароль</string>
 
+    <!-- External App Integration Section -->
+    <string name="external_integration_section">Внешняя интеграция приложений</string>
+    <string name="allow_insecure_receiver_title">Разрешить небезопасный приёмник</string>
+    <string name="allow_insecure_receiver_description">Разрешить внешним приложениям отправлять intents в это приложение</string>
+    <string name="export_wifi_action">Экспорт WiFi</string>
+
     <!-- Security Section -->
     <string name="security_section">Безопасность</string>
     <string name="app_lock_title">Блокировка приложения</string>
@@ -118,6 +124,12 @@
     <string name="empty_note_discarded">Пустая заметка отклонена</string>
     <string name="note_saved">Заметка сохранена</string>
     <string name="note_save_failed">Не удалось сохранить заметку</string>
+
+    <!-- Export WiFi Setup Screen -->
+    <string name="export_wifi_setup_title">Информация о настройке</string>
+    <string name="export_wifi_extra_format_hint">Формат экспорта: \'plain\' (JSON) или \'compressed\' (GZip). По умолчанию \'plain\'.</string>
+    <string name="export_wifi_extra_password_hint">Опциональный пароль для шифрования экспортированного файла. Если указан, расширение будет \'.bin\'.</string>
+    <string name="export_wifi_extra_filename_hint">Опциональное имя файла (без расширения). По умолчанию используется временная метка.</string>
 
     <!-- Security Types -->
     <string name="security_open">Открытая</string>

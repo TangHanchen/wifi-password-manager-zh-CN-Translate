@@ -65,6 +65,12 @@
     <string name="show_password">Show password</string>
     <string name="hide_password">Hide password</string>
 
+    <!-- External App Integration Section -->
+    <string name="external_integration_section">External App Integration</string>
+    <string name="allow_insecure_receiver_title">Allow Insecure Receiver</string>
+    <string name="allow_insecure_receiver_description">Allows external apps to send intents to this app</string>
+    <string name="export_wifi_action">Export WiFi</string>
+
     <!-- Security Section -->
     <string name="security_section">Security</string>
     <string name="app_lock_title">App Lock</string>
@@ -118,6 +124,12 @@
     <string name="empty_note_discarded">Empty note discarded</string>
     <string name="note_saved">Note saved</string>
     <string name="note_save_failed">Failed to save note</string>
+
+    <!-- Export WiFi Setup Screen -->
+    <string name="export_wifi_setup_title">Setup Information</string>
+    <string name="export_wifi_extra_format_hint">Export format: \'plain\' (JSON) or \'compressed\' (GZip). Defaults to \'plain\'.</string>
+    <string name="export_wifi_extra_password_hint">Optional password to encrypt the exported file. If provided, the extension will end with \'.bin\'.</string>
+    <string name="export_wifi_extra_filename_hint">Optional filename (without extension). Defaults to a timestamp.</string>
 
     <!-- Security Types -->
     <string name="security_open">None</string>

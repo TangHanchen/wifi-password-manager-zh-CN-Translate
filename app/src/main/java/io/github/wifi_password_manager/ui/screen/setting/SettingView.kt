@@ -1,7 +1,13 @@
 package io.github.wifi_password_manager.ui.screen.setting
 
 import android.os.Build
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -161,6 +167,52 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                         },
                         shapes = UiConfig.listItemShapes(),
                     )
+                }
+            }
+
+            // External Integration Section
+            item {
+                SettingSection(title = stringResource(R.string.external_integration_section)) {
+                    ListItem(
+                        onClick = {
+                            onAction(
+                                SettingViewModel.Action.ToggleAllowInsecureReceiver(
+                                    !state.settings.allowInsecureReceiver
+                                )
+                            )
+                        },
+                        content = { Text(text = stringResource(R.string.allow_insecure_receiver_title)) },
+                        supportingContent = {
+                            Text(text = stringResource(R.string.allow_insecure_receiver_description))
+                        },
+                        trailingContent = {
+                            Switch(
+                                checked = state.settings.allowInsecureReceiver,
+                                onCheckedChange = {
+                                    onAction(
+                                        SettingViewModel.Action.ToggleAllowInsecureReceiver(it)
+                                    )
+                                },
+                            )
+                        },
+                        shapes = UiConfig.listItemShapes(),
+                    )
+
+                    AnimatedVisibility(
+                        visible = state.settings.allowInsecureReceiver,
+                        enter = fadeIn() + expandVertically(),
+                        exit = fadeOut() + shrinkVertically(),
+                    ) {
+                        Column {
+                            HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+
+                            ListItem(
+                                onClick = { navBackStack.add(Route.ExportWifiSetupScreen) },
+                                content = { Text(text = stringResource(R.string.export_wifi_action)) },
+                                shapes = UiConfig.listItemShapes(),
+                            )
+                        }
+                    }
                 }
             }
 

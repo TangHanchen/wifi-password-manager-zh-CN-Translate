@@ -6,5 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface SettingRepository {
     val settings: StateFlow<Settings>
 
+    suspend fun getCurrentSettings(): Settings
+
     suspend fun updateSettings(transform: suspend (Settings) -> Settings)
 }

@@ -55,6 +55,15 @@
                 android:value="true" />
         </service>
 
+        <receiver
+            android:name=".receivers.ExportWifiReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="io.github.wifi_password_manager.EXPORT_WIFI" />
+            </intent-filter>
+        </receiver>
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"

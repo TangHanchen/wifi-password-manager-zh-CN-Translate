@@ -6,16 +6,17 @@ import androidx.datastore.core.Serializer
 import androidx.datastore.dataStore
 import io.github.wifi_password_manager.domain.model.Settings
 import io.github.wifi_password_manager.domain.repository.SettingRepository
-import java.io.InputStream
-import java.io.OutputStream
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.invoke
 import kotlinx.serialization.json.Json
+import java.io.InputStream
+import java.io.OutputStream
 
 class SettingRepositoryImpl(
     private val context: Context,
@@ -49,6 +50,10 @@ class SettingRepositoryImpl(
             started = SharingStarted.Eagerly,
             initialValue = Settings(),
         )
+
+    override suspend fun getCurrentSettings(): Settings {
+        return context.dataStore.data.first()
+    }
 
     override suspend fun updateSettings(transform: suspend (Settings) -> Settings) {
         context.dataStore.updateData(transform)

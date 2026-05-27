@@ -65,6 +65,12 @@
     <string name="show_password">Parolayı göster</string>
     <string name="hide_password">Parolayı gizle</string>
 
+    <!-- External App Integration Section -->
+    <string name="external_integration_section">Harici Uygulama Entegrasyonu</string>
+    <string name="allow_insecure_receiver_title">Güvensiz Alıcıya İzin Ver</string>
+    <string name="allow_insecure_receiver_description">Harici uygulamaların bu uygulamaya intent göndermesine izin verir</string>
+    <string name="export_wifi_action">WiFi Dışa Aktar</string>
+
     <!-- Security Section -->
     <string name="security_section">Güvenlik</string>
     <string name="app_lock_title">Uygulamayı Kilitle</string>
@@ -118,6 +124,12 @@
     <string name="empty_note_discarded">Boş not silindi</string>
     <string name="note_saved">Not kaydedildi</string>
     <string name="note_save_failed">Not kaydedilemedi</string>
+
+    <!-- Export WiFi Setup Screen -->
+    <string name="export_wifi_setup_title">Kurulum Bilgisi</string>
+    <string name="export_wifi_extra_format_hint">Dışa aktarma formatı: \'plain\' (JSON) veya \'compressed\' (GZip). Varsayılan \'plain\'.</string>
+    <string name="export_wifi_extra_password_hint">Dışa aktarılan dosyayı şifrelemek için isteğe bağlı parola. Sağlanırsa uzantı \'.bin\' olacaktır.</string>
+    <string name="export_wifi_extra_filename_hint">İsteğe bağlı dosya adı (uzantısız). Varsayılan bir zaman damgasıdır.</string>
 
     <!-- Security Types -->
     <string name="security_open">Yok</string>

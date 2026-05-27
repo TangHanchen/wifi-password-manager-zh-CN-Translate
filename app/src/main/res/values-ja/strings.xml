@@ -65,6 +65,12 @@
     <string name="show_password">パスワードを表示</string>
     <string name="hide_password">パスワードを非表示</string>
 
+    <!-- External App Integration Section -->
+    <string name="external_integration_section">外部アプリ連携</string>
+    <string name="allow_insecure_receiver_title">安全でないレシーバーを許可</string>
+    <string name="allow_insecure_receiver_description">外部アプリがこのアプリにインテントを送信できるようにします</string>
+    <string name="export_wifi_action">WiFiをエクスポート</string>
+
     <!-- Security Section -->
     <string name="security_section">セキュリティ</string>
     <string name="app_lock_title">アプリロック</string>
@@ -118,6 +124,12 @@
     <string name="empty_note_discarded">空のメモは破棄されました</string>
     <string name="note_saved">メモを保存しました</string>
     <string name="note_save_failed">メモの保存に失敗しました</string>
+
+    <!-- Export WiFi Setup Screen -->
+    <string name="export_wifi_setup_title">セットアップ情報</string>
+    <string name="export_wifi_extra_format_hint">エクスポート形式: \'plain\' (JSON) または \'compressed\' (GZip)。デフォルトは \'plain\'。</string>
+    <string name="export_wifi_extra_password_hint">エクスポートファイルを暗号化するためのオプションパスワード。指定すると拡張子が \'.bin\' になります。</string>
+    <string name="export_wifi_extra_filename_hint">オプションのファイル名（拡張子なし）。デフォルトはタイムスタンプ。</string>
 
     <!-- Security Types -->
     <string name="security_open">なし</string>

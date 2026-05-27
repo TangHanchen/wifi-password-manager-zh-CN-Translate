@@ -18,6 +18,7 @@ data class Settings(
     val appLockEnabled: Boolean = false,
     val secureScreenEnabled: Boolean = false,
     val allowCacheMode: Boolean = false,
+    val allowInsecureReceiver: Boolean = false,
 ) {
     @Serializable
     enum class ThemeMode {

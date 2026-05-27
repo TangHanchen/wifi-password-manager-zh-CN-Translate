@@ -65,6 +65,12 @@
     <string name="show_password">显示密码</string>
     <string name="hide_password">隐藏密码</string>
 
+    <!-- External App Integration Section -->
+    <string name="external_integration_section">外部应用集成</string>
+    <string name="allow_insecure_receiver_title">允许不安全接收器</string>
+    <string name="allow_insecure_receiver_description">允许外部应用向本应用发送意图</string>
+    <string name="export_wifi_action">导出 WiFi</string>
+
     <!-- Security Section -->
     <string name="security_section">安全</string>
     <string name="app_lock_title">应用锁</string>
@@ -118,6 +124,12 @@
     <string name="empty_note_discarded">已丢弃空注释</string>
     <string name="note_saved">注释已保存</string>
     <string name="note_save_failed">注释保存失败</string>
+
+    <!-- Export WiFi Setup Screen -->
+    <string name="export_wifi_setup_title">设置信息</string>
+    <string name="export_wifi_extra_format_hint">导出格式: \'plain\' (JSON) 或 \'compressed\' (GZip)。默认值为 \'plain\'。</string>
+    <string name="export_wifi_extra_password_hint">用于加密导出文件的可选密码。如果提供，扩展名将以 \'.bin\' 结尾。</string>
+    <string name="export_wifi_extra_filename_hint">可选文件名（不带扩展名）。默认为时间戳。</string>
 
     <!-- Security Types -->
     <string name="security_open">无</string>

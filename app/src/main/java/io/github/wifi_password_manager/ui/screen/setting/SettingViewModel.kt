@@ -84,6 +84,8 @@ class SettingViewModel(
 
         data class ToggleAllowCacheMode(val value: Boolean) : Action
 
+        data class ToggleAllowInsecureReceiver(val value: Boolean) : Action
+
         data object ImportNetworks : Action
 
         data object HideImportPasswordDialog : Action
@@ -133,6 +135,7 @@ class SettingViewModel(
             is Action.ToggleAutoPersistEphemeralNetworks ->
                 onToggleAutoPersistEphemeralNetworks(action.value)
             is Action.ToggleAllowCacheMode -> onToggleAllowCacheMode(action.value)
+            is Action.ToggleAllowInsecureReceiver -> onToggleAllowInsecureReceiver(action.value)
 
             is Action.ImportNetworks -> onImportNetworks()
             is Action.HideImportPasswordDialog ->
@@ -187,6 +190,12 @@ class SettingViewModel(
         }
     }
 
+    private fun onToggleAllowInsecureReceiver(value: Boolean) {
+        viewModelScope.launch {
+            settingRepository.updateSettings { it.copy(allowInsecureReceiver = value) }
+        }
+    }
+
     private fun onShowExportDialog() {
         viewModelScope.launch {
             val count = wifiRepository.getNetworkCount()
@@ -203,15 +212,10 @@ class SettingViewModel(
         viewModelScope.launch {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")
             val isEncrypted = password.isNotEmpty()
-            val extension =
-                when (option) {
-                    ExportOption.PLAIN -> "json"
-                    ExportOption.COMPRESSED -> "json.gz"
-                }
             val file =
                 FileKit.openFileSaver(
                     suggestedName = "WiFi_${LocalDateTime.now().format(formatter)}",
-                    defaultExtension = if (isEncrypted) "$extension.bin" else extension,
+                    defaultExtension = option.getFileExtension(password),
                 ) ?: return@launch
 
             runCatching {

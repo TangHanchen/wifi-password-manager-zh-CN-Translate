@@ -16,6 +16,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
+import io.github.wifi_password_manager.ui.screen.integration.ExportWifiSetupView
 import io.github.wifi_password_manager.ui.screen.license.LicenseView
 import io.github.wifi_password_manager.ui.screen.network.list.NetworkListView
 import io.github.wifi_password_manager.ui.screen.network.list.NetworkListViewModel
@@ -46,6 +47,7 @@ fun NavigationRoot(modifier: Modifier = Modifier) {
                             subclass(Route.SettingScreen::class)
                             subclass(Route.LicenseScreen::class)
                             subclass(Route.NoteScreen::class)
+                            subclass(Route.ExportWifiSetupScreen::class)
                         }
                     }
                 },
@@ -117,6 +119,8 @@ fun NavigationRoot(modifier: Modifier = Modifier) {
                             onAction = viewModel::onAction,
                         )
                     }
+
+                    entry<Route.ExportWifiSetupScreen> { ExportWifiSetupView() }
                 },
         )
     }

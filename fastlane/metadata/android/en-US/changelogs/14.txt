@@ -1,0 +1,2 @@
+- Added Turkish localization
+- Added external app integration for export feature

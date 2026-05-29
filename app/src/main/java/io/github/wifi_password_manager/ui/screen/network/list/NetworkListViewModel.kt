@@ -88,7 +88,7 @@ class NetworkListViewModel(
                 if (query.isBlank()) {
                     wifiRepository.getAllNetworks()
                 } else {
-                    wifiRepository.getAllNetworks("*$query*")
+                    wifiRepository.getAllNetworks(query.lowercase())
                 }
             }
             .map { it.groupAndSortedBySsid() }

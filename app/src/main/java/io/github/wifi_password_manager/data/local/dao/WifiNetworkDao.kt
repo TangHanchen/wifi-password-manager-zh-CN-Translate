@@ -13,9 +13,11 @@ interface WifiNetworkDao {
 
     @Query(
         """
+            SELECT * FROM wifi_networks WHERE ssid LIKE '%' || :query || '%'
+            UNION
             SELECT wifi_networks.* FROM wifi_networks
             JOIN wifi_networks_fts ON wifi_networks.ssid = wifi_networks_fts.ssid
-            WHERE wifi_networks_fts MATCH :query
+            WHERE wifi_networks_fts MATCH '*' || :query || '*'
         """
     )
     fun getAllNetworks(query: String): Flow<List<WifiNetworkEntity>>

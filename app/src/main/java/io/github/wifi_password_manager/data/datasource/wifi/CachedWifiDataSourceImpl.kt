@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package io.github.wifi_password_manager.data.datasource.wifi
 
 import android.net.wifi.WifiConfiguration

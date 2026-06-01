@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package io.github.wifi_password_manager.data.datasource.wifi
 
 import android.content.ComponentName
@@ -14,10 +12,10 @@ import com.topjohnwu.superuser.ipc.RootService
 import io.github.wifi_password_manager.IWifiRootService
 import io.github.wifi_password_manager.ipc.WifiNetworkParcel
 import io.github.wifi_password_manager.services.WiFiRootService
-import kotlin.coroutines.resume
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlin.coroutines.resume
 
 class RootWifiDataSourceImpl(context: Context) : WifiDataSource {
     companion object {
@@ -28,52 +26,51 @@ class RootWifiDataSourceImpl(context: Context) : WifiDataSource {
     private var cachedService: IWifiRootService? = null
     private val rootServiceIntent by lazy { Intent(context, WiFiRootService::class.java) }
 
-    private suspend fun getService(): IWifiRootService? =
-        mutex.withLock {
-            cachedService?.let { service ->
-                if (service.asBinder().isBinderAlive) {
-                    return@withLock service
-                } else {
-                    cachedService = null
-                }
+    private suspend fun getService(): IWifiRootService? = mutex.withLock {
+        cachedService?.let { service ->
+            if (service.asBinder().isBinderAlive) {
+                return@withLock service
+            } else {
+                cachedService = null
             }
+        }
 
-            suspendCancellableCoroutine<IWifiRootService?> { continuation ->
-                Shell.getShell { shell ->
-                    if (!shell.isRoot) {
-                        Log.w(TAG, "Root permission not available")
-                        continuation.resume(null)
-                        return@getShell
-                    }
+        suspendCancellableCoroutine<IWifiRootService?> { continuation ->
+            Shell.getShell { shell ->
+                if (!shell.isRoot) {
+                    Log.w(TAG, "Root permission not available")
+                    continuation.resume(null)
+                    return@getShell
+                }
 
-                    val connection =
-                        object : ServiceConnection {
-                            override fun onServiceConnected(
-                                name: ComponentName?,
-                                binder: IBinder?,
-                            ) {
-                                if (binder != null) {
-                                    val service = IWifiRootService.Stub.asInterface(binder)
-                                    Log.d(TAG, "WiFiRootService connected")
-                                    cachedService = service
-                                    continuation.resume(service)
-                                } else {
-                                    Log.e(TAG, "Received null binder")
-                                    continuation.resume(null)
-                                }
-                            }
-
-                            override fun onServiceDisconnected(name: ComponentName?) {
-                                Log.d(TAG, "WiFiRootService disconnected")
-                                cachedService = null
+                val connection =
+                    object : ServiceConnection {
+                        override fun onServiceConnected(
+                            name: ComponentName?,
+                            binder: IBinder?,
+                        ) {
+                            if (binder != null) {
+                                val service = IWifiRootService.Stub.asInterface(binder)
+                                Log.d(TAG, "WiFiRootService connected")
+                                cachedService = service
+                                continuation.resume(service)
+                            } else {
+                                Log.e(TAG, "Received null binder")
+                                continuation.resume(null)
                             }
                         }
 
-                    RootService.bind(rootServiceIntent, connection)
-                    continuation.invokeOnCancellation { RootService.unbind(connection) }
-                }
+                        override fun onServiceDisconnected(name: ComponentName?) {
+                            Log.d(TAG, "WiFiRootService disconnected")
+                            cachedService = null
+                        }
+                    }
+
+                RootService.bind(rootServiceIntent, connection)
+                continuation.invokeOnCancellation { RootService.unbind(connection) }
             }
         }
+    }
 
     override suspend fun getPrivilegedConfiguredNetworks(): List<WifiConfiguration> {
         val service = getService()

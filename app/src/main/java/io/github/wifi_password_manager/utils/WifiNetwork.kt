@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package io.github.wifi_password_manager.utils
 
 import android.content.ClipData
@@ -33,23 +31,23 @@ fun WifiNetwork.Companion.fromWifiConfiguration(config: WifiConfiguration): Wifi
 val WifiNetwork.Companion.MOCK
     get() =
         List(20) {
-                val type = SecurityType.entries.random()
-                WifiNetwork(
-                    networkId = it,
-                    ssid = "ssid $it",
-                    password =
-                        if (type !in setOf(SecurityType.OWE, SecurityType.OPEN)) {
-                            "password $it"
-                        } else {
-                            ""
-                        },
-                    securityType = setOf(type),
-                    hidden = Random.nextBoolean(),
-                    autojoin = Random.nextBoolean(),
-                    private = Random.nextBoolean(),
-                    note = if (Random.nextBoolean()) "Note $it" else null,
-                )
-            }
+            val type = SecurityType.entries.random()
+            WifiNetwork(
+                networkId = it,
+                ssid = "ssid $it",
+                password =
+                    if (type !in setOf(SecurityType.OWE, SecurityType.OPEN)) {
+                        "password $it"
+                    } else {
+                        ""
+                    },
+                securityType = setOf(type),
+                hidden = Random.nextBoolean(),
+                autojoin = Random.nextBoolean(),
+                private = Random.nextBoolean(),
+                note = if (Random.nextBoolean()) "Note $it" else null,
+            )
+        }
 
 fun List<WifiNetwork>.groupAndSortedBySsid(): List<WifiNetwork> =
     groupBy { it.ssid }

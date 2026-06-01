@@ -16,7 +16,7 @@ object WifiManagerHelper {
     ): List<WifiConfiguration> {
         val networks =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                val getPrivilegedConfiguredNetworks =
+                val method =
                     HiddenApiBypass.getDeclaredMethod(
                         IWifiManager::class.java,
                         "getPrivilegedConfiguredNetworks",
@@ -24,19 +24,19 @@ object WifiManagerHelper {
                         String::class.java,
                         Bundle::class.java,
                     )
-                getPrivilegedConfiguredNetworks(wifiManager, packageName, featureId, extras)
+                method(wifiManager, packageName, featureId, extras)
             } else {
                 try {
-                    val getPrivilegedConfiguredNetworks =
+                    val method =
                         HiddenApiBypass.getDeclaredMethod(
                             IWifiManager::class.java,
                             "getPrivilegedConfiguredNetworks",
                             String::class.java,
                             String::class.java,
                         )
-                    getPrivilegedConfiguredNetworks(wifiManager, packageName, featureId)
+                    method(wifiManager, packageName, featureId)
                 } catch (_: NoSuchMethodException) {
-                    val getPrivilegedConfiguredNetworks =
+                    val method =
                         HiddenApiBypass.getDeclaredMethod(
                             IWifiManager::class.java,
                             "getPrivilegedConfiguredNetworks",
@@ -44,7 +44,7 @@ object WifiManagerHelper {
                             String::class.java,
                             Bundle::class.java,
                         )
-                    getPrivilegedConfiguredNetworks(wifiManager, packageName, featureId, extras)
+                    method(wifiManager, packageName, featureId, extras)
                 }
             }
         val result =

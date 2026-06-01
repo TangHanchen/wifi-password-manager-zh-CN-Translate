@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package io.github.wifi_password_manager.data.datasource.wifi
 
 import android.content.AttributionSource
@@ -98,8 +96,9 @@ class ShizukuWifiDataSourceImpl(private val context: Context) : WifiDataSource {
 
     override suspend fun persistEphemeralNetworks() {
         val configs = getPrivilegedConfiguredNetworks()
-        val ephemeralConfigs =
-            configs.filter { Refine.unsafeCast<WifiConfigurationHidden>(it).isEphemeral }
+        val ephemeralConfigs = configs.filter {
+            Refine.unsafeCast<WifiConfigurationHidden>(it).isEphemeral
+        }
 
         for (config in ephemeralConfigs) {
             val hiddenConfig =

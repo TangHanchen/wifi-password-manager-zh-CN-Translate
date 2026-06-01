@@ -1,9 +1,0 @@
-package com.android.wifi.x.com.android.modules.utils;
-
-import java.util.List;
-
-abstract class BaseParceledListSlice<T> {
-    public List<T> getList() {
-        throw new RuntimeException("Stub!");
-    }
-}

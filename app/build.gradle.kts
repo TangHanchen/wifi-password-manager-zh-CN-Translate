@@ -1,6 +1,6 @@
-import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.aboutLibraries)
@@ -17,12 +17,12 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
     compilerOptions {
         progressiveMode = true
         languageVersion = KotlinVersion.KOTLIN_2_3
         apiVersion = KotlinVersion.KOTLIN_2_3
-        jvmTarget = JvmTarget.JVM_21
+        jvmTarget = JvmTarget.JVM_25
     }
 }
 

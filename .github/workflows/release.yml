@@ -6,7 +6,7 @@ on:
       - 'v*'
   workflow_dispatch:
 
-permissions: 
+permissions:
   contents: write
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v5
         with:
-          java-version: 21
+          java-version: 25
           cache: gradle
           distribution: temurin
 
@@ -43,10 +43,11 @@ jobs:
         run: ./gradlew assembleRelease --no-daemon
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: app-release.apk
           path: ./app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
 
       - name: Get version code
         id: version

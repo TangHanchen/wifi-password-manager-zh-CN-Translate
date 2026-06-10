@@ -65,7 +65,7 @@ fun NoAccessView(allowSkip: Boolean, onSkip: () -> Unit) {
                 showErrorDialog = true
                 return@rememberLauncherForActivityResult
             }
-            privilegedManager.refresh()
+            scope.launch { privilegedManager.refresh() }
         }
 
     val shizukuPermissionListener =
@@ -75,7 +75,7 @@ fun NoAccessView(allowSkip: Boolean, onSkip: () -> Unit) {
 
                 Shizuku.removeRequestPermissionResultListener(this)
                 if (grantResult == PackageManager.PERMISSION_GRANTED) {
-                    privilegedManager.refresh()
+                    scope.launch { privilegedManager.refresh() }
                 } else {
                     showErrorDialog = true
                 }

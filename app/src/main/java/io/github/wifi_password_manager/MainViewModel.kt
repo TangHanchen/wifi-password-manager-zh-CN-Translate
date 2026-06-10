@@ -34,11 +34,11 @@ class MainViewModel(
     val event = _event.receiveAsFlow()
 
     private val shizukuBinderReceivedListener = Shizuku.OnBinderReceivedListener {
-        privilegedManager.refresh()
+        viewModelScope.launch { privilegedManager.refresh() }
     }
 
     private val shizukuBinderDeadListener = Shizuku.OnBinderDeadListener {
-        privilegedManager.refresh()
+        viewModelScope.launch { privilegedManager.refresh() }
     }
 
     init {

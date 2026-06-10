@@ -17,6 +17,7 @@ import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.dialogs.init
 import io.github.wifi_password_manager.domain.model.PrivilegedMode
 import io.github.wifi_password_manager.domain.repository.SettingRepository
+import io.github.wifi_password_manager.manager.PrivilegedManager
 import io.github.wifi_password_manager.navigation.NavigationRoot
 import io.github.wifi_password_manager.ui.screen.lock.LockView
 import io.github.wifi_password_manager.ui.screen.noaccess.NoAccessView
@@ -33,6 +34,7 @@ import org.koin.core.parameter.parametersOf
 
 class MainActivity : AppCompatActivity() {
     private val settingRepository by inject<SettingRepository>()
+    private val privilegedManager by inject<PrivilegedManager>()
 
     private val viewModel by
         viewModel<MainViewModel> { parametersOf(isBiometricAuthenticationSupported()) }
@@ -82,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         installSplashScreen().apply { setKeepOnScreenCondition { keepSplashScreenOn } }
 
         lifecycleScope.launch {
+            privilegedManager.refresh()
             viewModel.isAuthenticated.collect {
                 keepSplashScreenOn = false
                 cancel()

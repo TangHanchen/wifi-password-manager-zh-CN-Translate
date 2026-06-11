@@ -15,6 +15,7 @@ import android.provider.Settings
 import com.topjohnwu.superuser.ipc.RootService
 import dev.rikka.tools.refine.Refine
 import io.github.wifi_password_manager.IWifiRootService
+import io.github.wifi_password_manager.ipc.WifiInfoParcel
 import io.github.wifi_password_manager.ipc.WifiNetworkParcel
 import io.github.wifi_password_manager.utils.WifiManagerHelper
 import rikka.shizuku.SystemServiceHelper
@@ -89,6 +90,11 @@ class WiFiRootService : RootService() {
 
         override fun removeNetwork(netId: Int): Boolean {
             return wifiManager.removeNetwork(netId, USER)
+        }
+
+        override fun getConnectionInfo(): WifiInfoParcel? {
+            if (wifiManager.wifiEnabledState != WifiManager.WIFI_STATE_ENABLED) return null
+            return wifiManager.getConnectionInfo(USER, null)?.let(WifiInfoParcel::fromWifiInfo)
         }
 
         override fun persistEphemeralNetworks() {

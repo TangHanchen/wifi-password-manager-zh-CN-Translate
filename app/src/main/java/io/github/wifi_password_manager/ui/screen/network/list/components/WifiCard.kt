@@ -1,6 +1,5 @@
 package io.github.wifi_password_manager.ui.screen.network.list.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,6 +10,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
@@ -32,6 +33,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.retain.retain
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -61,32 +63,33 @@ private sealed interface OptionState {
 fun WifiCard(
     modifier: Modifier = Modifier,
     network: WifiNetwork,
+    connected: Boolean = false,
     expanded: Boolean = false,
     onAction: (NetworkListViewModel.Action) -> Unit,
 ) {
     val navBackStack = LocalNavBackStack.current
     var optionState by remember { mutableStateOf<OptionState?>(null) }
 
-    ElevatedCard(modifier = modifier) {
+    ElevatedCard(
+        modifier = modifier,
+        colors =
+            if (connected) {
+                CardDefaults.elevatedCardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            } else {
+                CardDefaults.elevatedCardColors()
+            },
+    ) {
         SSIDItem(network = network, onOptionStateChange = { optionState = it }, onAction = onAction)
 
         if (network.password.isNotEmpty() || expanded) {
-            HorizontalDivider(
-                modifier =
-                    Modifier.background(color = ListItemDefaults.containerColor)
-                        .padding(horizontal = 16.dp)
-            )
-
+            Separator(connected = connected)
             PasswordItem(network = network)
         }
 
         if (network.note != null) {
-            HorizontalDivider(
-                modifier =
-                    Modifier.background(color = ListItemDefaults.containerColor)
-                        .padding(horizontal = 16.dp)
-            )
-
+            Separator(connected = connected)
             NoteItem(
                 modifier =
                     Modifier.clickable { navBackStack.add(Route.NoteScreen(network = network)) },
@@ -99,6 +102,14 @@ fun WifiCard(
         OptionState.WifiQR -> WifiQRDialog(network = network, onDismiss = { optionState = null })
         null -> Unit
     }
+}
+
+@Composable
+private fun Separator(modifier: Modifier = Modifier, connected: Boolean = false) {
+    HorizontalDivider(
+        modifier = modifier.padding(horizontal = 16.dp),
+        color = if (connected) MaterialTheme.colorScheme.onSurface else DividerDefaults.color,
+    )
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
@@ -220,6 +231,7 @@ private fun SSIDItem(
                 }
             }
         },
+        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
     )
 }
 
@@ -274,6 +286,7 @@ private fun PasswordItem(modifier: Modifier = Modifier, network: WifiNetwork) {
             }
         },
         trailingContent = trailingContent.takeIf { network.password.isNotEmpty() },
+        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
     )
 }
 
@@ -290,6 +303,7 @@ private fun NoteItem(modifier: Modifier = Modifier, network: WifiNetwork) {
         supportingContent = {
             Text(text = network.note.orEmpty(), maxLines = 3, overflow = TextOverflow.Ellipsis)
         },
+        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
     )
 }
 

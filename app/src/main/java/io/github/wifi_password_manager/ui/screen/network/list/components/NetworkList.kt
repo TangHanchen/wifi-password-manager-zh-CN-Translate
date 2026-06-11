@@ -27,6 +27,7 @@ fun NetworkList(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     networks: List<WifiNetwork>,
+    connectedSsid: String = "",
     onAction: (NetworkListViewModel.Action) -> Unit,
 ) {
     val windowSizeClass = currentWindowAdaptiveInfoV2().windowSizeClass
@@ -42,7 +43,11 @@ fun NetworkList(
                     key = { it.ssid },
                     contentType = { it.password.isEmpty() },
                 ) { network ->
-                    WifiCard(network = network, onAction = onAction)
+                    WifiCard(
+                        network = network,
+                        connected = network.ssid == connectedSsid,
+                        onAction = onAction,
+                    )
                 }
             }
         }
@@ -62,7 +67,12 @@ fun NetworkList(
                     key = { it.ssid },
                     contentType = { it.password.isEmpty() },
                 ) { network ->
-                    WifiCard(network = network, expanded = true, onAction = onAction)
+                    WifiCard(
+                        network = network,
+                        connected = network.ssid == connectedSsid,
+                        expanded = true,
+                        onAction = onAction,
+                    )
                 }
             }
         }

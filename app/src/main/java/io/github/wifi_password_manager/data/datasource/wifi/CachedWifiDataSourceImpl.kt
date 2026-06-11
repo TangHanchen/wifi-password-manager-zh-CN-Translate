@@ -1,6 +1,7 @@
 package io.github.wifi_password_manager.data.datasource.wifi
 
 import android.net.wifi.WifiConfiguration
+import android.net.wifi.WifiInfo
 import io.github.wifi_password_manager.data.local.dao.WifiNetworkDao
 import io.github.wifi_password_manager.data.local.entity.toDomain
 import io.github.wifi_password_manager.utils.toWifiConfigurations
@@ -17,6 +18,10 @@ class CachedWifiDataSourceImpl(private val wifiNetworkDao: WifiNetworkDao) : Wif
 
     override suspend fun removeNetwork(netId: Int): Boolean {
         return false
+    }
+
+    override suspend fun getConnectionInfo(): WifiInfo? {
+        return null
     }
 
     override suspend fun persistEphemeralNetworks() {}

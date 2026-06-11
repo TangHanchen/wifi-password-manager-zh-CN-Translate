@@ -7,9 +7,9 @@ import io.github.wifi_password_manager.domain.model.WifiNetwork
 val WifiConfigurationHidden.simpleKey: String
     get() {
         return when {
-            !preSharedKey.isNullOrBlank() -> preSharedKey.stripQuotes()
+            !preSharedKey.isNullOrBlank() -> preSharedKey.removeSurrounding("\"")
             !wepKeys.all { it.isNullOrBlank() } ->
-                wepKeys.filterNotNull().joinToString("\n") { it.stripQuotes() }
+                wepKeys.filterNotNull().joinToString("\n") { it.removeSurrounding("\"") }
 
             else -> ""
         }

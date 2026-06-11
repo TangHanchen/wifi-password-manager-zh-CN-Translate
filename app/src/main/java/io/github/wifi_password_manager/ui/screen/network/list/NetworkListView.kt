@@ -134,6 +134,7 @@ fun NetworkListView(
                 modifier = modifier,
                 contentPadding = innerPadding,
                 networks = state.savedNetworks,
+                connectedSsid = state.connectedSsid,
                 onAction = onAction,
             )
         }

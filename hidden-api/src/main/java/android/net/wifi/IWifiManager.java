@@ -24,4 +24,8 @@ public interface IWifiManager extends IInterface {
 
     //Android 11+
     boolean removeNetwork(int netId, String packageName);
+
+    WifiInfo getConnectionInfo(String callingPackage, String callingFeatureId);
+
+    int getWifiEnabledState();
 }

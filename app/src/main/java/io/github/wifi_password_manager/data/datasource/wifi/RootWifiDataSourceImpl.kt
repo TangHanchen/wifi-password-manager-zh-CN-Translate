@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.net.wifi.WifiConfiguration
+import android.net.wifi.WifiInfo
 import android.os.IBinder
 import android.util.Log
 import com.topjohnwu.superuser.Shell
@@ -98,6 +99,15 @@ class RootWifiDataSourceImpl(context: Context) : WifiDataSource {
             return false
         }
         return service.removeNetwork(netId)
+    }
+
+    override suspend fun getConnectionInfo(): WifiInfo? {
+        val service = getService()
+        if (service == null) {
+            Log.w(TAG, "Root service not available, cannot get connection info")
+            return null
+        }
+        return service.connectionInfo?.toWifiInfo()
     }
 
     override suspend fun persistEphemeralNetworks() {

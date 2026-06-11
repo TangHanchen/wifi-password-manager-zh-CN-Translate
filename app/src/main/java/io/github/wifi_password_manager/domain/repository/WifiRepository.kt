@@ -5,6 +5,8 @@ import io.github.wifi_password_manager.domain.model.WifiNetwork
 import kotlinx.coroutines.flow.Flow
 
 interface WifiRepository {
+    fun getConnectedWifiSsidFlow(): Flow<String>
+
     fun getAllNetworks(): Flow<List<WifiNetwork>>
 
     fun getAllNetworks(query: String): Flow<List<WifiNetwork>>

@@ -6,6 +6,7 @@ import android.content.Context
 import android.net.wifi.IWifiManager
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiConfigurationHidden
+import android.net.wifi.WifiInfo
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -92,6 +93,15 @@ class ShizukuWifiDataSourceImpl(private val context: Context) : WifiDataSource {
         }
 
         return wifiManager.removeNetwork(netId, user)
+    }
+
+    override suspend fun getConnectionInfo(): WifiInfo? {
+        if (!context.hasShizukuPermission) {
+            Log.w(TAG, "Shizuku permission not available, returning null")
+            return null
+        }
+        if (wifiManager.wifiEnabledState != WifiManager.WIFI_STATE_ENABLED) return null
+        return wifiManager.getConnectionInfo(SHELL_PACKAGE, null)
     }
 
     override suspend fun persistEphemeralNetworks() {

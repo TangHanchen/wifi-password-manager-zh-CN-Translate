@@ -21,9 +21,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
@@ -45,6 +43,7 @@ class NetworkListViewModel(
     data class State(
         val savedNetworks: List<WifiNetwork> = emptyList(),
         val showingSearch: Boolean = false,
+        val connectedSsid: String = "",
         val searchText: String = "",
         val isCacheMode: Boolean = false,
     )
@@ -63,10 +62,42 @@ class NetworkListViewModel(
         data class ShowMessage(val message: UiText) : Event
     }
 
-    private val _state = MutableStateFlow(State())
+    private val _showingSearch = MutableStateFlow(false)
+    private val _searchText = MutableStateFlow("")
+    private val _networks =
+        _searchText.debounce(200.milliseconds).distinctUntilChanged().flatMapLatest { searchText ->
+            val query = searchText.replace("[^a-zA-Z0-9\\\\s]".toRegex(), "").trim()
+            if (query.isBlank()) {
+                wifiRepository.getAllNetworks()
+            } else {
+                wifiRepository.getAllNetworks(query.lowercase())
+            }
+        }
+
     val state =
-        combine(_state, privilegedManager.mode) { state, mode ->
-                state.copy(isCacheMode = mode == PrivilegedMode.NONE)
+        combine(
+                _showingSearch,
+                _searchText,
+                _networks,
+                privilegedManager.mode.map { it == PrivilegedMode.NONE },
+                wifiRepository.getConnectedWifiSsidFlow(),
+            ) { showingSearch, searchText, networks, isCacheMode, connectedSsid ->
+                val sortedNetworks =
+                    networks.groupAndSortedBySsid().let { grouped ->
+                        if (connectedSsid.isNotBlank()) {
+                            grouped.sortedByDescending { it.ssid == connectedSsid }
+                        } else {
+                            grouped
+                        }
+                    }
+
+                State(
+                    savedNetworks = sortedNetworks,
+                    searchText = searchText,
+                    showingSearch = showingSearch,
+                    isCacheMode = isCacheMode,
+                    connectedSsid = connectedSsid,
+                )
             }
             .onStart { wifiRepository.refresh() }
             .stateIn(
@@ -78,30 +109,12 @@ class NetworkListViewModel(
     private val _event = Channel<Event>()
     val event = _event.receiveAsFlow()
 
-    init {
-        state
-            .map { it.searchText }
-            .debounce(200.milliseconds)
-            .distinctUntilChanged()
-            .flatMapLatest { searchText ->
-                val query = searchText.replace("[^a-zA-Z0-9\\\\s]".toRegex(), "").trim()
-                if (query.isBlank()) {
-                    wifiRepository.getAllNetworks()
-                } else {
-                    wifiRepository.getAllNetworks(query.lowercase())
-                }
-            }
-            .map { it.groupAndSortedBySsid() }
-            .onEach { networks -> _state.update { it.copy(savedNetworks = networks) } }
-            .launchIn(viewModelScope)
-    }
-
     fun onAction(action: Action) {
         Log.d(TAG, "onAction: $action")
         when (action) {
             is Action.Refresh -> onRefresh()
             is Action.ToggleSearch -> onToggleSearch()
-            is Action.SearchTextChanged -> _state.update { it.copy(searchText = action.text) }
+            is Action.SearchTextChanged -> _searchText.update { action.text }
             is Action.DeleteNote -> onDeleteNote(action.ssid)
         }
     }
@@ -114,7 +127,8 @@ class NetworkListViewModel(
     }
 
     private fun onToggleSearch() {
-        _state.update { it.copy(showingSearch = !it.showingSearch, searchText = "") }
+        _showingSearch.update { !it }
+        _searchText.update { "" }
     }
 
     private fun onDeleteNote(ssid: String) {

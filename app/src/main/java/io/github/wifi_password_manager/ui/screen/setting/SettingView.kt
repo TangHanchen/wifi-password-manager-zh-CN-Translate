@@ -33,6 +33,7 @@ import io.github.wifi_password_manager.navigation.LocalNavBackStack
 import io.github.wifi_password_manager.navigation.Route
 import io.github.wifi_password_manager.ui.UiConfig
 import io.github.wifi_password_manager.ui.screen.setting.components.AppLockItem
+import io.github.wifi_password_manager.ui.screen.setting.components.ConnectedWifiInfoItem
 import io.github.wifi_password_manager.ui.screen.setting.components.ExportDialog
 import io.github.wifi_password_manager.ui.screen.setting.components.ForgetAllConfirmDialog
 import io.github.wifi_password_manager.ui.screen.setting.components.ImportPasswordDialog
@@ -119,7 +120,7 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                             Text(text = stringResource(R.string.import_description))
                         },
                         shapes = UiConfig.listItemShapes(),
-                        enabled = !state.isCacheMode,
+                        enabled = state.mode.hasPrivilegedAccess,
                     )
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
@@ -181,9 +182,13 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                                 )
                             )
                         },
-                        content = { Text(text = stringResource(R.string.allow_insecure_receiver_title)) },
+                        content = {
+                            Text(text = stringResource(R.string.allow_insecure_receiver_title))
+                        },
                         supportingContent = {
-                            Text(text = stringResource(R.string.allow_insecure_receiver_description))
+                            Text(
+                                text = stringResource(R.string.allow_insecure_receiver_description)
+                            )
                         },
                         trailingContent = {
                             Switch(
@@ -208,7 +213,9 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
 
                             ListItem(
                                 onClick = { navBackStack.add(Route.ExportWifiSetupScreen) },
-                                content = { Text(text = stringResource(R.string.export_wifi_action)) },
+                                content = {
+                                    Text(text = stringResource(R.string.export_wifi_action))
+                                },
                                 shapes = UiConfig.listItemShapes(),
                             )
                         }
@@ -226,7 +233,7 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                             Text(text = stringResource(R.string.forget_all_description))
                         },
                         shapes = UiConfig.listItemShapes(),
-                        enabled = !state.isCacheMode,
+                        enabled = state.mode.hasPrivilegedAccess,
                     )
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
@@ -292,6 +299,10 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                         },
                         shapes = UiConfig.listItemShapes(),
                     )
+
+                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+
+                    ConnectedWifiInfoItem(mode = state.mode)
                 }
             }
 

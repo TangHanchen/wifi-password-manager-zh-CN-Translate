@@ -66,7 +66,7 @@ class SettingViewModel(
         val showExportDialog: Boolean = false,
         val showImportPasswordDialog: Boolean = false,
         val pendingImportFiles: List<PlatformFile> = emptyList(),
-        val isCacheMode: Boolean = true,
+        val mode: PrivilegedMode = PrivilegedMode.NONE,
     )
 
     sealed interface Action {
@@ -113,7 +113,7 @@ class SettingViewModel(
     val state =
         combine(_state, settingRepository.settings, privilegedManager.mode) { state, settings, mode
                 ->
-                state.copy(settings = settings, isCacheMode = mode == PrivilegedMode.NONE)
+                state.copy(settings = settings, mode = mode)
             }
             .stateIn(
                 scope = viewModelScope,
@@ -255,7 +255,7 @@ class SettingViewModel(
     }
 
     private fun onImportNetworks() {
-        if (state.value.isCacheMode) return
+        if (!state.value.mode.hasPrivilegedAccess) return
         viewModelScope.launch {
             val files =
                 FileKit.openFilePicker(
@@ -277,7 +277,7 @@ class SettingViewModel(
     }
 
     private fun onConfirmImportWithPassword(password: String) {
-        val files = _state.value.pendingImportFiles
+        val files = state.value.pendingImportFiles
         _state.update {
             it.copy(showImportPasswordDialog = false, pendingImportFiles = emptyList())
         }
@@ -424,7 +424,7 @@ class SettingViewModel(
     }
 
     private fun onShowForgetAllDialog() {
-        if (state.value.isCacheMode) return
+        if (!state.value.mode.hasPrivilegedAccess) return
         viewModelScope.launch {
             val count = wifiRepository.getNetworkCount()
             if (count == 0) {

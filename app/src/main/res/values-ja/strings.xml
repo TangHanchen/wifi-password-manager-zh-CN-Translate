@@ -171,4 +171,12 @@
     <string name="app_lock_permanently_locked">生体認証がロックされています。デバイスの認証情報を使用してください。</string>
     <string name="app_lock_authentication_failed">認証に失敗しました。</string>
     <string name="app_lock_disabled">画面ロックが削除されました。アプリロックが無効になりました。</string>
+
+    <!-- Connected WiFi Info -->
+    <string name="show_connected_wifi">接続中のWiFiを表示</string>
+    <string name="connected_wifi_active">アクティブ</string>
+    <string name="connected_wifi_active_with_access">アクティブ（%1$s アクセスを使用）</string>
+    <string name="location_permission_required">位置情報の権限が必要です</string>
+    <string name="location_services_disabled">位置情報サービスが無効です</string>
+    <string name="grant">許可</string>
 </resources>

@@ -171,4 +171,12 @@
     <string name="app_lock_permanently_locked">Biyometrik kilit aktif. Cihaz kimlik bilgilerini kullanın.</string>
     <string name="app_lock_authentication_failed">Kimlik doğrulama başarısız.</string>
     <string name="app_lock_disabled">Ekran kilidi kaldırıldı. Uygulama kilidi devre dışı bırakıldı.</string>
+
+    <!-- Connected WiFi Info -->
+    <string name="show_connected_wifi">Bağlı WiFi\'yi Göster</string>
+    <string name="connected_wifi_active">Aktif</string>
+    <string name="connected_wifi_active_with_access">Aktif (%1$s erişimi kullanılıyor)</string>
+    <string name="location_permission_required">Konum izni gerekli</string>
+    <string name="location_services_disabled">Konum servisleri devre dışı</string>
+    <string name="grant">İzin Ver</string>
 </resources>

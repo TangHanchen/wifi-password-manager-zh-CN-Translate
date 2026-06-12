@@ -171,4 +171,12 @@
     <string name="app_lock_permanently_locked">生物识别已锁定，请使用设备凭据。</string>
     <string name="app_lock_authentication_failed">身份验证失败。</string>
     <string name="app_lock_disabled">屏幕锁已被移除，应用锁定已禁用。</string>
+
+    <!-- Connected WiFi Info -->
+    <string name="show_connected_wifi">显示已连接的 WiFi</string>
+    <string name="connected_wifi_active">活跃</string>
+    <string name="connected_wifi_active_with_access">活跃（使用 %1$s 访问）</string>
+    <string name="location_permission_required">需要位置权限</string>
+    <string name="location_services_disabled">位置服务已关闭</string>
+    <string name="grant">授予</string>
 </resources>

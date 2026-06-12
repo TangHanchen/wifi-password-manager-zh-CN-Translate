@@ -171,4 +171,12 @@
     <string name="app_lock_permanently_locked">Biometric locked. Use device credentials.</string>
     <string name="app_lock_authentication_failed">Authentication failed.</string>
     <string name="app_lock_disabled">Screen lock was removed. App Lock has been disabled.</string>
+
+    <!-- Connected WiFi Info -->
+    <string name="show_connected_wifi">Show Connected Wifi</string>
+    <string name="connected_wifi_active">Active</string>
+    <string name="connected_wifi_active_with_access">Active (using %1$s access)</string>
+    <string name="location_permission_required">Location permission required</string>
+    <string name="location_services_disabled">Location services disabled</string>
+    <string name="grant">Grant</string>
 </resources>

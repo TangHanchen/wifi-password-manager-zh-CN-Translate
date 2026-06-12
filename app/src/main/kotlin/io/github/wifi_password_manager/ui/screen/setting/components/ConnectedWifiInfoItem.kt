@@ -25,7 +25,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -79,19 +78,6 @@ fun ConnectedWifiInfoItem(modifier: Modifier = Modifier, mode: PrivilegedMode) {
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
         permissionGranted = it
     }
-    val onClick by rememberUpdatedState {
-        when (status) {
-            ConnectedWifiInfoStatus.PERMISSION_REQUIRED -> {
-                launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-            }
-
-            ConnectedWifiInfoStatus.LOCATION_DISABLED -> {
-                context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-            }
-
-            else -> Unit
-        }
-    }
 
     DisposableEffect(Unit) {
         val receiver = object : BroadcastReceiver() {
@@ -106,7 +92,7 @@ fun ConnectedWifiInfoItem(modifier: Modifier = Modifier, mode: PrivilegedMode) {
 
     ListItem(
         modifier = modifier,
-        onClick = onClick,
+        onClick = {},
         content = { Text(text = stringResource(R.string.show_connected_wifi)) },
         supportingContent = {
             Text(
@@ -139,13 +125,19 @@ fun ConnectedWifiInfoItem(modifier: Modifier = Modifier, mode: PrivilegedMode) {
         trailingContent = {
             when (status) {
                 ConnectedWifiInfoStatus.PERMISSION_REQUIRED -> {
-                    TextButton(onClick = onClick, shapes = ButtonDefaults.shapes()) {
+                    TextButton(
+                        onClick = { launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION) },
+                        shapes = ButtonDefaults.shapes()
+                    ) {
                         Text(text = stringResource(R.string.grant))
                     }
                 }
 
                 ConnectedWifiInfoStatus.LOCATION_DISABLED -> {
-                    TextButton(onClick = onClick, shapes = ButtonDefaults.shapes()) {
+                    TextButton(
+                        onClick = { context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) },
+                        shapes = ButtonDefaults.shapes()
+                    ) {
                         Text(text = stringResource(R.string.open_settings))
                     }
                 }

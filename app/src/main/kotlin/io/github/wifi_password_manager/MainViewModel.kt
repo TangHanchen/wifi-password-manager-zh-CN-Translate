@@ -7,7 +7,7 @@ import io.github.wifi_password_manager.manager.PrivilegedManager
 import io.github.wifi_password_manager.utils.UiText
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -22,12 +22,8 @@ class MainViewModel(
         data class ShowMessage(val message: UiText) : Event
     }
 
-    private val _isAuthenticated = MutableStateFlow(false)
-    val isAuthenticated = _isAuthenticated.asStateFlow()
-
-    private val _skipPrivilegedCheck = MutableStateFlow(false)
-    val skipPrivilegedCheck = _skipPrivilegedCheck.asStateFlow()
-
+    val isAuthenticated: StateFlow<Boolean> field = MutableStateFlow(false)
+    val skipPrivilegedCheck: StateFlow<Boolean> field = MutableStateFlow(false)
     val privilegedMode = privilegedManager.mode
 
     private val _event = Channel<Event>()
@@ -50,7 +46,7 @@ class MainViewModel(
                 settingRepository.updateSettings { it.copy(appLockEnabled = false) }
                 _event.send(Event.ShowMessage(UiText.StringResource(R.string.app_lock_disabled)))
             }
-            _isAuthenticated.update { !settingRepository.settings.value.appLockEnabled }
+            isAuthenticated.update { !settingRepository.settings.value.appLockEnabled }
         }
     }
 
@@ -60,7 +56,7 @@ class MainViewModel(
         super.onCleared()
     }
 
-    fun onAuthenticated() = _isAuthenticated.update { true }
+    fun onAuthenticated() = isAuthenticated.update { true }
 
-    fun onSkipPrivilegedCheck() = _skipPrivilegedCheck.update { true }
+    fun onSkipPrivilegedCheck() = skipPrivilegedCheck.update { true }
 }

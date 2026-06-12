@@ -9,7 +9,7 @@ import io.github.wifi_password_manager.domain.repository.WifiRepository
 import io.github.wifi_password_manager.utils.UiText
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -32,8 +32,7 @@ class NoteViewModel(private val wifiRepository: WifiRepository, private val netw
         data object NavigateBack : Event
     }
 
-    private val _state = MutableStateFlow(network.note.orEmpty())
-    val state = _state.asStateFlow()
+    val state: StateFlow<String> field = MutableStateFlow(network.note.orEmpty())
 
     private val _event = Channel<Event>()
     val event = _event.receiveAsFlow()
@@ -41,7 +40,7 @@ class NoteViewModel(private val wifiRepository: WifiRepository, private val netw
     fun onAction(action: Action) {
         Log.d(TAG, "onAction: $action")
         when (action) {
-            is Action.UpdateNote -> _state.update { action.note }
+            is Action.UpdateNote -> state.update { action.note }
             is Action.SaveOrDeleteNote -> onSaveOrDeleteNote()
         }
     }

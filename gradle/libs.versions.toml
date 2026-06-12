@@ -21,7 +21,6 @@ koinPlugin = "1.0.0"
 kotlin = "2.3.21"
 kotlinxSerialization = "1.11.0"
 ksp = "2.3.9"
-ktfmt = "0.26.0"
 leakcanary = "3.0-alpha-8"
 libsu = "6.0.0"
 lifecycle = "2.10.0"
@@ -100,7 +99,6 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-ktfmt-gradle = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmt" }
 refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
 room3 = { id = "androidx.room3", version.ref = "room3" }
 stability-analyzer = { id = "com.github.skydoves.compose.stability.analyzer", version.ref = "stabilityAnalyzer" }

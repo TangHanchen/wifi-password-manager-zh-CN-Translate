@@ -65,7 +65,6 @@ class SettingViewModel(
         val showForgetAllDialog: Boolean = false,
         val showExportDialog: Boolean = false,
         val showImportPasswordDialog: Boolean = false,
-        val pendingImportFiles: List<PlatformFile> = emptyList(),
         val mode: PrivilegedMode = PrivilegedMode.NONE,
     )
 
@@ -109,11 +108,27 @@ class SettingViewModel(
         data class ShowMessage(val message: UiText) : Event
     }
 
-    private val _state = MutableStateFlow(State())
+    private val _isLoading = MutableStateFlow(false)
+    private val _showForgetAllDialog = MutableStateFlow(false)
+    private val _showExportDialog = MutableStateFlow(false)
+    private val _showImportPasswordDialog = MutableStateFlow(false)
+
     val state = combine(
-        _state, settingRepository.settings, privilegedManager.mode
-    ) { state, settings, mode ->
-        state.copy(settings = settings, mode = mode)
+        _isLoading,
+        _showForgetAllDialog,
+        _showExportDialog,
+        _showImportPasswordDialog,
+        settingRepository.settings,
+        privilegedManager.mode
+    ) { args ->
+        State(
+            isLoading = args[0] as Boolean,
+            showForgetAllDialog = args[1] as Boolean,
+            showExportDialog = args[2] as Boolean,
+            showImportPasswordDialog = args[3] as Boolean,
+            settings = args[4] as Settings,
+            mode = args[5] as PrivilegedMode
+        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5.seconds),
@@ -122,6 +137,9 @@ class SettingViewModel(
 
     private val _event = Channel<Event>()
     val event = _event.receiveAsFlow()
+
+    @Volatile
+    private var pendingImportFiles: List<PlatformFile> = emptyList()
 
     fun onAction(action: Action) {
         Log.d(TAG, "onAction: $action")
@@ -139,16 +157,14 @@ class SettingViewModel(
             is Action.ToggleAllowInsecureReceiver -> onToggleAllowInsecureReceiver(action.value)
 
             is Action.ImportNetworks -> onImportNetworks()
-            is Action.HideImportPasswordDialog -> _state.update {
-                it.copy(showImportPasswordDialog = false, pendingImportFiles = emptyList())
-            }
+            is Action.HideImportPasswordDialog -> onHideImportPasswordDialog()
 
             is Action.ConfirmImportWithPassword -> onConfirmImportWithPassword(action.password)
             is Action.ShowExportDialog -> onShowExportDialog()
-            is Action.HideExportDialog -> _state.update { it.copy(showExportDialog = false) }
+            is Action.HideExportDialog -> _showExportDialog.update { false }
             is Action.ConfirmExport -> onExportNetworks(action.option, action.password)
             is Action.ShowForgetAllDialog -> onShowForgetAllDialog()
-            is Action.HideForgetAllDialog -> _state.update { it.copy(showForgetAllDialog = false) }
+            is Action.HideForgetAllDialog -> _showForgetAllDialog.update { false }
             is Action.ConfirmForgetAllNetworks -> onForgetAllNetworks()
         }
     }
@@ -194,12 +210,12 @@ class SettingViewModel(
                 _event.send(Event.ShowMessage(UiText.StringResource(R.string.no_network_to_export)))
                 return@launch
             }
-            _state.update { it.copy(showExportDialog = true) }
+            _showExportDialog.update { true }
         }
     }
 
     private fun onExportNetworks(option: ExportOption, password: String) {
-        _state.update { it.copy(showExportDialog = false) }
+        _showExportDialog.update { false }
         viewModelScope.launch {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss")
             val isEncrypted = password.isNotEmpty()
@@ -238,9 +254,8 @@ class SettingViewModel(
 
             val hasEncryptedFiles = files.any { it.extension == "bin" }
             if (hasEncryptedFiles) {
-                _state.update {
-                    it.copy(showImportPasswordDialog = true, pendingImportFiles = files)
-                }
+                pendingImportFiles = files
+                _showImportPasswordDialog.update { true }
                 return@launch
             }
 
@@ -248,17 +263,21 @@ class SettingViewModel(
         }
     }
 
+    private fun onHideImportPasswordDialog() {
+        pendingImportFiles = emptyList()
+        _showImportPasswordDialog.update { false }
+    }
+
     private fun onConfirmImportWithPassword(password: String) {
-        val files = state.value.pendingImportFiles
-        _state.update {
-            it.copy(showImportPasswordDialog = false, pendingImportFiles = emptyList())
-        }
+        val files = pendingImportFiles
+        pendingImportFiles = emptyList()
+        _showImportPasswordDialog.update { false }
         performImport(files, password)
     }
 
     private fun performImport(files: List<PlatformFile>, password: String?) {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
+            _isLoading.update { true }
 
             try {
                 if (files.size == 1) {
@@ -278,7 +297,7 @@ class SettingViewModel(
                 _event.send(Event.ShowMessage(UiText.StringResource(R.string.import_networks_failed)))
             } finally {
                 wifiRepository.refresh()
-                _state.update { it.copy(isLoading = false) }
+                _isLoading.update { false }
             }
         }
     }
@@ -377,13 +396,14 @@ class SettingViewModel(
                 return@launch
             }
 
-            _state.update { it.copy(showForgetAllDialog = true) }
+            _showForgetAllDialog.update { true }
         }
     }
 
     private fun onForgetAllNetworks() {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, showForgetAllDialog = false) }
+            _isLoading.update { true }
+            _showForgetAllDialog.update { false }
 
             runCatching {
                 val networks = wifiRepository.getPrivilegedConfiguredNetworks()
@@ -391,7 +411,7 @@ class SettingViewModel(
 
                 if (validNetworks.isEmpty()) {
                     Log.d(TAG, "No valid networks to remove")
-                    _state.update { it.copy(isLoading = false) }
+                    _isLoading.update { false }
                     return@launch
                 }
 
@@ -410,7 +430,7 @@ class SettingViewModel(
                 },
             )
 
-            _state.update { it.copy(isLoading = false) }
+            _isLoading.update { false }
         }
     }
 }

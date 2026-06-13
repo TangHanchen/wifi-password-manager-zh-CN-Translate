@@ -1,0 +1,4 @@
+- Improved search result
+- Fixed a possible crash on Android 12
+- Updated Simplified Chinese translations
+- Added connected wifi monitoring

@@ -29,6 +29,14 @@ An Android application for managing saved WiFi network passwords using privilege
 - **Android 11 (API 30) or higher**
 - **For system-level WiFi management**: [Shizuku](https://shizuku.rikka.app/) or root access
 
+## Optional Permissions
+
+- **ACCESS_WIFI_STATE**: Access information about WiFi networks
+- **ACCESS_FINE_LOCATION**: Required by Android for certain WiFi information
+- **ACCESS_COARSE_LOCATION**: Required by Android alongside fine location
+
+These permissions are only needed for the **Show Connected WiFi** feature when you do not have Shizuku or root access. With Shizuku or root access, the feature works without any permissions.
+
 ## Installation
 
 [<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/io.github.wifi_password_manager)

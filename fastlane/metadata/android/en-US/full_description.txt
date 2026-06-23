@@ -7,3 +7,9 @@ View, manage, backup/restore saved WiFi passwords using Shizuku or root access.
 - Add notes to networks
 - Import/export networks as JSON with GZip compression and encryption options
 - Auto-save temporary networks
+
+<b>Optional permissions</b>
+
+- ACCESS_WIFI_STATE: Allows the app to access information about WiFi networks
+- ACCESS_FINE_LOCATION: Android requires this to access certain WiFi information for security reasons
+- ACCESS_COARSE_LOCATION: Android requires this alongside fine location

@@ -53,7 +53,6 @@ class MainViewModel(
     override fun onCleared() {
         Shizuku.removeBinderReceivedListener(shizukuBinderReceivedListener)
         Shizuku.removeBinderDeadListener(shizukuBinderDeadListener)
-        super.onCleared()
     }
 
     fun onAuthenticated() = isAuthenticated.update { true }

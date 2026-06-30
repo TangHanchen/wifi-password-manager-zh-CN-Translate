@@ -2,14 +2,12 @@ package io.github.wifi_password_manager.data.local
 
 import androidx.room3.Database
 import androidx.room3.RoomDatabase
-import androidx.room3.TypeConverters
 import androidx.room3.migration.Migration
 import androidx.sqlite.execSQL
 import io.github.wifi_password_manager.data.local.dao.WifiNetworkDao
 import io.github.wifi_password_manager.data.local.entity.WifiNetworkEntity
 import io.github.wifi_password_manager.data.local.entity.WifiNetworkFtsEntity
 
-@TypeConverters
 @Database(entities = [WifiNetworkEntity::class, WifiNetworkFtsEntity::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun wifiNetworkDao(): WifiNetworkDao

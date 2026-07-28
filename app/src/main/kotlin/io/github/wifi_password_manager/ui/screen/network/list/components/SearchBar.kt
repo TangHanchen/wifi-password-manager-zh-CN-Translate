@@ -1,16 +1,13 @@
 package io.github.wifi_password_manager.ui.screen.network.list.components
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -29,12 +26,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.ui.icons.ClearAll
 import io.github.wifi_password_manager.ui.screen.network.list.NetworkListViewModel
 import io.github.wifi_password_manager.ui.shared.BackButton
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ScaffoldWrapper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -97,10 +95,7 @@ fun SearchBar(
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ScaffoldWrapper::class)
 private fun SearchBarPreview() {
-    WiFiPasswordManagerTheme {
-        Scaffold(topBar = { SearchBar(state = NetworkListViewModel.State(), onAction = {}) }) {
-            Box(modifier = Modifier.padding(it))
-        }
-    }
+    SearchBar(state = NetworkListViewModel.State(), onAction = {})
 }

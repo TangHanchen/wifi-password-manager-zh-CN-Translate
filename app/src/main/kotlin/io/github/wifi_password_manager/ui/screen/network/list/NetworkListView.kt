@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.WifiNetwork
@@ -39,7 +40,7 @@ import io.github.wifi_password_manager.ui.icons.Settings
 import io.github.wifi_password_manager.ui.screen.network.list.components.NetworkList
 import io.github.wifi_password_manager.ui.screen.network.list.components.SearchBar
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 import io.github.wifi_password_manager.utils.MOCK
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -141,40 +142,36 @@ fun NetworkListView(
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun NetworkListViewPreview() {
-    WiFiPasswordManagerTheme {
-        NetworkListView(
-            state = NetworkListViewModel.State(savedNetworks = WifiNetwork.MOCK),
-            onAction = {},
-        )
-    }
+    NetworkListView(
+        state = NetworkListViewModel.State(savedNetworks = WifiNetwork.MOCK),
+        onAction = {},
+    )
 }
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun EmptyNetworkListViewPreview() {
-    WiFiPasswordManagerTheme {
-        NetworkListView(state = NetworkListViewModel.State(), onAction = {})
-    }
+    NetworkListView(state = NetworkListViewModel.State(), onAction = {})
 }
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun SearchNetworkListViewPreview() {
-    WiFiPasswordManagerTheme {
-        NetworkListView(
-            state = NetworkListViewModel.State(
-                showingSearch = true, savedNetworks = WifiNetwork.MOCK
-            ),
-            onAction = {},
-        )
-    }
+    NetworkListView(
+        state = NetworkListViewModel.State(
+            showingSearch = true, savedNetworks = WifiNetwork.MOCK
+        ),
+        onAction = {},
+    )
 }
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun EmptySearchNetworkListViewPreview() {
-    WiFiPasswordManagerTheme {
-        NetworkListView(state = NetworkListViewModel.State(showingSearch = true), onAction = {})
-    }
+    NetworkListView(state = NetworkListViewModel.State(showingSearch = true), onAction = {})
 }

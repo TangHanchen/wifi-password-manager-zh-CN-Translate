@@ -8,13 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
 import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import com.mikepenz.aboutlibraries.ui.compose.m3.libraryColors
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.ui.shared.BackButton
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 
 @Composable
 fun LicenseView() {
@@ -39,6 +40,7 @@ fun LicenseView() {
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun LicenseViewPreview() {
-    WiFiPasswordManagerTheme { LicenseView() }
+    LicenseView()
 }

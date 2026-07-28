@@ -2,7 +2,6 @@ package io.github.wifi_password_manager.ui.screen.network.list.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
@@ -19,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.qrose.QrData
 import io.github.alexzhirkevich.qrose.options.QrBrush
@@ -29,7 +29,7 @@ import io.github.alexzhirkevich.qrose.wifi
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.WifiNetwork
 import io.github.wifi_password_manager.domain.model.WifiNetwork.SecurityType
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 import io.github.wifi_password_manager.utils.MOCK
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,10 +81,7 @@ fun WifiQRDialog(
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun WifiQRDialogPreview() {
-    WiFiPasswordManagerTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            WifiQRDialog(network = WifiNetwork.MOCK.random(), onDismiss = {})
-        }
-    }
+    WifiQRDialog(network = WifiNetwork.MOCK.random(), onDismiss = {})
 }

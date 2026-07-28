@@ -14,10 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import io.github.wifi_password_manager.R
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,6 +48,7 @@ fun LoadingDialog(modifier: Modifier = Modifier) {
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun LoadingDialogPreview() {
-    WiFiPasswordManagerTheme { LoadingDialog() }
+    LoadingDialog()
 }

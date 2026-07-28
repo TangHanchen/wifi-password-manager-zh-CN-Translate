@@ -29,12 +29,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import androidx.compose.ui.tooling.preview.PreviewWrapper
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.WifiNetwork
 import io.github.wifi_password_manager.ui.shared.BackButton
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 import io.github.wifi_password_manager.utils.DeviceConfiguration
 import io.github.wifi_password_manager.utils.MOCK
 import io.github.wifi_password_manager.utils.plus
@@ -113,26 +115,23 @@ fun NoteView(network: WifiNetwork, state: String, onAction: (NoteViewModel.Actio
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun NoteViewPreview() {
-    WiFiPasswordManagerTheme {
-        val network = WifiNetwork.MOCK.random().copy(note = "Sample note")
-        NoteView(network = network, state = network.note.orEmpty(), onAction = {})
-    }
+    val network = WifiNetwork.MOCK.random().copy(note = LoremIpsum().values.joinToString(" "))
+    NoteView(network = network, state = network.note.orEmpty(), onAction = {})
 }
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun EmptyNoteViewPreview() {
-    WiFiPasswordManagerTheme {
-        val network = WifiNetwork.MOCK.random().copy(note = null)
-        NoteView(network = network, state = "", onAction = {})
-    }
+    val network = WifiNetwork.MOCK.random().copy(note = null)
+    NoteView(network = network, state = "", onAction = {})
 }
 
 @PreviewScreenSizes
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun AdaptiveNoteViewPreview() {
-    WiFiPasswordManagerTheme {
-        NoteView(network = WifiNetwork.MOCK.random(), state = "", onAction = {})
-    }
+    NoteView(network = WifiNetwork.MOCK.random(), state = "", onAction = {})
 }

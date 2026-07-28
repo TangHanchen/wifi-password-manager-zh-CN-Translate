@@ -6,10 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.navigation.LocalNavBackStack
 import io.github.wifi_password_manager.ui.icons.ArrowBack
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,8 +28,7 @@ fun BackButton(modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun BackButtonPreview() {
-    WiFiPasswordManagerTheme {
-        BackButton()
-    }
+    BackButton()
 }

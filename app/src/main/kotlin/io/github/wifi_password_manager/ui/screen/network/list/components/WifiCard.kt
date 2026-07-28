@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,7 +53,7 @@ import io.github.wifi_password_manager.ui.icons.MoreVert
 import io.github.wifi_password_manager.ui.icons.QrCode2
 import io.github.wifi_password_manager.ui.screen.network.list.NetworkListViewModel
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 import io.github.wifi_password_manager.utils.MOCK
 import io.github.wifi_password_manager.utils.getSecurity
 import io.github.wifi_password_manager.utils.passwordClipEntry
@@ -281,26 +282,24 @@ private fun NoteItem(modifier: Modifier = Modifier, network: WifiNetwork) {
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun WifiCardPreview() {
-    WiFiPasswordManagerTheme {
-        LazyColumn(
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            items(WifiNetwork.MOCK) { WifiCard(network = it, onAction = {}) }
-        }
+    LazyColumn(
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        items(WifiNetwork.MOCK) { WifiCard(network = it, onAction = {}) }
     }
 }
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun ExpandedWifiCardPreview() {
-    WiFiPasswordManagerTheme {
-        LazyColumn(
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            items(WifiNetwork.MOCK) { WifiCard(network = it, expanded = true, onAction = {}) }
-        }
+    LazyColumn(
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        items(WifiNetwork.MOCK) { WifiCard(network = it, expanded = true, onAction = {}) }
     }
 }

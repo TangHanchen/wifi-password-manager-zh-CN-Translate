@@ -29,10 +29,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalAutofillManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.ExportOption
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -139,6 +140,7 @@ fun ExportDialog(
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun ExportDialogPreview() {
-    WiFiPasswordManagerTheme { ExportDialog(onDismiss = {}, onSelect = { _, _ -> }) }
+    ExportDialog(onDismiss = {}, onSelect = { _, _ -> })
 }

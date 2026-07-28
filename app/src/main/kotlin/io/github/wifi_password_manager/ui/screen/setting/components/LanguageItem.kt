@@ -17,11 +17,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.Settings
 import io.github.wifi_password_manager.ui.UiConfig
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 
 @Composable
 fun LanguageItem(language: Settings.Language, onLanguageChange: (Settings.Language) -> Unit) {
@@ -70,20 +71,18 @@ private fun LanguageSelectionSheet(
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun LanguageItemPreview() {
-    WiFiPasswordManagerTheme {
-        LanguageItem(language = Settings.Language.ENGLISH, onLanguageChange = {})
-    }
+    LanguageItem(language = Settings.Language.ENGLISH, onLanguageChange = {})
 }
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun LanguageSelectionSheetPreview() {
-    WiFiPasswordManagerTheme {
-        LanguageSelectionSheet(
-            onDismiss = {},
-            language = Settings.Language.entries.random(),
-            onLanguageChange = {},
-        )
-    }
+    LanguageSelectionSheet(
+        onDismiss = {},
+        language = Settings.Language.entries.random(),
+        onLanguageChange = {},
+    )
 }

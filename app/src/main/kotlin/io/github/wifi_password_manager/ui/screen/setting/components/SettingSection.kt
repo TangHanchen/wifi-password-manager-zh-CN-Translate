@@ -10,8 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ScaffoldWrapper
 
 @Composable
 fun SettingSection(
@@ -33,12 +35,11 @@ fun SettingSection(
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ScaffoldWrapper::class)
 private fun SettingBoxPreview() {
-    WiFiPasswordManagerTheme {
-        SettingSection(title = "Setting") {
-            ListItem(supportingContent = { Text(text = "Description") }) {
-                Text(text = "Setting 1")
-            }
+    SettingSection(title = LoremIpsum(2).values.joinToString(" ")) {
+        ListItem(supportingContent = { Text(text = LoremIpsum(10).values.joinToString(" ")) }) {
+            Text(text = LoremIpsum(5).values.joinToString(" "))
         }
     }
 }

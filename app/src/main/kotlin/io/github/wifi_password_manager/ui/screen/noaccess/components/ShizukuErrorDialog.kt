@@ -1,19 +1,17 @@
 package io.github.wifi_password_manager.ui.screen.noaccess.components
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import io.github.wifi_password_manager.R
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 import io.github.wifi_password_manager.utils.launchUrl
 import rikka.shizuku.ShizukuProvider
 
@@ -61,8 +59,7 @@ fun ShizukuErrorDialog(onDismiss: () -> Unit) {
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun ShizukuErrorDialogPreview() {
-    WiFiPasswordManagerTheme {
-        Surface(modifier = Modifier.fillMaxSize()) { ShizukuErrorDialog(onDismiss = {}) }
-    }
+    ShizukuErrorDialog(onDismiss = {})
 }

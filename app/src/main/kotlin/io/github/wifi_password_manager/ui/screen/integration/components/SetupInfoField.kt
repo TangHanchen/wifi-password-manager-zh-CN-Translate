@@ -4,7 +4,6 @@ import android.content.ClipData
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.runtime.Composable
@@ -14,10 +13,11 @@ import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.toClipEntry
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.ui.icons.ContentCopy
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,6 +57,7 @@ fun SetupInfoField(
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun SetupInfoFieldPreview() {
-    WiFiPasswordManagerTheme { Surface { SetupInfoField(label = "Label", content = "Content") } }
+    SetupInfoField(label = "Label", content = "Content")
 }

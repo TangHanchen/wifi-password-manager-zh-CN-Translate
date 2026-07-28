@@ -33,13 +33,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import com.topjohnwu.superuser.Shell
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.manager.PrivilegedManager
 import io.github.wifi_password_manager.ui.icons.Lock
 import io.github.wifi_password_manager.ui.screen.noaccess.components.ShizukuErrorDialog
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -168,12 +169,14 @@ fun NoAccessView(allowSkip: Boolean, onSkip: () -> Unit) {
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun NoAccessViewPreview() {
-    WiFiPasswordManagerTheme { NoAccessView(allowSkip = false, onSkip = {}) }
+    NoAccessView(allowSkip = false, onSkip = {})
 }
 
 @PreviewScreenSizes
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun AdaptiveNoAccessViewPreview() {
-    WiFiPasswordManagerTheme { NoAccessView(allowSkip = false, onSkip = {}) }
+    NoAccessView(allowSkip = false, onSkip = {})
 }

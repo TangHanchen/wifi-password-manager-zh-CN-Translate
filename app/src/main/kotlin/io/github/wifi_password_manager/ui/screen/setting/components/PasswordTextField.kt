@@ -7,7 +7,6 @@ import androidx.compose.foundation.text.input.TextObfuscationMode
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedSecureTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.runtime.Composable
@@ -21,11 +20,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentType
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.ui.icons.Visibility
 import io.github.wifi_password_manager.ui.icons.VisibilityOff
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,6 +65,7 @@ fun PasswordTextField(
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun PasswordTextFieldPreview() {
-    WiFiPasswordManagerTheme { Surface { PasswordTextField(state = rememberTextFieldState()) } }
+    PasswordTextField(state = rememberTextFieldState())
 }

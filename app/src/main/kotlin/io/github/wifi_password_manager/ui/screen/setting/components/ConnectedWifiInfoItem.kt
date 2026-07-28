@@ -30,13 +30,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.PrivilegedMode
 import io.github.wifi_password_manager.ui.UiConfig
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 
 private enum class ConnectedWifiInfoStatus {
     ACTIVE, PERMISSION_REQUIRED, LOCATION_DISABLED,
@@ -149,10 +150,9 @@ fun ConnectedWifiInfoItem(modifier: Modifier = Modifier, mode: PrivilegedMode) {
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun ConnectedWifiInfoItemPreview() {
-    WiFiPasswordManagerTheme {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            PrivilegedMode.entries.forEach { ConnectedWifiInfoItem(mode = it) }
-        }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        PrivilegedMode.entries.forEach { ConnectedWifiInfoItem(mode = it) }
     }
 }

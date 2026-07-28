@@ -31,10 +31,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.ui.icons.Lock
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 import io.github.wifi_password_manager.utils.toast
 
 @Composable
@@ -115,12 +116,14 @@ fun LockView(onAuthenticated: () -> Unit) {
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun LockViewPreview() {
-    WiFiPasswordManagerTheme { LockView(onAuthenticated = {}) }
+    LockView(onAuthenticated = {})
 }
 
 @PreviewScreenSizes
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun AdaptiveLockViewPreview() {
-    WiFiPasswordManagerTheme { LockView(onAuthenticated = {}) }
+    LockView(onAuthenticated = {})
 }

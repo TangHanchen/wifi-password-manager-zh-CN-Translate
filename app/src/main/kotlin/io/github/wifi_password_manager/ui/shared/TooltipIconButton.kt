@@ -6,7 +6,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconButtonShapes
 import androidx.compose.material3.PlainTooltip
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TooltipBox
@@ -16,8 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import io.github.wifi_password_manager.ui.icons.Search
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,15 +44,12 @@ fun TooltipIconButton(
 @OptIn(ExperimentalMaterial3Api::class)
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun TooltipIconButtonPreview() {
-    WiFiPasswordManagerTheme {
-        Surface {
-            TooltipIconButton(
-                onClick = {},
-                imageVector = Search,
-                tooltip = "Tooltip",
-                positioning = TooltipAnchorPosition.Below,
-            )
-        }
-    }
+    TooltipIconButton(
+        onClick = {},
+        imageVector = Search,
+        tooltip = LoremIpsum(2).values.joinToString(" "),
+        positioning = TooltipAnchorPosition.Below,
+    )
 }

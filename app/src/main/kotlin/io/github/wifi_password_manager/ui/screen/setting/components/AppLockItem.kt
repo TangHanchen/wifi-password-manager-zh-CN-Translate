@@ -26,10 +26,11 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.ui.UiConfig
 import io.github.wifi_password_manager.ui.icons.Lock
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 import io.github.wifi_password_manager.utils.isBiometricAuthenticationSupported
 import io.github.wifi_password_manager.utils.toast
 
@@ -129,12 +130,14 @@ private fun LockScreenRequiredDialog(onDismiss: () -> Unit) {
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun AppLockItemPreview() {
-    WiFiPasswordManagerTheme { AppLockItem(appLockEnabled = false, onToggleAppLock = {}) }
+    AppLockItem(appLockEnabled = false, onToggleAppLock = {})
 }
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun LockScreenRequiredDialogPreview() {
-    WiFiPasswordManagerTheme { LockScreenRequiredDialog(onDismiss = {}) }
+    LockScreenRequiredDialog(onDismiss = {})
 }

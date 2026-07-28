@@ -7,17 +7,16 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import io.github.wifi_password_manager.domain.model.WifiNetwork
 import io.github.wifi_password_manager.ui.screen.network.list.NetworkListViewModel
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 import io.github.wifi_password_manager.utils.DeviceConfiguration
 import io.github.wifi_password_manager.utils.MOCK
 import io.github.wifi_password_manager.utils.plus
@@ -83,20 +82,14 @@ fun NetworkList(
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun NetworkListPreview() {
-    WiFiPasswordManagerTheme {
-        Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
-            NetworkList(networks = WifiNetwork.MOCK, onAction = {})
-        }
-    }
+    NetworkList(networks = WifiNetwork.MOCK, onAction = {})
 }
 
 @PreviewScreenSizes
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun AdaptiveNetworkListPreview() {
-    WiFiPasswordManagerTheme {
-        Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
-            NetworkList(networks = WifiNetwork.MOCK, onAction = {})
-        }
-    }
+    NetworkList(networks = WifiNetwork.MOCK, onAction = {})
 }

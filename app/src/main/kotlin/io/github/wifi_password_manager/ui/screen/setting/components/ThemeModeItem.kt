@@ -17,11 +17,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.Settings
 import io.github.wifi_password_manager.ui.UiConfig
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ScaffoldWrapper
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 
 @Composable
 fun ThemeModeItem(themeMode: Settings.ThemeMode, onThemeModeChange: (Settings.ThemeMode) -> Unit) {
@@ -70,20 +72,18 @@ private fun ThemeModeSelectionSheet(
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun ThemeModeItemPreview() {
-    WiFiPasswordManagerTheme {
-        ThemeModeItem(themeMode = Settings.ThemeMode.SYSTEM, onThemeModeChange = {})
-    }
+    ThemeModeItem(themeMode = Settings.ThemeMode.SYSTEM, onThemeModeChange = {})
 }
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ScaffoldWrapper::class)
 private fun ThemeModeSelectionSheetPreview() {
-    WiFiPasswordManagerTheme {
-        ThemeModeSelectionSheet(
-            onDismiss = {},
-            themeMode = Settings.ThemeMode.entries.random(),
-            onThemeModeChange = {},
-        )
-    }
+    ThemeModeSelectionSheet(
+        onDismiss = {},
+        themeMode = Settings.ThemeMode.entries.random(),
+        onThemeModeChange = {},
+    )
 }

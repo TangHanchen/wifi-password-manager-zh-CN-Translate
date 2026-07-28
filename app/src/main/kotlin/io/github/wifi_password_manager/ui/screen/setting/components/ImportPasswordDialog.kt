@@ -16,9 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalAutofillManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import io.github.wifi_password_manager.R
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 
 @Composable
 fun ImportPasswordDialog(
@@ -76,6 +77,7 @@ fun ImportPasswordDialog(
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(SurfaceWrapper::class)
 private fun ImportPasswordDialogPreview() {
-    WiFiPasswordManagerTheme { ImportPasswordDialog(onDismiss = {}, onConfirm = {}) }
+    ImportPasswordDialog(onDismiss = {}, onConfirm = {})
 }

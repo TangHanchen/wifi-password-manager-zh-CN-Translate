@@ -10,13 +10,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import io.github.wifi_password_manager.BuildConfig
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.receivers.ExportWifiReceiver
 import io.github.wifi_password_manager.ui.screen.integration.components.SetupInfoField
 import io.github.wifi_password_manager.ui.shared.BackButton
-import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 import io.github.wifi_password_manager.utils.plus
 
 @Composable
@@ -73,6 +74,7 @@ fun ExportWifiSetupView() {
 
 @PreviewLightDark
 @Composable
+@PreviewWrapper(ThemeWrapper::class)
 private fun ExportWifiSetupViewPreview() {
-    WiFiPasswordManagerTheme { ExportWifiSetupView() }
+    ExportWifiSetupView()
 }

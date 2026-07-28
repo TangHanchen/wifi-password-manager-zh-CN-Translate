@@ -25,13 +25,14 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import io.github.wifi_password_manager.R
+import io.github.wifi_password_manager.ui.icons.ClearAll
 import io.github.wifi_password_manager.ui.screen.network.list.NetworkListViewModel
+import io.github.wifi_password_manager.ui.shared.BackButton
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 
@@ -70,18 +71,13 @@ fun SearchBar(
             ),
             keyboardActions = KeyboardActions(onSearch = { keyboardController?.hide() }),
             leadingIcon = {
-                TooltipIconButton(
-                    onClick = { onAction(NetworkListViewModel.Action.ToggleSearch) },
-                    painter = painterResource(R.drawable.ic_arrow_back),
-                    tooltip = stringResource(R.string.back),
-                    positioning = TooltipAnchorPosition.Below,
-                )
+                BackButton { onAction(NetworkListViewModel.Action.ToggleSearch) }
             },
             trailingIcon = {
                 Row {
                     TooltipIconButton(
                         onClick = { onAction(NetworkListViewModel.Action.SearchTextChanged("")) },
-                        painter = painterResource(R.drawable.ic_clear_all),
+                        imageVector = ClearAll,
                         tooltip = stringResource(R.string.clear),
                         positioning = TooltipAnchorPosition.Below,
                     )

@@ -24,11 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalResources
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.ui.UiConfig
+import io.github.wifi_password_manager.ui.icons.Lock
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 import io.github.wifi_password_manager.utils.isBiometricAuthenticationSupported
 import io.github.wifi_password_manager.utils.toast
@@ -102,7 +102,7 @@ private fun LockScreenRequiredDialog(onDismiss: () -> Unit) {
         onDismissRequest = onDismiss,
         icon = {
             Icon(
-                painter = painterResource(R.drawable.ic_lock),
+                imageVector = Lock,
                 contentDescription = stringResource(R.string.lock_screen_required_title),
             )
         },

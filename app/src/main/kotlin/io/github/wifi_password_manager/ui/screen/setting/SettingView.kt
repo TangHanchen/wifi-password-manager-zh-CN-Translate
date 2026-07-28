@@ -10,18 +10,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
@@ -39,12 +36,11 @@ import io.github.wifi_password_manager.ui.screen.setting.components.ImportPasswo
 import io.github.wifi_password_manager.ui.screen.setting.components.LanguageItem
 import io.github.wifi_password_manager.ui.screen.setting.components.SettingSection
 import io.github.wifi_password_manager.ui.screen.setting.components.ThemeModeItem
+import io.github.wifi_password_manager.ui.shared.BackButton
 import io.github.wifi_password_manager.ui.shared.LoadingDialog
-import io.github.wifi_password_manager.ui.shared.TooltipIconButton
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 import io.github.wifi_password_manager.utils.plus
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Action) -> Unit) {
     val uriHandler = LocalUriHandler.current
@@ -53,14 +49,7 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
     Scaffold(
         topBar = {
             TopAppBar(
-                navigationIcon = {
-                    TooltipIconButton(
-                        onClick = { navBackStack.removeLastOrNull() },
-                        painter = painterResource(R.drawable.ic_arrow_back),
-                        tooltip = stringResource(R.string.back),
-                        positioning = TooltipAnchorPosition.Below,
-                    )
-                },
+                navigationIcon = { BackButton() },
                 title = { Text(text = stringResource(R.string.settings_title)) },
             )
         },

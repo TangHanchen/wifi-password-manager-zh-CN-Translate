@@ -17,12 +17,13 @@ import androidx.compose.runtime.retain.retain
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentType
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import io.github.wifi_password_manager.R
+import io.github.wifi_password_manager.ui.icons.Visibility
+import io.github.wifi_password_manager.ui.icons.VisibilityOff
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 
@@ -49,7 +50,7 @@ fun PasswordTextField(
         trailingIcon = {
             TooltipIconButton(
                 onClick = { isObfuscated = !isObfuscated },
-                painter = painterResource(if (isObfuscated) R.drawable.ic_visibility_off else R.drawable.ic_visibility),
+                imageVector = if (isObfuscated) VisibilityOff else Visibility,
                 tooltip = if (isObfuscated) {
                     stringResource(R.string.hide_password)
                 } else {

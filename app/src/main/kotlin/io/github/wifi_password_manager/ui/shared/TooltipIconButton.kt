@@ -14,10 +14,9 @@ import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import io.github.wifi_password_manager.R
+import io.github.wifi_password_manager.ui.icons.Search
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,7 +25,7 @@ fun TooltipIconButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     shapes: IconButtonShapes = IconButtonDefaults.shapes(),
-    painter: Painter,
+    imageVector: ImageVector,
     tooltip: String,
     positioning: TooltipAnchorPosition,
 ) {
@@ -36,7 +35,7 @@ fun TooltipIconButton(
         state = rememberTooltipState(),
     ) {
         IconButton(modifier = modifier, onClick = onClick, shapes = shapes) {
-            Icon(painter = painter, contentDescription = tooltip)
+            Icon(imageVector = imageVector, contentDescription = tooltip)
         }
     }
 }
@@ -49,7 +48,7 @@ private fun TooltipIconButtonPreview() {
         Surface {
             TooltipIconButton(
                 onClick = {},
-                painter = painterResource(R.drawable.ic_search),
+                imageVector = Search,
                 tooltip = "Tooltip",
                 positioning = TooltipAnchorPosition.Below,
             )

@@ -10,12 +10,10 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
@@ -27,7 +25,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -36,13 +33,12 @@ import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.WifiNetwork
-import io.github.wifi_password_manager.ui.shared.TooltipIconButton
+import io.github.wifi_password_manager.ui.shared.BackButton
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 import io.github.wifi_password_manager.utils.DeviceConfiguration
 import io.github.wifi_password_manager.utils.MOCK
 import io.github.wifi_password_manager.utils.plus
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteView(network: WifiNetwork, state: String, onAction: (NoteViewModel.Action) -> Unit) {
     val focusManager = LocalFocusManager.current
@@ -56,14 +52,7 @@ fun NoteView(network: WifiNetwork, state: String, onAction: (NoteViewModel.Actio
         modifier = Modifier.pointerInput(Unit) { detectTapGestures { focusManager.clearFocus() } },
         topBar = {
             TopAppBar(
-                navigationIcon = {
-                    TooltipIconButton(
-                        onClick = { onAction(NoteViewModel.Action.SaveOrDeleteNote) },
-                        painter = painterResource(R.drawable.ic_arrow_back),
-                        tooltip = stringResource(R.string.back),
-                        positioning = TooltipAnchorPosition.Below,
-                    )
-                },
+                navigationIcon = { BackButton { onAction(NoteViewModel.Action.SaveOrDeleteNote) } },
                 title = { Text(text = stringResource(R.string.note_title, network.ssid)) },
             )
         },

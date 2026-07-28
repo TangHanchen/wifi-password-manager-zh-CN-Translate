@@ -35,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -46,6 +45,11 @@ import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.WifiNetwork
 import io.github.wifi_password_manager.navigation.LocalNavBackStack
 import io.github.wifi_password_manager.navigation.Route
+import io.github.wifi_password_manager.ui.icons.ContentCopy
+import io.github.wifi_password_manager.ui.icons.Delete
+import io.github.wifi_password_manager.ui.icons.EditNote
+import io.github.wifi_password_manager.ui.icons.MoreVert
+import io.github.wifi_password_manager.ui.icons.QrCode2
 import io.github.wifi_password_manager.ui.screen.network.list.NetworkListViewModel
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
@@ -126,7 +130,7 @@ private fun SSIDItem(
         trailingContent = {
             TooltipIconButton(
                 onClick = { expanded = true },
-                painter = painterResource(R.drawable.ic_more_vert),
+                imageVector = MoreVert,
                 tooltip = stringResource(R.string.more_options),
                 positioning = TooltipAnchorPosition.Below,
             )
@@ -153,7 +157,7 @@ private fun SSIDItem(
                     shape = MenuDefaults.standaloneItemShape,
                     leadingIcon = {
                         Icon(
-                            painter = painterResource(R.drawable.ic_qr_code_2),
+                            imageVector = QrCode2,
                             contentDescription = stringResource(R.string.show_wifi_qr_code),
                         )
                     },
@@ -172,7 +176,7 @@ private fun SSIDItem(
                     },
                     leadingIcon = {
                         Icon(
-                            painter = painterResource(R.drawable.ic_edit_note),
+                            imageVector = EditNote,
                             contentDescription = stringResource(if (network.note != null) R.string.edit_note else R.string.add_note),
                         )
                     },
@@ -188,7 +192,7 @@ private fun SSIDItem(
                         shape = MenuDefaults.standaloneItemShape,
                         leadingIcon = {
                             Icon(
-                                painter = painterResource(R.drawable.ic_delete),
+                                imageVector = Delete,
                                 contentDescription = stringResource(R.string.delete_note),
                             )
                         },
@@ -224,7 +228,7 @@ private fun PasswordItem(modifier: Modifier = Modifier, network: WifiNetwork) {
             shapes = ButtonDefaults.shapes(),
         ) {
             Icon(
-                painter = painterResource(R.drawable.ic_content_copy),
+                imageVector = ContentCopy,
                 contentDescription = stringResource(R.string.copy_description),
             )
             Spacer(modifier = Modifier.width(8.dp))

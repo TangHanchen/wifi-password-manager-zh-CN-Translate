@@ -29,7 +29,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -38,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.topjohnwu.superuser.Shell
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.manager.PrivilegedManager
+import io.github.wifi_password_manager.ui.icons.Lock
 import io.github.wifi_password_manager.ui.screen.noaccess.components.ShizukuErrorDialog
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -118,7 +118,7 @@ fun NoAccessView(allowSkip: Boolean, onSkip: () -> Unit) {
         ) {
             item {
                 Icon(
-                    painter = painterResource(R.drawable.ic_lock),
+                    imageVector = Lock,
                     contentDescription = null,
                     modifier = Modifier.size(80.dp),
                     tint = MaterialTheme.colorScheme.primary,

@@ -27,13 +27,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import io.github.wifi_password_manager.R
+import io.github.wifi_password_manager.ui.icons.Lock
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 import io.github.wifi_password_manager.utils.toast
 
@@ -78,7 +78,7 @@ fun LockView(onAuthenticated: () -> Unit) {
                 verticalArrangement = Arrangement.Center,
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_lock),
+                    imageVector = Lock,
                     contentDescription = stringResource(R.string.lock_description),
                     modifier = Modifier.size(80.dp),
                     tint = MaterialTheme.colorScheme.primary,

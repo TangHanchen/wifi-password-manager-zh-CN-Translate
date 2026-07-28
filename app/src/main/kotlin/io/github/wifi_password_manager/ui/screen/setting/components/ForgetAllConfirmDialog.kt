@@ -7,10 +7,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import io.github.wifi_password_manager.R
+import io.github.wifi_password_manager.ui.icons.Warning
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 
 @Composable
@@ -24,7 +24,7 @@ fun ForgetAllConfirmDialog(
         onDismissRequest = onDismiss,
         icon = {
             Icon(
-                painter = painterResource(R.drawable.ic_warning),
+                imageVector = Warning,
                 contentDescription = stringResource(R.string.warning),
             )
         },

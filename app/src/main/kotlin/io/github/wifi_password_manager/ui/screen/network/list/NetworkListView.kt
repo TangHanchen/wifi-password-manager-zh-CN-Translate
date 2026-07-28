@@ -25,7 +25,6 @@ import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -34,6 +33,9 @@ import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.WifiNetwork
 import io.github.wifi_password_manager.navigation.LocalNavBackStack
 import io.github.wifi_password_manager.navigation.Route
+import io.github.wifi_password_manager.ui.icons.Refresh
+import io.github.wifi_password_manager.ui.icons.Search
+import io.github.wifi_password_manager.ui.icons.Settings
 import io.github.wifi_password_manager.ui.screen.network.list.components.NetworkList
 import io.github.wifi_password_manager.ui.screen.network.list.components.SearchBar
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
@@ -64,14 +66,14 @@ fun NetworkListView(
                         actions = {
                             TooltipIconButton(
                                 onClick = { onAction(NetworkListViewModel.Action.ToggleSearch) },
-                                painter = painterResource(R.drawable.ic_search),
+                                imageVector = Search,
                                 tooltip = stringResource(R.string.search_tooltip),
                                 positioning = TooltipAnchorPosition.Below,
                             )
 
                             TooltipIconButton(
                                 onClick = { navBackStack.add(Route.SettingScreen) },
-                                painter = painterResource(R.drawable.ic_settings),
+                                imageVector = Settings,
                                 tooltip = stringResource(R.string.settings_tooltip),
                                 positioning = TooltipAnchorPosition.Below,
                             )
@@ -94,7 +96,7 @@ fun NetworkListView(
                         onClick = { onAction(NetworkListViewModel.Action.Refresh) },
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.ic_refresh),
+                            imageVector = Refresh,
                             contentDescription = stringResource(R.string.refresh_description),
                         )
                     }

@@ -12,10 +12,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.toClipEntry
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import io.github.wifi_password_manager.R
+import io.github.wifi_password_manager.ui.icons.ContentCopy
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 import kotlinx.coroutines.launch
@@ -45,7 +45,7 @@ fun SetupInfoField(
                         clipboard.setClipEntry(ClipData.newPlainText(label, content).toClipEntry())
                     }
                 },
-                painter = painterResource(R.drawable.ic_content_copy),
+                imageVector = ContentCopy,
                 tooltip = stringResource(R.string.copy_action),
                 positioning = TooltipAnchorPosition.Above,
             )

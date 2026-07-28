@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -45,7 +44,7 @@ import io.github.wifi_password_manager.ui.shared.TooltipIconButton
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 import io.github.wifi_password_manager.utils.plus
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Action) -> Unit) {
     val uriHandler = LocalUriHandler.current
@@ -89,7 +88,6 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
 
                         ListItem(
                             onClick = { onAction(SettingViewModel.Action.ToggleMaterialYou(!state.settings.useMaterialYou)) },
-                            content = { Text(text = stringResource(R.string.material_you_title)) },
                             trailingContent = {
                                 Switch(
                                     checked = state.settings.useMaterialYou,
@@ -99,7 +97,9 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                                 )
                             },
                             shapes = UiConfig.listItemShapes(),
-                        )
+                        ) {
+                            Text(text = stringResource(R.string.material_you_title))
+                        }
                     }
                 }
             }
@@ -109,20 +109,22 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                 SettingSection(title = stringResource(R.string.import_export_section)) {
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ImportNetworks) },
-                        content = { Text(text = stringResource(R.string.import_action)) },
                         supportingContent = { Text(text = stringResource(R.string.import_description)) },
                         shapes = UiConfig.listItemShapes(),
                         enabled = state.mode.hasPrivilegedAccess,
-                    )
+                    ) {
+                        Text(text = stringResource(R.string.import_action))
+                    }
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
 
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ShowExportDialog) },
-                        content = { Text(text = stringResource(R.string.export_action)) },
                         supportingContent = { Text(text = stringResource(R.string.export_description)) },
                         shapes = UiConfig.listItemShapes(),
-                    )
+                    ) {
+                        Text(text = stringResource(R.string.export_action))
+                    }
                 }
             }
 
@@ -138,7 +140,6 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
 
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ToggleSecureScreen(!state.settings.secureScreenEnabled)) },
-                        content = { Text(text = stringResource(R.string.secure_screen_title)) },
                         supportingContent = { Text(text = stringResource(R.string.secure_screen_description)) },
                         trailingContent = {
                             Switch(
@@ -149,7 +150,9 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                             )
                         },
                         shapes = UiConfig.listItemShapes(),
-                    )
+                    ) {
+                        Text(text = stringResource(R.string.secure_screen_title))
+                    }
                 }
             }
 
@@ -158,7 +161,6 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                 SettingSection(title = stringResource(R.string.external_integration_section)) {
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ToggleAllowInsecureReceiver(!state.settings.allowInsecureReceiver)) },
-                        content = { Text(text = stringResource(R.string.allow_insecure_receiver_title)) },
                         supportingContent = { Text(text = stringResource(R.string.allow_insecure_receiver_description)) },
                         trailingContent = {
                             Switch(
@@ -169,7 +171,9 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                             )
                         },
                         shapes = UiConfig.listItemShapes(),
-                    )
+                    ) {
+                        Text(text = stringResource(R.string.allow_insecure_receiver_title))
+                    }
 
                     AnimatedVisibility(
                         visible = state.settings.allowInsecureReceiver,
@@ -181,9 +185,10 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
 
                             ListItem(
                                 onClick = { navBackStack.add(Route.ExportWifiSetupScreen) },
-                                content = { Text(text = stringResource(R.string.export_wifi_action)) },
                                 shapes = UiConfig.listItemShapes(),
-                            )
+                            ) {
+                                Text(text = stringResource(R.string.export_wifi_action))
+                            }
                         }
                     }
                 }
@@ -194,11 +199,12 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                 SettingSection(title = stringResource(R.string.advanced_section)) {
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ShowForgetAllDialog) },
-                        content = { Text(text = stringResource(R.string.forget_all_title)) },
                         supportingContent = { Text(text = stringResource(R.string.forget_all_description)) },
                         shapes = UiConfig.listItemShapes(),
                         enabled = state.mode.hasPrivilegedAccess,
-                    )
+                    ) {
+                        Text(text = stringResource(R.string.forget_all_title))
+                    }
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
 
@@ -206,7 +212,6 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                         onClick = {
                             onAction(SettingViewModel.Action.ToggleAutoPersistEphemeralNetworks(!state.settings.autoPersistEphemeralNetworks))
                         },
-                        content = { Text(text = stringResource(R.string.auto_persist_ephemeral_networks_title)) },
                         supportingContent = { Text(text = stringResource(R.string.auto_persist_ephemeral_networks_description)) },
                         trailingContent = {
                             Switch(
@@ -221,13 +226,14 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                             )
                         },
                         shapes = UiConfig.listItemShapes(),
-                    )
+                    ) {
+                        Text(text = stringResource(R.string.auto_persist_ephemeral_networks_title))
+                    }
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
 
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ToggleAllowCacheMode(!state.settings.allowCacheMode)) },
-                        content = { Text(text = stringResource(R.string.allow_cache_mode_title)) },
                         supportingContent = { Text(text = stringResource(R.string.allow_cache_mode_description)) },
                         trailingContent = {
                             Switch(
@@ -238,7 +244,9 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                             )
                         },
                         shapes = UiConfig.listItemShapes(),
-                    )
+                    ) {
+                        Text(text = stringResource(R.string.allow_cache_mode_title))
+                    }
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
 
@@ -251,37 +259,39 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                 SettingSection(title = stringResource(R.string.about_section)) {
                     ListItem(
                         onClick = { navBackStack.add(Route.LicenseScreen) },
-                        content = { Text(text = stringResource(R.string.license_title)) },
                         supportingContent = { Text(text = stringResource(R.string.license_description)) },
                         shapes = UiConfig.listItemShapes(),
-                    )
+                    ) {
+                        Text(text = stringResource(R.string.license_title))
+                    }
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
 
                     ListItem(
                         onClick = { uriHandler.openUri(BuildConfig.SOURCE_CODE_URL) },
-                        content = { Text(text = stringResource(R.string.source_code_title)) },
                         supportingContent = { Text(text = BuildConfig.SOURCE_CODE_URL) },
                         shapes = UiConfig.listItemShapes(),
-                    )
+                    ) {
+                        Text(text = stringResource(R.string.source_code_title))
+                    }
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
 
                     ListItem(
-                        onClick = {},
-                        content = { Text(text = stringResource(R.string.version_title)) },
                         supportingContent = { Text(text = BuildConfig.VERSION_NAME) },
                         shapes = UiConfig.listItemShapes(),
-                    )
+                    ) {
+                        Text(text = stringResource(R.string.version_title))
+                    }
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
 
                     ListItem(
-                        onClick = {},
-                        content = { Text(text = stringResource(R.string.build_type_title)) },
                         supportingContent = { Text(text = BuildConfig.BUILD_TYPE) },
                         shapes = UiConfig.listItemShapes(),
-                    )
+                    ) {
+                        Text(text = stringResource(R.string.build_type_title))
+                    }
                 }
             }
         }

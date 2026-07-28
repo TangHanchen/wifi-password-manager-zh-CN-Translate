@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -50,7 +49,6 @@ import rikka.shizuku.ShizukuProvider
 
 private const val REQUEST_CODE = 10001
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun NoAccessView(allowSkip: Boolean, onSkip: () -> Unit) {
     val privilegedManager = if (LocalInspectionMode.current) {

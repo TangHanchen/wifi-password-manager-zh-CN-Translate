@@ -8,7 +8,6 @@ import androidx.biometric.BiometricPrompt
 import androidx.biometric.compose.rememberAuthenticationLauncher
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Switch
@@ -34,7 +33,6 @@ import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 import io.github.wifi_password_manager.utils.isBiometricAuthenticationSupported
 import io.github.wifi_password_manager.utils.toast
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AppLockItem(
     modifier: Modifier = Modifier,
@@ -77,37 +75,25 @@ fun AppLockItem(
 
     ListItem(
         modifier = modifier,
-        onClick = {
-            if (isAvailable) {
-                handleToggle()
-            } else {
-                showDialog = true
-            }
-        },
-        content = { Text(text = stringResource(R.string.app_lock_title)) },
+        onClick = { if (isAvailable) handleToggle() else showDialog = true },
         supportingContent = { Text(text = stringResource(R.string.app_lock_description)) },
         trailingContent = {
             Switch(
                 checked = appLockEnabled && isAvailable,
-                onCheckedChange = {
-                    if (isAvailable) {
-                        handleToggle()
-                    } else {
-                        showDialog = true
-                    }
-                },
+                onCheckedChange = { if (isAvailable) handleToggle() else showDialog = true },
                 enabled = isAvailable,
             )
         },
         shapes = UiConfig.listItemShapes(),
-    )
+    ) {
+        Text(text = stringResource(R.string.app_lock_title))
+    }
 
     if (showDialog) {
         LockScreenRequiredDialog(onDismiss = { showDialog = false })
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun LockScreenRequiredDialog(onDismiss: () -> Unit) {
     val context = LocalContext.current

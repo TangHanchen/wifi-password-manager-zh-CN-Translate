@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -43,7 +42,7 @@ import io.github.wifi_password_manager.utils.DeviceConfiguration
 import io.github.wifi_password_manager.utils.MOCK
 import io.github.wifi_password_manager.utils.plus
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteView(network: WifiNetwork, state: String, onAction: (NoteViewModel.Action) -> Unit) {
     val focusManager = LocalFocusManager.current

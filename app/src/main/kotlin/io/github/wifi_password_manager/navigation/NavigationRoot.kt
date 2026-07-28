@@ -59,13 +59,3 @@ fun NavigationRoot(modifier: Modifier = Modifier) {
 }
 
 val LocalNavBackStack = compositionLocalOf { NavBackStack<NavKey>() }
-
-fun NavBackStack<NavKey>.addOrReplace(element: NavKey) {
-    val index = lastIndexOf(element)
-
-    if (index != -1) {
-        this[index] = element
-    } else {
-        add(element)
-    }
-}

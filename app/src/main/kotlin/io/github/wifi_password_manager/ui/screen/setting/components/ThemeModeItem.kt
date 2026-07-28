@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.ModalBottomSheet
@@ -24,18 +23,18 @@ import io.github.wifi_password_manager.domain.model.Settings
 import io.github.wifi_password_manager.ui.UiConfig
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ThemeModeItem(themeMode: Settings.ThemeMode, onThemeModeChange: (Settings.ThemeMode) -> Unit) {
     var showBottomSheet by retain { mutableStateOf(false) }
 
     ListItem(
         onClick = { showBottomSheet = true },
-        content = { Text(text = stringResource(R.string.app_theme_title)) },
         supportingContent = { Text(text = stringResource(R.string.app_theme_description)) },
         trailingContent = { Text(text = stringResource(themeMode.resId)) },
         shapes = UiConfig.listItemShapes(),
-    )
+    ) {
+        Text(text = stringResource(R.string.app_theme_title))
+    }
 
     if (showBottomSheet) {
         ThemeModeSelectionSheet(
@@ -46,7 +45,7 @@ fun ThemeModeItem(themeMode: Settings.ThemeMode, onThemeModeChange: (Settings.Th
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ThemeModeSelectionSheet(
     onDismiss: () -> Unit,
@@ -60,9 +59,10 @@ private fun ThemeModeSelectionSheet(
                     onClick = { onThemeModeChange(it) },
                     selected = it == themeMode,
                     leadingContent = { RadioButton(selected = it == themeMode, onClick = null) },
-                    content = { Text(text = stringResource(it.resId)) },
                     colors = ListItemDefaults.colors(containerColor = BottomSheetDefaults.ContainerColor),
-                )
+                ) {
+                    Text(text = stringResource(it.resId))
+                }
             }
         }
     }

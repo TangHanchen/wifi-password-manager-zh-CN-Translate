@@ -16,7 +16,6 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -108,7 +107,7 @@ private fun Separator(modifier: Modifier = Modifier, connected: Boolean = false)
     )
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SSIDItem(
     modifier: Modifier = Modifier,
@@ -123,14 +122,6 @@ private fun SSIDItem(
 
     ListItem(
         modifier = modifier,
-        headlineContent = {
-            Text(
-                text = network.ssid,
-                style = MaterialTheme.typography.titleMedium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        },
         supportingContent = { Text(text = network.getSecurity(context)) },
         trailingContent = {
             TooltipIconButton(
@@ -210,10 +201,16 @@ private fun SSIDItem(
             }
         },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-    )
+    ) {
+        Text(
+            text = network.ssid,
+            style = MaterialTheme.typography.titleMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun PasswordItem(modifier: Modifier = Modifier, network: WifiNetwork) {
     var obscured by retain { mutableStateOf(true) }
@@ -237,12 +234,6 @@ private fun PasswordItem(modifier: Modifier = Modifier, network: WifiNetwork) {
 
     ListItem(
         modifier = modifier,
-        headlineContent = {
-            Text(
-                text = stringResource(R.string.password_label),
-                style = MaterialTheme.typography.titleMedium,
-            )
-        },
         supportingContent = {
             if (network.password.isNotEmpty()) {
                 Text(
@@ -260,24 +251,28 @@ private fun PasswordItem(modifier: Modifier = Modifier, network: WifiNetwork) {
         },
         trailingContent = trailingContent.takeIf { network.password.isNotEmpty() },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-    )
+    ) {
+        Text(
+            text = stringResource(R.string.password_label),
+            style = MaterialTheme.typography.titleMedium,
+        )
+    }
 }
 
 @Composable
 private fun NoteItem(modifier: Modifier = Modifier, network: WifiNetwork) {
     ListItem(
         modifier = modifier,
-        headlineContent = {
-            Text(
-                text = stringResource(R.string.note_label),
-                style = MaterialTheme.typography.titleMedium,
-            )
-        },
         supportingContent = {
             Text(text = network.note.orEmpty(), maxLines = 3, overflow = TextOverflow.Ellipsis)
         },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-    )
+    ) {
+        Text(
+            text = stringResource(R.string.note_label),
+            style = MaterialTheme.typography.titleMedium,
+        )
+    }
 }
 
 @PreviewLightDark

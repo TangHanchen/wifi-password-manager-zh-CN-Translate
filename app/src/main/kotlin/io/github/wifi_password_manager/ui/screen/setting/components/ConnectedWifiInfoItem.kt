@@ -13,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -43,7 +42,6 @@ private enum class ConnectedWifiInfoStatus {
     ACTIVE, PERMISSION_REQUIRED, LOCATION_DISABLED,
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ConnectedWifiInfoItem(modifier: Modifier = Modifier, mode: PrivilegedMode) {
     val context = LocalContext.current
@@ -92,8 +90,6 @@ fun ConnectedWifiInfoItem(modifier: Modifier = Modifier, mode: PrivilegedMode) {
 
     ListItem(
         modifier = modifier,
-        onClick = {},
-        content = { Text(text = stringResource(R.string.show_connected_wifi)) },
         supportingContent = {
             Text(
                 text = when (status) {
@@ -146,7 +142,9 @@ fun ConnectedWifiInfoItem(modifier: Modifier = Modifier, mode: PrivilegedMode) {
             }
         },
         shapes = UiConfig.listItemShapes(),
-    )
+    ) {
+        Text(text = stringResource(R.string.show_connected_wifi))
+    }
 }
 
 @PreviewLightDark

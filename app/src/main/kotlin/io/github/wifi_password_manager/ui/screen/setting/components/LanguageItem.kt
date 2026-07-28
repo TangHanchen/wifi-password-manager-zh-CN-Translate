@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.ModalBottomSheet
@@ -24,18 +23,18 @@ import io.github.wifi_password_manager.domain.model.Settings
 import io.github.wifi_password_manager.ui.UiConfig
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun LanguageItem(language: Settings.Language, onLanguageChange: (Settings.Language) -> Unit) {
     var showBottomSheet by retain { mutableStateOf(false) }
 
     ListItem(
         onClick = { showBottomSheet = true },
-        content = { Text(text = stringResource(R.string.language_title)) },
         supportingContent = { Text(text = stringResource(R.string.language_description)) },
         trailingContent = { Text(text = language.displayName) },
         shapes = UiConfig.listItemShapes(),
-    )
+    ) {
+        Text(text = stringResource(R.string.language_title))
+    }
 
     if (showBottomSheet) {
         LanguageSelectionSheet(
@@ -46,7 +45,7 @@ fun LanguageItem(language: Settings.Language, onLanguageChange: (Settings.Langua
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun LanguageSelectionSheet(
     onDismiss: () -> Unit,
@@ -60,9 +59,10 @@ private fun LanguageSelectionSheet(
                     onClick = { onLanguageChange(it) },
                     selected = it == language,
                     leadingContent = { RadioButton(selected = it == language, onClick = null) },
-                    content = { Text(text = it.displayName) },
                     colors = ListItemDefaults.colors(containerColor = BottomSheetDefaults.ContainerColor),
-                )
+                ) {
+                    Text(text = it.displayName)
+                }
             }
         }
     }

@@ -90,11 +90,14 @@ android {
 }
 
 composeCompiler {
-    stabilityConfigurationFiles.addAll(
-        rootProject.layout.projectDirectory.file("stability_config.conf")
-    )
+    stabilityConfigurationFiles.addAll(rootProject.layout.projectDirectory.file("stability_config.conf"))
     reportsDestination = layout.buildDirectory.dir("compose_compiler")
     metricsDestination = layout.buildDirectory.dir("compose_compiler")
+}
+
+composeStabilityAnalyzer {
+    stabilityConfigurationFiles.addAll(rootProject.layout.projectDirectory.file("stability_config.conf"))
+    stabilityValidation { outputDir = layout.buildDirectory.dir("stability") }
 }
 
 dependencies {

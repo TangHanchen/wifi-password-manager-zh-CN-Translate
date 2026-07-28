@@ -10,7 +10,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -35,7 +34,7 @@ import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.ExportOption
 import io.github.wifi_password_manager.ui.theme.WiFiPasswordManagerTheme
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExportDialog(
     modifier: Modifier = Modifier,
@@ -93,12 +92,13 @@ fun ExportDialog(
                 ListItem(
                     checked = encrypted,
                     onCheckedChange = { encrypted = it },
-                    content = { Text(text = stringResource(R.string.encrypt_export)) },
                     leadingContent = {
                         Checkbox(checked = encrypted, onCheckedChange = { encrypted = it })
                     },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                )
+                ) {
+                    Text(text = stringResource(R.string.encrypt_export))
+                }
 
                 AnimatedVisibility(visible = encrypted, modifier = Modifier.fillMaxWidth()) {
                     PasswordTextField(

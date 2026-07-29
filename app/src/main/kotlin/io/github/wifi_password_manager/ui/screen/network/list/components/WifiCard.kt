@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.wifi_password_manager.R
+import io.github.wifi_password_manager.domain.model.LocalSettings
 import io.github.wifi_password_manager.domain.model.WifiNetwork
 import io.github.wifi_password_manager.navigation.LocalNavBackStack
 import io.github.wifi_password_manager.navigation.Route
@@ -218,7 +219,8 @@ private fun SSIDItem(
 
 @Composable
 private fun PasswordItem(modifier: Modifier = Modifier, network: WifiNetwork) {
-    var obscured by retain { mutableStateOf(true) }
+    val plaintextPasswords = LocalSettings.current.plaintextPasswords
+    var obscured by retain { mutableStateOf(!plaintextPasswords) }
 
     val trailingContent = @Composable {
         val clipboard = LocalClipboard.current
@@ -247,7 +249,9 @@ private fun PasswordItem(modifier: Modifier = Modifier, network: WifiNetwork) {
                     } else {
                         network.password
                     },
-                    modifier = Modifier.clickable { obscured = !obscured },
+                    modifier = Modifier.clickable(enabled = !plaintextPasswords) {
+                        obscured = !obscured
+                    },
                     letterSpacing = if (obscured) 2.sp else TextUnit.Unspecified,
                 )
             } else {

@@ -87,6 +87,8 @@
     <string name="advanced_section">詳細設定</string>
     <string name="forget_all_title">すべてのネットワークを削除</string>
     <string name="forget_all_description">このデバイスから保存済みWiFiネットワークをすべて削除する</string>
+    <string name="plaintext_passwords_title">パスワードをプレーンテキストで表示</string>
+    <string name="plaintext_passwords_description">WiFiパスワードをプレーンテキストで表示します</string>
     <string name="auto_persist_ephemeral_networks_title">一時ネットワークを自動保存</string>
     <string name="auto_persist_ephemeral_networks_description">切断後に削除される一時ネットワークを自動的に保存します（切断が発生することがあります）</string>
     <string name="allow_cache_mode_title">キャッシュモードを許可</string>
@@ -171,6 +173,7 @@
     <string name="app_lock_permanently_locked">生体認証がロックされています。デバイスの認証情報を使用してください。</string>
     <string name="app_lock_authentication_failed">認証に失敗しました。</string>
     <string name="app_lock_disabled">画面ロックが削除されました。アプリロックが無効になりました。</string>
+    <string name="require_secure_screen">セキュア画面が必要</string>
 
     <!-- Connected WiFi Info -->
     <string name="show_connected_wifi">接続中のWiFiを表示</string>

@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -15,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import io.github.vinceglb.filekit.FileKit
 import io.github.vinceglb.filekit.dialogs.init
+import io.github.wifi_password_manager.domain.model.LocalSettings
 import io.github.wifi_password_manager.domain.model.PrivilegedMode
 import io.github.wifi_password_manager.domain.repository.SettingRepository
 import io.github.wifi_password_manager.manager.PrivilegedManager
@@ -57,24 +59,26 @@ class MainActivity : AppCompatActivity() {
             val isAuthenticated by viewModel.isAuthenticated.collectAsStateWithLifecycle()
             val skipPrivilegedCheck by viewModel.skipPrivilegedCheck.collectAsStateWithLifecycle()
 
-            WiFiPasswordManagerTheme(
-                darkTheme = settings.themeMode.isDark,
-                dynamicColor = settings.useMaterialYou,
-            ) {
-                when {
-                    settings.appLockEnabled && !isAuthenticated -> {
-                        LockView(viewModel::onAuthenticated)
-                    }
+            CompositionLocalProvider(LocalSettings provides settings) {
+                WiFiPasswordManagerTheme(
+                    darkTheme = settings.themeMode.isDark,
+                    dynamicColor = settings.useMaterialYou,
+                ) {
+                    when {
+                        settings.appLockEnabled && !isAuthenticated -> {
+                            LockView(viewModel::onAuthenticated)
+                        }
 
-                    privilegedMode.hasPrivilegedAccess || (privilegedMode == PrivilegedMode.NONE && skipPrivilegedCheck) -> {
-                        NavigationRoot()
-                    }
+                        privilegedMode.hasPrivilegedAccess || (privilegedMode == PrivilegedMode.NONE && skipPrivilegedCheck) -> {
+                            NavigationRoot()
+                        }
 
-                    else -> {
-                        NoAccessView(
-                            allowSkip = settings.allowCacheMode,
-                            onSkip = viewModel::onSkipPrivilegedCheck,
-                        )
+                        else -> {
+                            NoAccessView(
+                                allowSkip = settings.allowCacheMode,
+                                onSkip = viewModel::onSkipPrivilegedCheck,
+                            )
+                        }
                     }
                 }
             }

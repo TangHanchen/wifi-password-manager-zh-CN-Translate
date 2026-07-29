@@ -60,7 +60,6 @@ class SettingViewModel(
 
     @Immutable
     data class State(
-        val settings: Settings = Settings(),
         val isLoading: Boolean = false,
         val showForgetAllDialog: Boolean = false,
         val showExportDialog: Boolean = false,
@@ -78,6 +77,8 @@ class SettingViewModel(
         data class ToggleAppLock(val value: Boolean) : Action
 
         data class ToggleSecureScreen(val value: Boolean) : Action
+
+        data class TogglePlaintextPasswords(val value: Boolean) : Action
 
         data class ToggleAutoPersistEphemeralNetworks(val value: Boolean) : Action
 
@@ -118,16 +119,14 @@ class SettingViewModel(
         _showForgetAllDialog,
         _showExportDialog,
         _showImportPasswordDialog,
-        settingRepository.settings,
         privilegedManager.mode
-    ) { args ->
+    ) { isLoading, showForgetAllDialog, showExportDialog, showImportPasswordDialog, mode ->
         State(
-            isLoading = args[0] as Boolean,
-            showForgetAllDialog = args[1] as Boolean,
-            showExportDialog = args[2] as Boolean,
-            showImportPasswordDialog = args[3] as Boolean,
-            settings = args[4] as Settings,
-            mode = args[5] as PrivilegedMode
+            isLoading = isLoading,
+            showForgetAllDialog = showForgetAllDialog,
+            showExportDialog = showExportDialog,
+            showImportPasswordDialog = showImportPasswordDialog,
+            mode = mode,
         )
     }.stateIn(
         scope = viewModelScope,
@@ -149,6 +148,7 @@ class SettingViewModel(
             is Action.ToggleMaterialYou -> onToggleMaterialYou(action.value)
             is Action.ToggleAppLock -> onToggleAppLock(action.value)
             is Action.ToggleSecureScreen -> onToggleSecureScreen(action.value)
+            is Action.TogglePlaintextPasswords -> onTogglePlaintextPasswords(action.value)
             is Action.ToggleAutoPersistEphemeralNetworks -> onToggleAutoPersistEphemeralNetworks(
                 action.value
             )
@@ -186,7 +186,15 @@ class SettingViewModel(
     }
 
     private fun onToggleSecureScreen(value: Boolean) {
-        viewModelScope.launch { settingRepository.updateSettings { it.copy(secureScreenEnabled = value) } }
+        viewModelScope.launch {
+            settingRepository.updateSettings {
+                it.copy(secureScreenEnabled = value, plaintextPasswords = false)
+            }
+        }
+    }
+
+    private fun onTogglePlaintextPasswords(value: Boolean) {
+        viewModelScope.launch { settingRepository.updateSettings { it.copy(plaintextPasswords = value) } }
     }
 
     private fun onToggleAutoPersistEphemeralNetworks(value: Boolean) {

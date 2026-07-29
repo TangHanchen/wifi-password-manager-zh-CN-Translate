@@ -87,6 +87,8 @@
     <string name="advanced_section">Дополнительно</string>
     <string name="forget_all_title">Забыть все сети</string>
     <string name="forget_all_description">Удалить все сохранённые сети WiFi с этого устройства</string>
+    <string name="plaintext_passwords_title">Показывать пароли в открытом виде</string>
+    <string name="plaintext_passwords_description">Отображать пароли WiFi в открытом виде</string>
     <string name="auto_persist_ephemeral_networks_title">Автосохранение временных сетей</string>
     <string name="auto_persist_ephemeral_networks_description">Автоматически сохранять временные сети, которые иначе были бы забыты после отключения (может вызвать разрывы соединения)</string>
     <string name="allow_cache_mode_title">Разрешить режим кэширования</string>
@@ -171,6 +173,7 @@
     <string name="app_lock_permanently_locked">Биометрия заблокирована. Используйте пароль устройства.</string>
     <string name="app_lock_authentication_failed">Ошибка аутентификации.</string>
     <string name="app_lock_disabled">Блокировка экрана удалена. Блокировка приложения отключена.</string>
+    <string name="require_secure_screen">Требуется защита экрана</string>
 
     <!-- Connected WiFi Info -->
     <string name="show_connected_wifi">Показать подключённый WiFi</string>

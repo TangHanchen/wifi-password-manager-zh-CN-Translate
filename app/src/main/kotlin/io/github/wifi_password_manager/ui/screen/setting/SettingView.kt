@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import io.github.wifi_password_manager.BuildConfig
 import io.github.wifi_password_manager.R
+import io.github.wifi_password_manager.domain.model.LocalSettings
 import io.github.wifi_password_manager.navigation.LocalNavBackStack
 import io.github.wifi_password_manager.navigation.Route
 import io.github.wifi_password_manager.ui.UiConfig
@@ -35,6 +36,7 @@ import io.github.wifi_password_manager.ui.screen.setting.components.ExportDialog
 import io.github.wifi_password_manager.ui.screen.setting.components.ForgetAllConfirmDialog
 import io.github.wifi_password_manager.ui.screen.setting.components.ImportPasswordDialog
 import io.github.wifi_password_manager.ui.screen.setting.components.LanguageItem
+import io.github.wifi_password_manager.ui.screen.setting.components.PlaintextPasswordsItem
 import io.github.wifi_password_manager.ui.screen.setting.components.SettingSection
 import io.github.wifi_password_manager.ui.screen.setting.components.ThemeModeItem
 import io.github.wifi_password_manager.ui.shared.BackButton
@@ -46,6 +48,7 @@ import io.github.wifi_password_manager.utils.plus
 fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Action) -> Unit) {
     val uriHandler = LocalUriHandler.current
     val navBackStack = LocalNavBackStack.current
+    val settings = LocalSettings.current
 
     Scaffold(
         topBar = {
@@ -63,13 +66,13 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
             // Appearance Section
             item {
                 SettingSection(title = stringResource(R.string.appearance_section)) {
-                    LanguageItem(language = state.settings.language) {
+                    LanguageItem(language = settings.language) {
                         onAction(SettingViewModel.Action.UpdateLanguage(it))
                     }
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
 
-                    ThemeModeItem(themeMode = state.settings.themeMode) {
+                    ThemeModeItem(themeMode = settings.themeMode) {
                         onAction(SettingViewModel.Action.UpdateThemeMode(it))
                     }
 
@@ -77,10 +80,10 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                         HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
 
                         ListItem(
-                            onClick = { onAction(SettingViewModel.Action.ToggleMaterialYou(!state.settings.useMaterialYou)) },
+                            onClick = { onAction(SettingViewModel.Action.ToggleMaterialYou(!settings.useMaterialYou)) },
                             trailingContent = {
                                 Switch(
-                                    checked = state.settings.useMaterialYou,
+                                    checked = settings.useMaterialYou,
                                     onCheckedChange = {
                                         onAction(SettingViewModel.Action.ToggleMaterialYou(it))
                                     },
@@ -122,18 +125,18 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
             item {
                 SettingSection(title = stringResource(R.string.security_section)) {
                     AppLockItem(
-                        appLockEnabled = state.settings.appLockEnabled,
+                        appLockEnabled = settings.appLockEnabled,
                         onToggleAppLock = { onAction(SettingViewModel.Action.ToggleAppLock(it)) },
                     )
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
 
                     ListItem(
-                        onClick = { onAction(SettingViewModel.Action.ToggleSecureScreen(!state.settings.secureScreenEnabled)) },
+                        onClick = { onAction(SettingViewModel.Action.ToggleSecureScreen(!settings.secureScreenEnabled)) },
                         supportingContent = { Text(text = stringResource(R.string.secure_screen_description)) },
                         trailingContent = {
                             Switch(
-                                checked = state.settings.secureScreenEnabled,
+                                checked = settings.secureScreenEnabled,
                                 onCheckedChange = {
                                     onAction(SettingViewModel.Action.ToggleSecureScreen(it))
                                 },
@@ -143,6 +146,16 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                     ) {
                         Text(text = stringResource(R.string.secure_screen_title))
                     }
+
+                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+
+                    PlaintextPasswordsItem(
+                        enabled = settings.secureScreenEnabled,
+                        value = settings.plaintextPasswords,
+                        onValueChange = {
+                            onAction(SettingViewModel.Action.TogglePlaintextPasswords(it))
+                        },
+                    )
                 }
             }
 
@@ -150,11 +163,11 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
             item {
                 SettingSection(title = stringResource(R.string.external_integration_section)) {
                     ListItem(
-                        onClick = { onAction(SettingViewModel.Action.ToggleAllowInsecureReceiver(!state.settings.allowInsecureReceiver)) },
+                        onClick = { onAction(SettingViewModel.Action.ToggleAllowInsecureReceiver(!settings.allowInsecureReceiver)) },
                         supportingContent = { Text(text = stringResource(R.string.allow_insecure_receiver_description)) },
                         trailingContent = {
                             Switch(
-                                checked = state.settings.allowInsecureReceiver,
+                                checked = settings.allowInsecureReceiver,
                                 onCheckedChange = {
                                     onAction(SettingViewModel.Action.ToggleAllowInsecureReceiver(it))
                                 },
@@ -166,7 +179,7 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                     }
 
                     AnimatedVisibility(
-                        visible = state.settings.allowInsecureReceiver,
+                        visible = settings.allowInsecureReceiver,
                         enter = fadeIn() + expandVertically(),
                         exit = fadeOut() + shrinkVertically(),
                     ) {
@@ -200,12 +213,12 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
 
                     ListItem(
                         onClick = {
-                            onAction(SettingViewModel.Action.ToggleAutoPersistEphemeralNetworks(!state.settings.autoPersistEphemeralNetworks))
+                            onAction(SettingViewModel.Action.ToggleAutoPersistEphemeralNetworks(!settings.autoPersistEphemeralNetworks))
                         },
                         supportingContent = { Text(text = stringResource(R.string.auto_persist_ephemeral_networks_description)) },
                         trailingContent = {
                             Switch(
-                                checked = state.settings.autoPersistEphemeralNetworks,
+                                checked = settings.autoPersistEphemeralNetworks,
                                 onCheckedChange = {
                                     onAction(
                                         SettingViewModel.Action.ToggleAutoPersistEphemeralNetworks(
@@ -223,11 +236,11 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                     HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
 
                     ListItem(
-                        onClick = { onAction(SettingViewModel.Action.ToggleAllowCacheMode(!state.settings.allowCacheMode)) },
+                        onClick = { onAction(SettingViewModel.Action.ToggleAllowCacheMode(!settings.allowCacheMode)) },
                         supportingContent = { Text(text = stringResource(R.string.allow_cache_mode_description)) },
                         trailingContent = {
                             Switch(
-                                checked = state.settings.allowCacheMode,
+                                checked = settings.allowCacheMode,
                                 onCheckedChange = {
                                     onAction(SettingViewModel.Action.ToggleAllowCacheMode(it))
                                 },

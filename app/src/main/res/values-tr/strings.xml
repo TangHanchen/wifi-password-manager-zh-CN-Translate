@@ -87,6 +87,8 @@
     <string name="advanced_section">Gelişmiş</string>
     <string name="forget_all_title">Tüm ağları unut</string>
     <string name="forget_all_description">Bu cihazdan kaydedilmiş tüm WiFi ağlarını kaldırır</string>
+    <string name="plaintext_passwords_title">Düz Metin Şifreleri Göster</string>
+    <string name="plaintext_passwords_description">WiFi şifrelerini düz metin şeklinde görüntüle</string>
     <string name="auto_persist_ephemeral_networks_title">Geçici ağları otomatik hatırla</string>
     <string name="auto_persist_ephemeral_networks_description">Bağlantı kesildikten sonra unutulabilecek geçici ağları otomatik olarak kaydedin (bağlantı kesintilerine neden olabilir)</string>
     <string name="allow_cache_mode_title">Önbellek moduna izin ver</string>
@@ -171,6 +173,7 @@
     <string name="app_lock_permanently_locked">Biyometrik kilit aktif. Cihaz kimlik bilgilerini kullanın.</string>
     <string name="app_lock_authentication_failed">Kimlik doğrulama başarısız.</string>
     <string name="app_lock_disabled">Ekran kilidi kaldırıldı. Uygulama kilidi devre dışı bırakıldı.</string>
+    <string name="require_secure_screen">Güvenli Ekran Gereklidir</string>
 
     <!-- Connected WiFi Info -->
     <string name="show_connected_wifi">Bağlı WiFi\'yi Göster</string>

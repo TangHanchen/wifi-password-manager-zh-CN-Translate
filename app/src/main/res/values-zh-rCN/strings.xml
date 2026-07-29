@@ -87,6 +87,8 @@
     <string name="advanced_section">高级</string>
     <string name="forget_all_title">忘记所有网络</string>
     <string name="forget_all_description">从本设备移除所有已保存的 WiFi 网络</string>
+    <string name="plaintext_passwords_title">显示明文密码</string>
+    <string name="plaintext_passwords_description">以明文显示 WiFi 密码</string>
     <string name="auto_persist_ephemeral_networks_title">自动保留临时网络</string>
     <string name="auto_persist_ephemeral_networks_description">自动保存临时网络，使其不会在断开连接后被忘记（可能导致断连）</string>
     <string name="allow_cache_mode_title">允许缓存模式</string>
@@ -171,6 +173,7 @@
     <string name="app_lock_permanently_locked">生物识别已锁定，请使用设备凭据。</string>
     <string name="app_lock_authentication_failed">身份验证失败。</string>
     <string name="app_lock_disabled">屏幕锁已被移除，应用锁定已禁用。</string>
+    <string name="require_secure_screen">需要安全屏幕</string>
 
     <!-- Connected WiFi Info -->
     <string name="show_connected_wifi">显示已连接的 WiFi</string>

@@ -5,6 +5,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.compositionLocalOf
 import io.github.wifi_password_manager.R
 import kotlinx.serialization.Serializable
 
@@ -19,6 +20,7 @@ data class Settings(
     val secureScreenEnabled: Boolean = false,
     val allowCacheMode: Boolean = false,
     val allowInsecureReceiver: Boolean = false,
+    val plaintextPasswords: Boolean = false,
 ) {
     @Serializable
     enum class ThemeMode {
@@ -62,3 +64,5 @@ data class Settings(
             }
     }
 }
+
+val LocalSettings = compositionLocalOf { Settings() }

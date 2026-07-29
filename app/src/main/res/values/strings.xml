@@ -87,6 +87,8 @@
     <string name="advanced_section">Advanced</string>
     <string name="forget_all_title">Forget all networks</string>
     <string name="forget_all_description">Remove all saved WiFi networks from this device</string>
+    <string name="plaintext_passwords_title">Show Plaintext Passwords</string>
+    <string name="plaintext_passwords_description">Display WiFi passwords in plaintext</string>
     <string name="auto_persist_ephemeral_networks_title">Auto persist ephemeral networks</string>
     <string name="auto_persist_ephemeral_networks_description">Automatically save temporary networks that would otherwise be forgotten after disconnecting (may cause disconnects)</string>
     <string name="allow_cache_mode_title">Allow cache mode</string>
@@ -171,6 +173,7 @@
     <string name="app_lock_permanently_locked">Biometric locked. Use device credentials.</string>
     <string name="app_lock_authentication_failed">Authentication failed.</string>
     <string name="app_lock_disabled">Screen lock was removed. App Lock has been disabled.</string>
+    <string name="require_secure_screen">Secure Screen Required</string>
 
     <!-- Connected WiFi Info -->
     <string name="show_connected_wifi">Show Connected Wifi</string>

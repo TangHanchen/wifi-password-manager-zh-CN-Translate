@@ -19,7 +19,7 @@
         android:localeConfig="@xml/locales_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/Theme.Splash"
-        tools:targetApi="BAKLAVA">
+        tools:targetApi="CINNAMON_BUN">
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -30,6 +30,12 @@ import io.github.wifi_password_manager.domain.model.LocalSettings
 import io.github.wifi_password_manager.navigation.LocalNavBackStack
 import io.github.wifi_password_manager.navigation.Route
 import io.github.wifi_password_manager.ui.UiConfig
+import io.github.wifi_password_manager.ui.icons.Info
+import io.github.wifi_password_manager.ui.icons.IntegrationInstructions
+import io.github.wifi_password_manager.ui.icons.Palette
+import io.github.wifi_password_manager.ui.icons.Security
+import io.github.wifi_password_manager.ui.icons.SwapVert
+import io.github.wifi_password_manager.ui.icons.Tune
 import io.github.wifi_password_manager.ui.screen.setting.components.AppLockItem
 import io.github.wifi_password_manager.ui.screen.setting.components.ConnectedWifiInfoItem
 import io.github.wifi_password_manager.ui.screen.setting.components.ExportDialog
@@ -65,7 +71,10 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
         ) {
             // Appearance Section
             item {
-                SettingSection(title = stringResource(R.string.appearance_section)) {
+                SettingSection(
+                    imageVector = Palette,
+                    title = stringResource(R.string.appearance_section),
+                ) {
                     LanguageItem(language = settings.language) {
                         onAction(SettingViewModel.Action.UpdateLanguage(it))
                     }
@@ -99,7 +108,10 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
 
             // Import & Export Section
             item {
-                SettingSection(title = stringResource(R.string.import_export_section)) {
+                SettingSection(
+                    imageVector = SwapVert,
+                    title = stringResource(R.string.import_export_section),
+                ) {
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ImportNetworks) },
                         supportingContent = { Text(text = stringResource(R.string.import_description)) },
@@ -123,7 +135,10 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
 
             // Security Section
             item {
-                SettingSection(title = stringResource(R.string.security_section)) {
+                SettingSection(
+                    imageVector = Security,
+                    title = stringResource(R.string.security_section),
+                ) {
                     AppLockItem(
                         appLockEnabled = settings.appLockEnabled,
                         onToggleAppLock = { onAction(SettingViewModel.Action.ToggleAppLock(it)) },
@@ -161,7 +176,10 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
 
             // External Integration Section
             item {
-                SettingSection(title = stringResource(R.string.external_integration_section)) {
+                SettingSection(
+                    imageVector = IntegrationInstructions,
+                    title = stringResource(R.string.external_integration_section),
+                ) {
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ToggleAllowInsecureReceiver(!settings.allowInsecureReceiver)) },
                         supportingContent = { Text(text = stringResource(R.string.allow_insecure_receiver_description)) },
@@ -199,7 +217,10 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
 
             // Advanced Section
             item {
-                SettingSection(title = stringResource(R.string.advanced_section)) {
+                SettingSection(
+                    imageVector = Tune,
+                    title = stringResource(R.string.advanced_section),
+                ) {
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ShowForgetAllDialog) },
                         supportingContent = { Text(text = stringResource(R.string.forget_all_description)) },
@@ -259,7 +280,10 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
 
             // About Section
             item {
-                SettingSection(title = stringResource(R.string.about_section)) {
+                SettingSection(
+                    imageVector = Info,
+                    title = stringResource(R.string.about_section),
+                ) {
                     ListItem(
                         onClick = { navBackStack.add(Route.LicenseScreen) },
                         supportingContent = { Text(text = stringResource(R.string.license_description)) },

@@ -7,14 +7,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -75,12 +74,12 @@ fun WifiCard(
     val navBackStack = LocalNavBackStack.current
     var optionState by remember { mutableStateOf<OptionState?>(null) }
 
-    ElevatedCard(
+    Card(
         modifier = modifier,
         colors = if (connected) {
-            CardDefaults.elevatedCardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+            CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
         } else {
-            CardDefaults.elevatedCardColors()
+            CardDefaults.cardColors()
         },
     ) {
         SSIDItem(network = network, onOptionStateChange = { optionState = it }, onAction = onAction)
@@ -109,7 +108,7 @@ fun WifiCard(
 private fun Separator(modifier: Modifier = Modifier, connected: Boolean = false) {
     HorizontalDivider(
         modifier = modifier.padding(horizontal = 16.dp),
-        color = if (connected) MaterialTheme.colorScheme.onSurface else DividerDefaults.color,
+        color = if (connected) MaterialTheme.colorScheme.onPrimaryContainer else ListItemDefaults.colors().supportingContentColor,
     )
 }
 
@@ -292,7 +291,13 @@ private fun WifiCardPreview() {
         contentPadding = PaddingValues(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(WifiNetwork.MOCK) { WifiCard(network = it, onAction = {}) }
+        itemsIndexed(WifiNetwork.MOCK) { index, network ->
+            WifiCard(
+                network = network,
+                connected = index == 0,
+                onAction = {},
+            )
+        }
     }
 }
 
@@ -304,6 +309,13 @@ private fun ExpandedWifiCardPreview() {
         contentPadding = PaddingValues(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(WifiNetwork.MOCK) { WifiCard(network = it, expanded = true, onAction = {}) }
+        itemsIndexed(WifiNetwork.MOCK) { index, network ->
+            WifiCard(
+                network = network,
+                connected = index == 0,
+                expanded = true,
+                onAction = {},
+            )
+        }
     }
 }

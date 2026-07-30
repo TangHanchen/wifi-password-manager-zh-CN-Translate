@@ -51,6 +51,8 @@
     <string name="app_theme_title">Тема приложения</string>
     <string name="app_theme_description">Изменить внешний вид приложения</string>
     <string name="material_you_title">Material You</string>
+    <string name="pure_black_theme_title">Чёрная тема</string>
+    <string name="pure_black_theme_description">Использовать чисто чёрный фон в тёмной теме</string>
 
     <!-- Import & Export Section -->
     <string name="import_export_section">Импорт и экспорт</string>

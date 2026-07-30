@@ -74,6 +74,8 @@ class SettingViewModel(
 
         data class ToggleMaterialYou(val value: Boolean) : Action
 
+        data class TogglePureBlackTheme(val value: Boolean) : Action
+
         data class ToggleAppLock(val value: Boolean) : Action
 
         data class ToggleSecureScreen(val value: Boolean) : Action
@@ -146,6 +148,7 @@ class SettingViewModel(
             is Action.UpdateLanguage -> onUpdateLanguage(action.language)
             is Action.UpdateThemeMode -> onUpdateThemeMode(action.themeMode)
             is Action.ToggleMaterialYou -> onToggleMaterialYou(action.value)
+            is Action.TogglePureBlackTheme -> onTogglePureBlackTheme(action.value)
             is Action.ToggleAppLock -> onToggleAppLock(action.value)
             is Action.ToggleSecureScreen -> onToggleSecureScreen(action.value)
             is Action.TogglePlaintextPasswords -> onTogglePlaintextPasswords(action.value)
@@ -179,6 +182,10 @@ class SettingViewModel(
 
     private fun onToggleMaterialYou(value: Boolean) {
         viewModelScope.launch { settingRepository.updateSettings { it.copy(useMaterialYou = value) } }
+    }
+
+    private fun onTogglePureBlackTheme(value: Boolean) {
+        viewModelScope.launch { settingRepository.updateSettings { it.copy(pureBlackTheme = value) } }
     }
 
     private fun onToggleAppLock(value: Boolean) {

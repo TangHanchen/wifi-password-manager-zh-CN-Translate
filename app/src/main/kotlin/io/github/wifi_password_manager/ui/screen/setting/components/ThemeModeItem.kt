@@ -8,6 +8,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.Settings
 import io.github.wifi_password_manager.ui.UiConfig
-import io.github.wifi_password_manager.ui.theme.ScaffoldWrapper
+import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 
 @Composable
@@ -34,6 +35,7 @@ fun ThemeModeItem(themeMode: Settings.ThemeMode, onThemeModeChange: (Settings.Th
         supportingContent = { Text(text = stringResource(R.string.app_theme_description)) },
         trailingContent = { Text(text = stringResource(themeMode.resId)) },
         shapes = UiConfig.listItemShapes(),
+        colors = UiConfig.listItemColors(),
     ) {
         Text(text = stringResource(R.string.app_theme_title))
     }
@@ -57,11 +59,14 @@ private fun ThemeModeSelectionSheet(
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(modifier = Modifier.padding(horizontal = 12.dp)) {
             Settings.ThemeMode.entries.forEach {
-                ListItem(
+                SegmentedListItem(
                     onClick = { onThemeModeChange(it) },
                     selected = it == themeMode,
                     leadingContent = { RadioButton(selected = it == themeMode, onClick = null) },
-                    colors = ListItemDefaults.colors(containerColor = BottomSheetDefaults.ContainerColor),
+                    shapes = ListItemDefaults.segmentedShapes(
+                        index = it.ordinal, count = Settings.ThemeMode.entries.size
+                    ),
+                    colors = ListItemDefaults.segmentedColors(containerColor = BottomSheetDefaults.ContainerColor),
                 ) {
                     Text(text = stringResource(it.resId))
                 }
@@ -79,7 +84,7 @@ private fun ThemeModeItemPreview() {
 
 @PreviewLightDark
 @Composable
-@PreviewWrapper(ScaffoldWrapper::class)
+@PreviewWrapper(SurfaceWrapper::class)
 private fun ThemeModeSelectionSheetPreview() {
     ThemeModeSelectionSheet(
         onDismiss = {},

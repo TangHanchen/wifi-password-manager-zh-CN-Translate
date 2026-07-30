@@ -51,6 +51,8 @@
     <string name="app_theme_title">App Theme</string>
     <string name="app_theme_description">Change the app\'s appearance</string>
     <string name="material_you_title">Material You</string>
+    <string name="pure_black_theme_title">Pure black theme</string>
+    <string name="pure_black_theme_description">Use pure black background for dark theme</string>
 
     <!-- Import & Export Section -->
     <string name="import_export_section">Import &amp; Export</string>

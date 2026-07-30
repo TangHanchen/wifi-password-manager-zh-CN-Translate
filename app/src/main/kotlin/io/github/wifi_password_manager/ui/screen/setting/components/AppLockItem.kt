@@ -31,6 +31,7 @@ import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.ui.UiConfig
 import io.github.wifi_password_manager.ui.icons.Lock
 import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 import io.github.wifi_password_manager.utils.isBiometricAuthenticationSupported
 import io.github.wifi_password_manager.utils.toast
 
@@ -86,6 +87,7 @@ fun AppLockItem(
             )
         },
         shapes = UiConfig.listItemShapes(),
+        colors = UiConfig.listItemColors(),
     ) {
         Text(text = stringResource(R.string.app_lock_title))
     }
@@ -130,7 +132,7 @@ private fun LockScreenRequiredDialog(onDismiss: () -> Unit) {
 
 @PreviewLightDark
 @Composable
-@PreviewWrapper(SurfaceWrapper::class)
+@PreviewWrapper(ThemeWrapper::class)
 private fun AppLockItemPreview() {
     AppLockItem(appLockEnabled = false, onToggleAppLock = {})
 }

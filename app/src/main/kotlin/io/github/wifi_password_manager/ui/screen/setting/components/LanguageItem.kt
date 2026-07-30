@@ -8,6 +8,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,6 +24,7 @@ import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.Settings
 import io.github.wifi_password_manager.ui.UiConfig
 import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 
 @Composable
 fun LanguageItem(language: Settings.Language, onLanguageChange: (Settings.Language) -> Unit) {
@@ -33,6 +35,7 @@ fun LanguageItem(language: Settings.Language, onLanguageChange: (Settings.Langua
         supportingContent = { Text(text = stringResource(R.string.language_description)) },
         trailingContent = { Text(text = language.displayName) },
         shapes = UiConfig.listItemShapes(),
+        colors = UiConfig.listItemColors(),
     ) {
         Text(text = stringResource(R.string.language_title))
     }
@@ -56,11 +59,14 @@ private fun LanguageSelectionSheet(
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(modifier = Modifier.padding(horizontal = 12.dp)) {
             Settings.Language.entries.sortedBy { it.code }.forEach {
-                ListItem(
+                SegmentedListItem(
                     onClick = { onLanguageChange(it) },
                     selected = it == language,
                     leadingContent = { RadioButton(selected = it == language, onClick = null) },
-                    colors = ListItemDefaults.colors(containerColor = BottomSheetDefaults.ContainerColor),
+                    shapes = ListItemDefaults.segmentedShapes(
+                        index = it.ordinal, count = Settings.Language.entries.size
+                    ),
+                    colors = ListItemDefaults.segmentedColors(containerColor = BottomSheetDefaults.ContainerColor),
                 ) {
                     Text(text = it.displayName)
                 }
@@ -71,7 +77,7 @@ private fun LanguageSelectionSheet(
 
 @PreviewLightDark
 @Composable
-@PreviewWrapper(SurfaceWrapper::class)
+@PreviewWrapper(ThemeWrapper::class)
 private fun LanguageItemPreview() {
     LanguageItem(language = Settings.Language.ENGLISH, onLanguageChange = {})
 }

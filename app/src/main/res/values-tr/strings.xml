@@ -51,6 +51,8 @@
     <string name="app_theme_title">Uygulama Teması</string>
     <string name="app_theme_description">Uygulama görünümünü değiştir</string>
     <string name="material_you_title">Material You</string>
+    <string name="pure_black_theme_title">Safah teması</string>
+    <string name="pure_black_theme_description">Koyu temada safah arka plan kullan</string>
 
     <!-- Import & Export Section -->
     <string name="import_export_section">İçe &amp; Dışa aktar</string>

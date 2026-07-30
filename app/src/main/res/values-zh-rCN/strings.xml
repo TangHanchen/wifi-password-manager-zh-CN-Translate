@@ -51,6 +51,8 @@
     <string name="app_theme_title">应用主题</string>
     <string name="app_theme_description">更改应用外观</string>
     <string name="material_you_title">Material You</string>
+    <string name="pure_black_theme_title">纯黑主题</string>
+    <string name="pure_black_theme_description">在深色主题中使用纯黑背景</string>
 
     <!-- 导入与导出部分 -->
     <string name="import_export_section">导入与导出</string>

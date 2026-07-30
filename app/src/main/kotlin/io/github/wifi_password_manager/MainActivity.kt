@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                 WiFiPasswordManagerTheme(
                     darkTheme = settings.themeMode.isDark,
                     dynamicColor = settings.useMaterialYou,
+                    pureBlackTheme = settings.pureBlackTheme,
                 ) {
                     when {
                         settings.appLockEnabled && !isAuthenticated -> {

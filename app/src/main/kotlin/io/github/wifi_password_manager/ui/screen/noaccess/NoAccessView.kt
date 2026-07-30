@@ -110,7 +110,8 @@ fun NoAccessView(allowSkip: Boolean, onSkip: () -> Unit) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .systemBarsPadding()
+            .systemBarsPadding(),
+        color = MaterialTheme.colorScheme.background,
     ) {
         LazyColumn(
             contentPadding = PaddingValues(32.dp),
@@ -130,7 +131,6 @@ fun NoAccessView(allowSkip: Boolean, onSkip: () -> Unit) {
                 Text(
                     text = stringResource(R.string.no_access_title),
                     style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
                 )
 
@@ -139,7 +139,6 @@ fun NoAccessView(allowSkip: Boolean, onSkip: () -> Unit) {
                 Text(
                     text = stringResource(R.string.no_access_description),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                 )
 

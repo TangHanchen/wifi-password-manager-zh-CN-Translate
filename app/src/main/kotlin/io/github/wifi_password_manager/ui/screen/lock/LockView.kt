@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -71,7 +71,8 @@ fun LockView(onAuthenticated: () -> Unit) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .navigationBarsPadding()
+            .systemBarsPadding(),
+        color = MaterialTheme.colorScheme.background,
     ) {
         Box(modifier = Modifier.padding(32.dp), contentAlignment = Alignment.Center) {
             Column(
@@ -90,7 +91,7 @@ fun LockView(onAuthenticated: () -> Unit) {
                 Text(
                     text = stringResource(R.string.lock_title),
                     style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Center,
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -98,7 +99,6 @@ fun LockView(onAuthenticated: () -> Unit) {
                 Text(
                     text = stringResource(R.string.app_lock_required),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                 )
             }

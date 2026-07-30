@@ -10,11 +10,11 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -46,6 +47,8 @@ fun NoteView(network: WifiNetwork, state: String, onAction: (NoteViewModel.Actio
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+
     BackHandler { onAction(NoteViewModel.Action.SaveOrDeleteNote) }
 
     LaunchedEffect(Unit) { focusRequester.requestFocus() }
@@ -56,9 +59,9 @@ fun NoteView(network: WifiNetwork, state: String, onAction: (NoteViewModel.Actio
             TopAppBar(
                 navigationIcon = { BackButton { onAction(NoteViewModel.Action.SaveOrDeleteNote) } },
                 title = { Text(text = stringResource(R.string.note_title, network.ssid)) },
+                scrollBehavior = scrollBehavior,
             )
         },
-        containerColor = MaterialTheme.colorScheme.surfaceContainer,
     ) { innerPadding ->
         val windowSizeClass = currentWindowAdaptiveInfoV2().windowSizeClass
         val deviceConfiguration = DeviceConfiguration.fromWindowSizeClass(windowSizeClass)
@@ -91,6 +94,7 @@ fun NoteView(network: WifiNetwork, state: String, onAction: (NoteViewModel.Actio
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
                 .imePadding(),
             contentPadding = innerPadding + contentPadding,
             horizontalAlignment = Alignment.CenterHorizontally,

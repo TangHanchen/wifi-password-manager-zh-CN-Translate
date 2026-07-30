@@ -21,10 +21,12 @@ import androidx.compose.material3.TooltipAnchorPosition
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -50,6 +52,8 @@ fun NetworkListView(
     onAction: (NetworkListViewModel.Action) -> Unit,
 ) {
     val navBackStack = LocalNavBackStack.current
+
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     BackHandler(enabled = state.showingSearch) { onAction(NetworkListViewModel.Action.ToggleSearch) }
 
@@ -79,6 +83,7 @@ fun NetworkListView(
                                 positioning = TooltipAnchorPosition.Below,
                             )
                         },
+                        scrollBehavior = scrollBehavior,
                     )
                 }
             }
@@ -104,11 +109,12 @@ fun NetworkListView(
                 }
             }
         },
-        containerColor = MaterialTheme.colorScheme.surfaceContainer,
     ) { innerPadding ->
-        val modifier = Modifier
-            .fillMaxSize()
-            .imePadding()
+        val modifier =
+            Modifier
+                .fillMaxSize()
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .imePadding()
 
         if (state.savedNetworks.isEmpty()) {
             Box(modifier = modifier.padding(innerPadding), contentAlignment = Alignment.Center) {

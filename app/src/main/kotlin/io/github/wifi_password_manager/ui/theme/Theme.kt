@@ -14,6 +14,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.expressiveLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewWrapperProvider
 
@@ -21,6 +22,7 @@ import androidx.compose.ui.tooling.preview.PreviewWrapperProvider
 fun WiFiPasswordManagerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
+    pureBlackTheme: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
@@ -31,6 +33,12 @@ fun WiFiPasswordManagerTheme(
 
         darkTheme -> darkColorScheme()
         else -> expressiveLightColorScheme()
+    }.let {
+        if (pureBlackTheme && darkTheme) {
+            it.copy(background = Color.Black, surface = Color.Black)
+        } else {
+            it
+        }
     }
 
     MaterialExpressiveTheme(colorScheme = colorScheme, content = content)

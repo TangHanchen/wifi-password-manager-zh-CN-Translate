@@ -51,6 +51,8 @@
     <string name="app_theme_title">アプリテーマ</string>
     <string name="app_theme_description">アプリの外観を変更する</string>
     <string name="material_you_title">Material You</string>
+    <string name="pure_black_theme_title">ピュアブラックテーマ</string>
+    <string name="pure_black_theme_description">ダークテーマで純黒の背景を使用</string>
 
     <!-- Import & Export Section -->
     <string name="import_export_section">インポート &amp; エクスポート</string>

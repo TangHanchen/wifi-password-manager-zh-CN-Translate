@@ -17,7 +17,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -56,16 +59,19 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
     val navBackStack = LocalNavBackStack.current
     val settings = LocalSettings.current
 
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+
     Scaffold(
         topBar = {
             TopAppBar(
                 navigationIcon = { BackButton() },
                 title = { Text(text = stringResource(R.string.settings_title)) },
+                scrollBehavior = scrollBehavior,
             )
         },
-        containerColor = MaterialTheme.colorScheme.surfaceContainer,
     ) { innerPadding ->
         LazyColumn(
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             contentPadding = innerPadding + PaddingValues(12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -79,14 +85,14 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                         onAction(SettingViewModel.Action.UpdateLanguage(it))
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                     ThemeModeItem(themeMode = settings.themeMode) {
                         onAction(SettingViewModel.Action.UpdateThemeMode(it))
                     }
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                        HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                         ListItem(
                             onClick = { onAction(SettingViewModel.Action.ToggleMaterialYou(!settings.useMaterialYou)) },
@@ -99,8 +105,36 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                                 )
                             },
                             shapes = UiConfig.listItemShapes(),
+                            colors = UiConfig.listItemColors(),
                         ) {
                             Text(text = stringResource(R.string.material_you_title))
+                        }
+                    }
+
+                    AnimatedVisibility(
+                        visible = settings.themeMode.isDark,
+                        enter = fadeIn() + expandVertically(),
+                        exit = fadeOut() + shrinkVertically(),
+                    ) {
+                        Column {
+                            HorizontalDivider(color = MaterialTheme.colorScheme.background)
+
+                            ListItem(
+                                onClick = { onAction(SettingViewModel.Action.TogglePureBlackTheme(!settings.pureBlackTheme)) },
+                                supportingContent = { Text(text = stringResource(R.string.pure_black_theme_description)) },
+                                trailingContent = {
+                                    Switch(
+                                        checked = settings.pureBlackTheme,
+                                        onCheckedChange = {
+                                            onAction(SettingViewModel.Action.TogglePureBlackTheme(it))
+                                        },
+                                    )
+                                },
+                                shapes = UiConfig.listItemShapes(),
+                                colors = UiConfig.listItemColors(),
+                            ) {
+                                Text(text = stringResource(R.string.pure_black_theme_title))
+                            }
                         }
                     }
                 }
@@ -116,17 +150,19 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                         onClick = { onAction(SettingViewModel.Action.ImportNetworks) },
                         supportingContent = { Text(text = stringResource(R.string.import_description)) },
                         shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
                         enabled = state.mode.hasPrivilegedAccess,
                     ) {
                         Text(text = stringResource(R.string.import_action))
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ShowExportDialog) },
                         supportingContent = { Text(text = stringResource(R.string.export_description)) },
                         shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
                     ) {
                         Text(text = stringResource(R.string.export_action))
                     }
@@ -144,7 +180,7 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                         onToggleAppLock = { onAction(SettingViewModel.Action.ToggleAppLock(it)) },
                     )
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ToggleSecureScreen(!settings.secureScreenEnabled)) },
@@ -158,11 +194,12 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                             )
                         },
                         shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
                     ) {
                         Text(text = stringResource(R.string.secure_screen_title))
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                     PlaintextPasswordsItem(
                         enabled = settings.secureScreenEnabled,
@@ -192,6 +229,7 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                             )
                         },
                         shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
                     ) {
                         Text(text = stringResource(R.string.allow_insecure_receiver_title))
                     }
@@ -202,11 +240,12 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                         exit = fadeOut() + shrinkVertically(),
                     ) {
                         Column {
-                            HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                            HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                             ListItem(
                                 onClick = { navBackStack.add(Route.ExportWifiSetupScreen) },
                                 shapes = UiConfig.listItemShapes(),
+                                colors = UiConfig.listItemColors(),
                             ) {
                                 Text(text = stringResource(R.string.export_wifi_action))
                             }
@@ -225,12 +264,13 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                         onClick = { onAction(SettingViewModel.Action.ShowForgetAllDialog) },
                         supportingContent = { Text(text = stringResource(R.string.forget_all_description)) },
                         shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
                         enabled = state.mode.hasPrivilegedAccess,
                     ) {
                         Text(text = stringResource(R.string.forget_all_title))
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                     ListItem(
                         onClick = {
@@ -250,11 +290,12 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                             )
                         },
                         shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
                     ) {
                         Text(text = stringResource(R.string.auto_persist_ephemeral_networks_title))
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                     ListItem(
                         onClick = { onAction(SettingViewModel.Action.ToggleAllowCacheMode(!settings.allowCacheMode)) },
@@ -268,11 +309,12 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                             )
                         },
                         shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
                     ) {
                         Text(text = stringResource(R.string.allow_cache_mode_title))
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                     ConnectedWifiInfoItem(mode = state.mode)
                 }
@@ -288,34 +330,38 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                         onClick = { navBackStack.add(Route.LicenseScreen) },
                         supportingContent = { Text(text = stringResource(R.string.license_description)) },
                         shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
                     ) {
                         Text(text = stringResource(R.string.license_title))
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                     ListItem(
                         onClick = { uriHandler.openUri(BuildConfig.SOURCE_CODE_URL) },
                         supportingContent = { Text(text = BuildConfig.SOURCE_CODE_URL) },
                         shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
                     ) {
                         Text(text = stringResource(R.string.source_code_title))
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                     ListItem(
                         supportingContent = { Text(text = BuildConfig.VERSION_NAME) },
                         shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
                     ) {
                         Text(text = stringResource(R.string.version_title))
                     }
 
-                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
 
                     ListItem(
                         supportingContent = { Text(text = BuildConfig.BUILD_TYPE) },
                         shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
                     ) {
                         Text(text = stringResource(R.string.build_type_title))
                     }

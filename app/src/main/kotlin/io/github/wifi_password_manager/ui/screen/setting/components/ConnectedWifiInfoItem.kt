@@ -143,6 +143,7 @@ fun ConnectedWifiInfoItem(modifier: Modifier = Modifier, mode: PrivilegedMode) {
             }
         },
         shapes = UiConfig.listItemShapes(),
+        colors = UiConfig.listItemColors(),
     ) {
         Text(text = stringResource(R.string.show_connected_wifi))
     }

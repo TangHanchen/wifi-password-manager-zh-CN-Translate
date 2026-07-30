@@ -33,6 +33,7 @@ fun PlaintextPasswordsItem(
             Switch(enabled = enabled, checked = value, onCheckedChange = onValueChange)
         },
         shapes = UiConfig.listItemShapes(),
+        colors = UiConfig.listItemColors(),
     ) {
         Text(text = stringResource(R.string.plaintext_passwords_title))
     }

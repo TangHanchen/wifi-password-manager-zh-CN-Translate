@@ -21,6 +21,7 @@ data class Settings(
     val allowCacheMode: Boolean = false,
     val allowInsecureReceiver: Boolean = false,
     val plaintextPasswords: Boolean = false,
+    val pureBlackTheme: Boolean = false,
 ) {
     @Serializable
     enum class ThemeMode {

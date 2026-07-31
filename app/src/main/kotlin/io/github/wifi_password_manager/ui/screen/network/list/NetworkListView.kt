@@ -8,7 +8,6 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -96,9 +95,7 @@ fun NetworkListView(
                     state = rememberTooltipState(),
                 ) {
                     FloatingActionButton(
-                        modifier = Modifier
-                            .navigationBarsPadding()
-                            .imePadding(),
+                        modifier = Modifier.imePadding(),
                         onClick = { onAction(NetworkListViewModel.Action.Refresh) },
                     ) {
                         Icon(

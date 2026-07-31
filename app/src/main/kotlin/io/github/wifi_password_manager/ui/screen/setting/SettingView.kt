@@ -33,6 +33,7 @@ import io.github.wifi_password_manager.domain.model.LocalSettings
 import io.github.wifi_password_manager.navigation.LocalNavBackStack
 import io.github.wifi_password_manager.navigation.Route
 import io.github.wifi_password_manager.ui.UiConfig
+import io.github.wifi_password_manager.ui.icons.BugReport
 import io.github.wifi_password_manager.ui.icons.Info
 import io.github.wifi_password_manager.ui.icons.IntegrationInstructions
 import io.github.wifi_password_manager.ui.icons.Palette
@@ -320,6 +321,22 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                 }
             }
 
+            // Debugging Section
+            item {
+                SettingSection(
+                    imageVector = BugReport,
+                    title = stringResource(R.string.debugging),
+                ) {
+                    ListItem(
+                        onClick = { navBackStack.add(Route.IWifiManagerMethodInspectorScreen) },
+                        shapes = UiConfig.listItemShapes(),
+                        colors = UiConfig.listItemColors(),
+                    ) {
+                        Text(text = "IWifiManager Methods")
+                    }
+                }
+            }
+
             // About Section
             item {
                 SettingSection(
@@ -364,6 +381,22 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                         colors = UiConfig.listItemColors(),
                     ) {
                         Text(text = stringResource(R.string.build_type_title))
+                    }
+
+                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
+
+                    ListItem(
+                        supportingContent = {
+                            Column {
+                                Text(text = "Brand: ${Build.BRAND}")
+                                Text(text = "Model: ${Build.MODEL}")
+                                Text(text = "Manufacturer: ${Build.MANUFACTURER}")
+                                Text(text = "Android Version: ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})")
+                            }
+                        },
+                        colors = UiConfig.listItemColors(),
+                    ) {
+                        Text(text = stringResource(R.string.about_device))
                     }
                 }
             }

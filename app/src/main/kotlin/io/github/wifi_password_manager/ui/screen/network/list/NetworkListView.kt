@@ -39,7 +39,7 @@ import io.github.wifi_password_manager.ui.icons.Refresh
 import io.github.wifi_password_manager.ui.icons.Search
 import io.github.wifi_password_manager.ui.icons.Settings
 import io.github.wifi_password_manager.ui.screen.network.list.components.NetworkList
-import io.github.wifi_password_manager.ui.screen.network.list.components.SearchBar
+import io.github.wifi_password_manager.ui.shared.SearchBar
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
 import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 import io.github.wifi_password_manager.utils.MOCK
@@ -63,7 +63,15 @@ fun NetworkListView(
                 transitionSpec = { fadeIn() togetherWith fadeOut() },
             ) { showingSearch ->
                 if (showingSearch) {
-                    SearchBar(state = state, onAction = onAction)
+                    SearchBar(
+                        showingSearch = state.showingSearch,
+                        searchText = state.searchText,
+                        onSearchTextChanged = {
+                            onAction(NetworkListViewModel.Action.SearchTextChanged(it))
+                        },
+                        onBack = { onAction(NetworkListViewModel.Action.ToggleSearch) },
+                        placeholder = stringResource(R.string.search_hint),
+                    )
                 } else {
                     TopAppBar(
                         title = { Text(text = stringResource(R.string.network_list_title)) },

@@ -96,6 +96,9 @@
     <string name="allow_cache_mode_title">允许缓存模式</string>
     <string name="allow_cache_mode_description">允许应用在无 Shizuku 或 root 权限时运行。特权功能将被禁用，WiFi 数据将从缓存中读取。</string>
 
+    <!-- 调试部分 -->
+    <string name="debugging">调试</string>
+
     <!-- 关于部分 -->
     <string name="about_section">关于</string>
     <string name="license_title">许可证</string>
@@ -103,6 +106,7 @@
     <string name="source_code_title">源代码</string>
     <string name="version_title">版本</string>
     <string name="build_type_title">构建类型</string>
+    <string name="about_device">关于设备</string>
 
     <!-- 快捷设置磁贴 -->
     <string name="auto_persist">自动保留</string>
@@ -134,6 +138,15 @@
     <string name="export_wifi_extra_format_hint">导出格式：\'plain\'（JSON）或 \'compressed\'（GZip）。默认为 \'plain\'。</string>
     <string name="export_wifi_extra_password_hint">用于加密导出文件的可选密码。如果提供，文件扩展名将以 \'.bin\' 结尾。</string>
     <string name="export_wifi_extra_filename_hint">可选文件名（不含扩展名）。默认为时间戳。</string>
+
+    <!-- 方法检查器界面 -->
+    <string name="method_inspector_search_hint">搜索方法…</string>
+    <plurals name="method_inspector_title">
+        <item quantity="other">正在显示 %d 个方法</item>
+    </plurals>
+    <string name="export_methods_action">导出</string>
+    <string name="export_methods_success">方法导出成功</string>
+    <string name="export_methods_failed">方法导出失败</string>
 
     <!-- 安全类型 -->
     <string name="security_open">无</string>

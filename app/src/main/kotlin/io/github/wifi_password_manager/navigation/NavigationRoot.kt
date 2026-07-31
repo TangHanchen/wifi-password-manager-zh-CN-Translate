@@ -1,5 +1,6 @@
 package io.github.wifi_password_manager.navigation
 
+import android.net.wifi.IWifiManager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
@@ -14,6 +15,7 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
 import io.github.wifi_password_manager.ui.screen.integration.ExportWifiSetupView
 import io.github.wifi_password_manager.ui.screen.license.LicenseView
+import io.github.wifi_password_manager.ui.screen.methodinspector.MethodInspectorScreen
 import io.github.wifi_password_manager.ui.screen.network.list.NetworkListScreen
 import io.github.wifi_password_manager.ui.screen.note.NoteScreen
 import io.github.wifi_password_manager.ui.screen.setting.SettingScreen
@@ -32,6 +34,7 @@ fun NavigationRoot(modifier: Modifier = Modifier) {
                     subclass(Route.LicenseScreen::class)
                     subclass(Route.NoteScreen::class)
                     subclass(Route.ExportWifiSetupScreen::class)
+                    subclass(Route.IWifiManagerMethodInspectorScreen::class)
                 }
             }
         },
@@ -53,6 +56,7 @@ fun NavigationRoot(modifier: Modifier = Modifier) {
                 entry<Route.LicenseScreen> { LicenseView() }
                 entry<Route.NoteScreen> { NoteScreen(it.network) }
                 entry<Route.ExportWifiSetupScreen> { ExportWifiSetupView() }
+                entry<Route.IWifiManagerMethodInspectorScreen> { MethodInspectorScreen(IWifiManager::class) }
             },
         )
     }

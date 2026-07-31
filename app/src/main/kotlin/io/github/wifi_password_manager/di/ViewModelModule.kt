@@ -6,13 +6,16 @@ import io.github.wifi_password_manager.domain.repository.FileRepository
 import io.github.wifi_password_manager.domain.repository.SettingRepository
 import io.github.wifi_password_manager.domain.repository.WifiRepository
 import io.github.wifi_password_manager.manager.PrivilegedManager
+import io.github.wifi_password_manager.ui.screen.methodinspector.MethodInspectorViewModel
 import io.github.wifi_password_manager.ui.screen.network.list.NetworkListViewModel
 import io.github.wifi_password_manager.ui.screen.note.NoteViewModel
 import io.github.wifi_password_manager.ui.screen.setting.SettingViewModel
+import kotlinx.serialization.json.Json
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.InjectedParam
 import org.koin.core.annotation.KoinViewModel
 import org.koin.core.annotation.Module
+import kotlin.reflect.KClass
 
 @Module
 @Configuration
@@ -39,4 +42,8 @@ class ViewModelModule {
         fileRepository: FileRepository,
         privilegedManager: PrivilegedManager,
     ) = SettingViewModel(settingRepository, wifiRepository, fileRepository, privilegedManager)
+
+    @KoinViewModel
+    fun <T : Any> methodInspectorViewModel(@InjectedParam forClass: KClass<T>, json: Json) =
+        MethodInspectorViewModel(forClass, json)
 }

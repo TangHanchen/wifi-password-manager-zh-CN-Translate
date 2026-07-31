@@ -96,6 +96,9 @@
     <string name="allow_cache_mode_title">Allow cache mode</string>
     <string name="allow_cache_mode_description">Allow the app to run without Shizuku or root. Privileged functionalities will be disabled and WiFi data will be read from cache.</string>
 
+    <!-- Debugging Section -->
+    <string name="debugging">Debugging</string>
+
     <!-- About Section -->
     <string name="about_section">About</string>
     <string name="license_title">License</string>
@@ -103,6 +106,7 @@
     <string name="source_code_title">Source Code</string>
     <string name="version_title">Version</string>
     <string name="build_type_title">Build Type</string>
+    <string name="about_device">About device</string>
 
     <!-- Quick Settings Tiles -->
     <string name="auto_persist">Auto-persist</string>
@@ -134,6 +138,16 @@
     <string name="export_wifi_extra_format_hint">Export format: \'plain\' (JSON) or \'compressed\' (GZip). Defaults to \'plain\'.</string>
     <string name="export_wifi_extra_password_hint">Optional password to encrypt the exported file. If provided, the extension will end with \'.bin\'.</string>
     <string name="export_wifi_extra_filename_hint">Optional filename (without extension). Defaults to a timestamp.</string>
+
+    <!-- Method Inspector Screen -->
+    <string name="method_inspector_search_hint">Search methods…</string>
+    <plurals name="method_inspector_title">
+        <item quantity="one">Showing %d method</item>
+        <item quantity="other">Showing %d methods</item>
+    </plurals>
+    <string name="export_methods_action">Export</string>
+    <string name="export_methods_success">Methods exported successfully</string>
+    <string name="export_methods_failed">Failed to export methods</string>
 
     <!-- Security Types -->
     <string name="security_open">None</string>

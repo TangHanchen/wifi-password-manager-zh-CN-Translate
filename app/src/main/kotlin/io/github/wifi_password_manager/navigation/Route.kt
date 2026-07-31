@@ -20,4 +20,7 @@ sealed interface Route : NavKey {
 
     @Serializable
     data object ExportWifiSetupScreen : Route, NavKey
+
+    @Serializable
+    data object IWifiManagerMethodInspectorScreen : Route, NavKey
 }

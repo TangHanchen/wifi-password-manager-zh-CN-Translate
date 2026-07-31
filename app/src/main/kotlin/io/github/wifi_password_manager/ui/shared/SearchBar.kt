@@ -1,4 +1,4 @@
-package io.github.wifi_password_manager.ui.screen.network.list.components
+package io.github.wifi_password_manager.ui.shared
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,25 +27,26 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewWrapper
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.ui.icons.ClearAll
-import io.github.wifi_password_manager.ui.screen.network.list.NetworkListViewModel
-import io.github.wifi_password_manager.ui.shared.BackButton
-import io.github.wifi_password_manager.ui.shared.TooltipIconButton
-import io.github.wifi_password_manager.ui.theme.ScaffoldWrapper
+import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
-    state: NetworkListViewModel.State,
-    onAction: (NetworkListViewModel.Action) -> Unit,
+    showingSearch: Boolean,
+    searchText: String,
+    onSearchTextChanged: (String) -> Unit,
+    onBack: () -> Unit,
+    placeholder: String,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
 
-    LaunchedEffect(state.showingSearch) {
-        if (state.showingSearch) {
+    LaunchedEffect(showingSearch) {
+        if (showingSearch) {
             focusRequester.requestFocus()
             keyboardController?.show()
         } else {
@@ -60,21 +61,19 @@ fun SearchBar(
                 .statusBarsPadding()
                 .height(TopAppBarDefaults.TopAppBarExpandedHeight)
                 .focusRequester(focusRequester),
-            value = state.searchText,
-            onValueChange = { onAction(NetworkListViewModel.Action.SearchTextChanged(it)) },
+            value = searchText,
+            onValueChange = onSearchTextChanged,
             singleLine = true,
-            placeholder = { Text(text = stringResource(R.string.search_hint)) },
+            placeholder = { Text(text = placeholder) },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Search, keyboardType = KeyboardType.Text
             ),
             keyboardActions = KeyboardActions(onSearch = { keyboardController?.hide() }),
-            leadingIcon = {
-                BackButton { onAction(NetworkListViewModel.Action.ToggleSearch) }
-            },
+            leadingIcon = { BackButton(onClick = onBack) },
             trailingIcon = {
                 Row {
                     TooltipIconButton(
-                        onClick = { onAction(NetworkListViewModel.Action.SearchTextChanged("")) },
+                        onClick = { onSearchTextChanged("") },
                         imageVector = ClearAll,
                         tooltip = stringResource(R.string.clear),
                         positioning = TooltipAnchorPosition.Below,
@@ -95,7 +94,26 @@ fun SearchBar(
 
 @PreviewLightDark
 @Composable
-@PreviewWrapper(ScaffoldWrapper::class)
+@PreviewWrapper(ThemeWrapper::class)
 private fun SearchBarPreview() {
-    SearchBar(state = NetworkListViewModel.State(), onAction = {})
+    SearchBar(
+        showingSearch = true,
+        searchText = "",
+        onSearchTextChanged = {},
+        onBack = {},
+        placeholder = LoremIpsum(2).values.joinToString(" "),
+    )
+}
+
+@PreviewLightDark
+@Composable
+@PreviewWrapper(ThemeWrapper::class)
+private fun SearchBarWithTextPreview() {
+    SearchBar(
+        showingSearch = true,
+        searchText = LoremIpsum(7).values.joinToString(" "),
+        onSearchTextChanged = {},
+        onBack = {},
+        placeholder = LoremIpsum(2).values.joinToString(" "),
+    )
 }

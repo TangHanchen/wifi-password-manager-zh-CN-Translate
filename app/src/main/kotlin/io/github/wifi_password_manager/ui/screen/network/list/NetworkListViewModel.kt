@@ -46,6 +46,7 @@ class NetworkListViewModel(
         val connectedSsid: String = "",
         val searchText: String = "",
         val isCacheMode: Boolean = false,
+        val showMethodSignatureError: Boolean = false,
     )
 
     sealed interface Action {
@@ -56,6 +57,8 @@ class NetworkListViewModel(
         data class SearchTextChanged(val text: String) : Action
 
         data class DeleteNote(val ssid: String) : Action
+
+        data object DismissMethodInspectorError : Action
     }
 
     sealed interface Event {
@@ -64,6 +67,7 @@ class NetworkListViewModel(
 
     private val _showingSearch = MutableStateFlow(false)
     private val _searchText = MutableStateFlow("")
+    private val _showMethodSignatureError = MutableStateFlow(false)
     private val _networks =
         _searchText.debounce(200.milliseconds).distinctUntilChanged().flatMapLatest { searchText ->
             val query = searchText.replace("[^a-zA-Z0-9\\\\s]".toRegex(), "").trim()
@@ -75,12 +79,15 @@ class NetworkListViewModel(
         }
 
     val state = combine(
-        _showingSearch,
-        _searchText,
         _networks,
+        _searchText,
+        _showingSearch,
         privilegedManager.mode.map { it == PrivilegedMode.NONE },
         wifiRepository.getConnectedWifiSsidFlow(),
-    ) { showingSearch, searchText, networks, isCacheMode, connectedSsid ->
+        _showMethodSignatureError,
+    ) { args ->
+        @Suppress("UNCHECKED_CAST") val networks = args[0] as List<WifiNetwork>
+        val connectedSsid = args[4] as String
         val sortedNetworks = networks.groupAndSortedBySsid().let { grouped ->
             if (connectedSsid.isNotBlank()) {
                 grouped.sortedByDescending { it.ssid == connectedSsid }
@@ -91,12 +98,13 @@ class NetworkListViewModel(
 
         State(
             savedNetworks = sortedNetworks,
-            searchText = searchText,
-            showingSearch = showingSearch,
-            isCacheMode = isCacheMode,
+            searchText = args[1] as String,
+            showingSearch = args[2] as Boolean,
+            isCacheMode = args[3] as Boolean,
             connectedSsid = connectedSsid,
+            showMethodSignatureError = args[5] as Boolean,
         )
-    }.onStart { wifiRepository.refresh() }.stateIn(
+    }.onStart { refresh() }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5.seconds),
         initialValue = State(),
@@ -112,13 +120,25 @@ class NetworkListViewModel(
             is Action.ToggleSearch -> onToggleSearch()
             is Action.SearchTextChanged -> _searchText.update { action.text }
             is Action.DeleteNote -> onDeleteNote(action.ssid)
+            is Action.DismissMethodInspectorError -> _showMethodSignatureError.update { false }
         }
     }
 
     private fun onRefresh() {
         viewModelScope.launch {
-            wifiRepository.refresh()
+            if (!refresh()) return@launch
             _event.send(Event.ShowMessage(UiText.StringResource(R.string.refresh_success)))
+        }
+    }
+
+    private suspend fun refresh(): Boolean {
+        return try {
+            wifiRepository.refresh()
+            true
+        } catch (e: NoSuchMethodException) {
+            Log.e(TAG, "Method signature not found", e)
+            _showMethodSignatureError.update { true }
+            false
         }
     }
 

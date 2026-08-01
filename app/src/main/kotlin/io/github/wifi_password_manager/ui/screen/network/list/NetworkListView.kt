@@ -38,6 +38,7 @@ import io.github.wifi_password_manager.navigation.Route
 import io.github.wifi_password_manager.ui.icons.Refresh
 import io.github.wifi_password_manager.ui.icons.Search
 import io.github.wifi_password_manager.ui.icons.Settings
+import io.github.wifi_password_manager.ui.screen.network.list.components.MethodSignatureErrorDialog
 import io.github.wifi_password_manager.ui.screen.network.list.components.NetworkList
 import io.github.wifi_password_manager.ui.shared.SearchBar
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
@@ -146,6 +147,13 @@ fun NetworkListView(
                 networks = state.savedNetworks,
                 connectedSsid = state.connectedSsid,
                 onAction = onAction,
+            )
+        }
+
+        if (state.showMethodSignatureError) {
+            MethodSignatureErrorDialog(
+                onDismiss = { onAction(NetworkListViewModel.Action.DismissMethodInspectorError) },
+                onOpenMethodInspector = { navBackStack.add(Route.IWifiManagerMethodInspectorScreen) },
             )
         }
     }

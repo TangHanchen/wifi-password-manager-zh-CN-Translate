@@ -164,6 +164,11 @@
     <string name="open_shizuku">Открыть Shizuku</string>
     <string name="install_shizuku">Установить Shizuku</string>
 
+    <!-- Method Inspector Error Dialog -->
+    <string name="method_inspector_error_title">Ошибка сигнатуры метода</string>
+    <string name="method_inspector_error_message">Системная служба WiFi этого устройства не соответствует ни одной известной сигнатуре метода. Пожалуйста, откройте инспектор методов, экспортируйте методы и отправьте их, чтобы это можно было исправить в будущем обновлении.</string>
+    <string name="open_method_inspector">Открыть инспектор методов</string>
+
     <!-- Forget All Networks Confirmation Dialog -->
     <string name="forget_all_confirmation_title">Забыть все сети?</string>
     <string name="forget_all_confirmation_message">Это безвозвратно удалит все сохранённые сети WiFi с этого устройства. Это действие нельзя отменить.</string>

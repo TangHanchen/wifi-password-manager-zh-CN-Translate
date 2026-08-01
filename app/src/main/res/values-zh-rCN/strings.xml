@@ -161,6 +161,11 @@
     <string name="open_shizuku">打开 Shizuku</string>
     <string name="install_shizuku">安装 Shizuku</string>
 
+    <!-- 方法检查器错误对话框 -->
+    <string name="method_inspector_error_title">方法签名错误</string>
+    <string name="method_inspector_error_message">此设备的 WiFi 系统服务与任何已知方法签名都不匹配。请打开方法检查器，导出方法并提交，以便在未来的更新中修复此问题。</string>
+    <string name="open_method_inspector">打开方法检查器</string>
+
     <!-- 忘记所有网络确认对话框 -->
     <string name="forget_all_confirmation_title">忘记所有网络？</string>
     <string name="forget_all_confirmation_message">此操作将从本设备永久移除所有已保存的 WiFi 网络。此操作不可撤销。</string>

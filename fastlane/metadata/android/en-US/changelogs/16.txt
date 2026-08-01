@@ -1,0 +1,3 @@
+- Added plaintext password visibility feature and related settings
+- Added pure black theme
+- Added Method Signature error handling

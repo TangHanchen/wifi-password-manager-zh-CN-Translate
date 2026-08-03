@@ -145,23 +145,24 @@ class SettingViewModel(
     fun onAction(action: Action) {
         Log.d(TAG, "onAction: $action")
         when (action) {
-            is Action.UpdateLanguage -> onUpdateLanguage(action.language)
-            is Action.UpdateThemeMode -> onUpdateThemeMode(action.themeMode)
-            is Action.ToggleMaterialYou -> onToggleMaterialYou(action.value)
-            is Action.TogglePureBlackTheme -> onTogglePureBlackTheme(action.value)
-            is Action.ToggleAppLock -> onToggleAppLock(action.value)
-            is Action.ToggleSecureScreen -> onToggleSecureScreen(action.value)
-            is Action.TogglePlaintextPasswords -> onTogglePlaintextPasswords(action.value)
-            is Action.ToggleAutoPersistEphemeralNetworks -> onToggleAutoPersistEphemeralNetworks(
-                action.value
-            )
+            is Action.UpdateLanguage -> updateSettings { it.copy(language = action.language) }
+            is Action.UpdateThemeMode -> updateSettings { it.copy(themeMode = action.themeMode) }
+            is Action.ToggleMaterialYou -> updateSettings { it.copy(useMaterialYou = action.value) }
+            is Action.TogglePureBlackTheme -> updateSettings { it.copy(pureBlackTheme = action.value) }
+            is Action.ToggleAppLock -> updateSettings { it.copy(appLockEnabled = action.value) }
+            is Action.ToggleSecureScreen -> updateSettings {
+                it.copy(secureScreenEnabled = action.value, plaintextPasswords = false)
+            }
 
-            is Action.ToggleAllowCacheMode -> onToggleAllowCacheMode(action.value)
-            is Action.ToggleAllowInsecureReceiver -> onToggleAllowInsecureReceiver(action.value)
+            is Action.TogglePlaintextPasswords -> updateSettings { it.copy(plaintextPasswords = action.value) }
+            is Action.ToggleAutoPersistEphemeralNetworks -> updateSettings {
+                it.copy(autoPersistEphemeralNetworks = action.value)
+            }
 
+            is Action.ToggleAllowCacheMode -> updateSettings { it.copy(allowCacheMode = action.value) }
+            is Action.ToggleAllowInsecureReceiver -> updateSettings { it.copy(allowInsecureReceiver = action.value) }
             is Action.ImportNetworks -> onImportNetworks()
             is Action.HideImportPasswordDialog -> onHideImportPasswordDialog()
-
             is Action.ConfirmImportWithPassword -> onConfirmImportWithPassword(action.password)
             is Action.ShowExportDialog -> onShowExportDialog()
             is Action.HideExportDialog -> _showExportDialog.update { false }
@@ -172,50 +173,8 @@ class SettingViewModel(
         }
     }
 
-    private fun onUpdateLanguage(value: Settings.Language) {
-        viewModelScope.launch { settingRepository.updateSettings { it.copy(language = value) } }
-    }
-
-    private fun onUpdateThemeMode(value: Settings.ThemeMode) {
-        viewModelScope.launch { settingRepository.updateSettings { it.copy(themeMode = value) } }
-    }
-
-    private fun onToggleMaterialYou(value: Boolean) {
-        viewModelScope.launch { settingRepository.updateSettings { it.copy(useMaterialYou = value) } }
-    }
-
-    private fun onTogglePureBlackTheme(value: Boolean) {
-        viewModelScope.launch { settingRepository.updateSettings { it.copy(pureBlackTheme = value) } }
-    }
-
-    private fun onToggleAppLock(value: Boolean) {
-        viewModelScope.launch { settingRepository.updateSettings { it.copy(appLockEnabled = value) } }
-    }
-
-    private fun onToggleSecureScreen(value: Boolean) {
-        viewModelScope.launch {
-            settingRepository.updateSettings {
-                it.copy(secureScreenEnabled = value, plaintextPasswords = false)
-            }
-        }
-    }
-
-    private fun onTogglePlaintextPasswords(value: Boolean) {
-        viewModelScope.launch { settingRepository.updateSettings { it.copy(plaintextPasswords = value) } }
-    }
-
-    private fun onToggleAutoPersistEphemeralNetworks(value: Boolean) {
-        viewModelScope.launch {
-            settingRepository.updateSettings { it.copy(autoPersistEphemeralNetworks = value) }
-        }
-    }
-
-    private fun onToggleAllowCacheMode(value: Boolean) {
-        viewModelScope.launch { settingRepository.updateSettings { it.copy(allowCacheMode = value) } }
-    }
-
-    private fun onToggleAllowInsecureReceiver(value: Boolean) {
-        viewModelScope.launch { settingRepository.updateSettings { it.copy(allowInsecureReceiver = value) } }
+    private fun updateSettings(block: (Settings) -> Settings) {
+        viewModelScope.launch { settingRepository.updateSettings(block) }
     }
 
     private fun onShowExportDialog() {

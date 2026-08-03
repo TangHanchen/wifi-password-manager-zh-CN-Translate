@@ -44,10 +44,12 @@
     <string name="settings_title">Settings</string>
     <string name="settings_tooltip">Settings</string>
 
-    <!-- Appearance Section -->
-    <string name="appearance_section">Appearance</string>
+    <!-- Language Section -->
     <string name="language_title">Language</string>
     <string name="language_description">Change the app\'s language</string>
+
+    <!-- Appearance Section -->
+    <string name="appearance_section">Appearance</string>
     <string name="app_theme_title">App Theme</string>
     <string name="app_theme_description">Change the app\'s appearance</string>
     <string name="material_you_title">Material You</string>

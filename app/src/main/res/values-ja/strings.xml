@@ -44,10 +44,12 @@
     <string name="settings_title">設定</string>
     <string name="settings_tooltip">設定</string>
 
-    <!-- Appearance Section -->
-    <string name="appearance_section">外観</string>
+    <!-- Language Section -->
     <string name="language_title">言語</string>
     <string name="language_description">アプリの言語を変更する</string>
+
+    <!-- Appearance Section -->
+    <string name="appearance_section">外観</string>
     <string name="app_theme_title">アプリテーマ</string>
     <string name="app_theme_description">アプリの外観を変更する</string>
     <string name="material_you_title">Material You</string>

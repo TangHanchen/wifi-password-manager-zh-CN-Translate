@@ -44,10 +44,12 @@
     <string name="settings_title">设置</string>
     <string name="settings_tooltip">设置</string>
 
-    <!-- 外观部分 -->
-    <string name="appearance_section">外观</string>
+    <!-- 语言部分 -->
     <string name="language_title">语言</string>
     <string name="language_description">更改应用语言</string>
+
+    <!-- 外观部分 -->
+    <string name="appearance_section">外观</string>
     <string name="app_theme_title">应用主题</string>
     <string name="app_theme_description">更改应用外观</string>
     <string name="material_you_title">Material You</string>

@@ -36,6 +36,7 @@ import io.github.wifi_password_manager.ui.UiConfig
 import io.github.wifi_password_manager.ui.icons.BugReport
 import io.github.wifi_password_manager.ui.icons.Info
 import io.github.wifi_password_manager.ui.icons.IntegrationInstructions
+import io.github.wifi_password_manager.ui.icons.Language
 import io.github.wifi_password_manager.ui.icons.Palette
 import io.github.wifi_password_manager.ui.icons.Security
 import io.github.wifi_password_manager.ui.icons.SwapVert
@@ -76,18 +77,24 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
             contentPadding = innerPadding + PaddingValues(12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            // Language Section
+            item {
+                SettingSection(
+                    imageVector = Language,
+                    title = stringResource(R.string.language_title),
+                ) {
+                    LanguageItem(language = settings.language) {
+                        onAction(SettingViewModel.Action.UpdateLanguage(it))
+                    }
+                }
+            }
+
             // Appearance Section
             item {
                 SettingSection(
                     imageVector = Palette,
                     title = stringResource(R.string.appearance_section),
                 ) {
-                    LanguageItem(language = settings.language) {
-                        onAction(SettingViewModel.Action.UpdateLanguage(it))
-                    }
-
-                    HorizontalDivider(color = MaterialTheme.colorScheme.background)
-
                     ThemeModeItem(themeMode = settings.themeMode) {
                         onAction(SettingViewModel.Action.UpdateThemeMode(it))
                     }

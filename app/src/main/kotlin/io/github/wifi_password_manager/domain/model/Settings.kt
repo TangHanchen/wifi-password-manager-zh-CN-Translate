@@ -6,13 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.res.stringResource
 import io.github.wifi_password_manager.R
 import kotlinx.serialization.Serializable
 
 @Immutable
 @Serializable
 data class Settings(
-    val language: Language = Language.ENGLISH,
+    val language: Language = Language.SYSTEM,
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
     val useMaterialYou: Boolean = true,
     val autoPersistEphemeralNetworks: Boolean = false,
@@ -44,10 +45,11 @@ data class Settings(
 
     @Serializable
     enum class Language {
-        ENGLISH, RUSSIAN, CHINESE_SIMPLIFIED, JAPANESE, TURKISH;
+        SYSTEM, ENGLISH, RUSSIAN, CHINESE_SIMPLIFIED, JAPANESE, TURKISH;
 
         val code: String
             get() = when (this) {
+                SYSTEM -> ""
                 ENGLISH -> "en"
                 RUSSIAN -> "ru"
                 CHINESE_SIMPLIFIED -> "zh-CN"
@@ -56,7 +58,8 @@ data class Settings(
             }
 
         val displayName: String
-            get() = when (this) {
+            @Composable get() = when (this) {
+                SYSTEM -> stringResource(R.string.language_system_default)
                 ENGLISH -> "English"
                 RUSSIAN -> "Русский"
                 CHINESE_SIMPLIFIED -> "中文 (简体)"

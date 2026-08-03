@@ -47,6 +47,7 @@
     <!-- Language Section -->
     <string name="language_title">Dil</string>
     <string name="language_description">Uygulama dilini değiştir</string>
+    <string name="language_system_default">Sistem varsayılanı</string>
 
     <!-- Appearance Section -->
     <string name="appearance_section">Görünüm</string>

@@ -47,6 +47,7 @@
     <!-- Language Section -->
     <string name="language_title">Language</string>
     <string name="language_description">Change the app\'s language</string>
+    <string name="language_system_default">System default</string>
 
     <!-- Appearance Section -->
     <string name="appearance_section">Appearance</string>

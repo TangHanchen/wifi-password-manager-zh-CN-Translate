@@ -47,6 +47,7 @@
     <!-- Language Section -->
     <string name="language_title">言語</string>
     <string name="language_description">アプリの言語を変更する</string>
+    <string name="language_system_default">システムデフォルト</string>
 
     <!-- Appearance Section -->
     <string name="appearance_section">外観</string>

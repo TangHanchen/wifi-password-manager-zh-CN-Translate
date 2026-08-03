@@ -47,6 +47,7 @@
     <!-- 语言部分 -->
     <string name="language_title">语言</string>
     <string name="language_description">更改应用语言</string>
+    <string name="language_system_default">系统默认</string>
 
     <!-- 外观部分 -->
     <string name="appearance_section">外观</string>

@@ -47,6 +47,7 @@
     <!-- Language Section -->
     <string name="language_title">Язык</string>
     <string name="language_description">Изменить язык приложения</string>
+    <string name="language_system_default">Системный по умолчанию</string>
 
     <!-- Appearance Section -->
     <string name="appearance_section">Внешний вид</string>

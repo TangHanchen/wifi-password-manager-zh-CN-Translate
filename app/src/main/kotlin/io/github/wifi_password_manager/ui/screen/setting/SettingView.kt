@@ -408,36 +408,36 @@ fun SettingView(state: SettingViewModel.State, onAction: (SettingViewModel.Actio
                 }
             }
         }
+    }
 
-        when {
-            state.isLoading -> {
-                LoadingDialog()
-            }
+    when {
+        state.isLoading -> {
+            LoadingDialog()
+        }
 
-            state.showForgetAllDialog -> {
-                ForgetAllConfirmDialog(
-                    onDismiss = { onAction(SettingViewModel.Action.HideForgetAllDialog) },
-                    onConfirm = { onAction(SettingViewModel.Action.ConfirmForgetAllNetworks) },
-                )
-            }
+        state.showForgetAllDialog -> {
+            ForgetAllConfirmDialog(
+                onDismiss = { onAction(SettingViewModel.Action.HideForgetAllDialog) },
+                onConfirm = { onAction(SettingViewModel.Action.ConfirmForgetAllNetworks) },
+            )
+        }
 
-            state.showExportDialog -> {
-                ExportDialog(
-                    onDismiss = { onAction(SettingViewModel.Action.HideExportDialog) },
-                    onSelect = { option, password ->
-                        onAction(SettingViewModel.Action.ConfirmExport(option, password))
-                    },
-                )
-            }
+        state.showExportDialog -> {
+            ExportDialog(
+                onDismiss = { onAction(SettingViewModel.Action.HideExportDialog) },
+                onSelect = { option, password ->
+                    onAction(SettingViewModel.Action.ConfirmExport(option, password))
+                },
+            )
+        }
 
-            state.showImportPasswordDialog -> {
-                ImportPasswordDialog(
-                    onDismiss = { onAction(SettingViewModel.Action.HideImportPasswordDialog) },
-                    onConfirm = { password ->
-                        onAction(SettingViewModel.Action.ConfirmImportWithPassword(password))
-                    },
-                )
-            }
+        state.showImportPasswordDialog -> {
+            ImportPasswordDialog(
+                onDismiss = { onAction(SettingViewModel.Action.HideImportPasswordDialog) },
+                onConfirm = { password ->
+                    onAction(SettingViewModel.Action.ConfirmImportWithPassword(password))
+                },
+            )
         }
     }
 }

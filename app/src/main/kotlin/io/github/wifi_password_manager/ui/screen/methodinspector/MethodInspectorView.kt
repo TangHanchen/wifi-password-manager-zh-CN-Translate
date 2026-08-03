@@ -127,10 +127,10 @@ fun MethodInspectorView(
                 }
             }
         }
+    }
 
-        if (state.isExporting) {
-            LoadingDialog()
-        }
+    if (state.isExporting) {
+        LoadingDialog()
     }
 }
 

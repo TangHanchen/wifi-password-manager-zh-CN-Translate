@@ -149,13 +149,13 @@ fun NetworkListView(
                 onAction = onAction,
             )
         }
+    }
 
-        if (state.showMethodSignatureError) {
-            MethodSignatureErrorDialog(
-                onDismiss = { onAction(NetworkListViewModel.Action.DismissMethodInspectorError) },
-                onOpenMethodInspector = { navBackStack.add(Route.IWifiManagerMethodInspectorScreen) },
-            )
-        }
+    if (state.showMethodSignatureError) {
+        MethodSignatureErrorDialog(
+            onDismiss = { onAction(NetworkListViewModel.Action.DismissMethodInspectorError) },
+            onOpenMethodInspector = { navBackStack.add(Route.IWifiManagerMethodInspectorScreen) },
+        )
     }
 }
 

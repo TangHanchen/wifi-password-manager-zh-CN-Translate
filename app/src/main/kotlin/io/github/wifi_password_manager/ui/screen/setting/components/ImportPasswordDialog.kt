@@ -1,7 +1,8 @@
 package io.github.wifi_password_manager.ui.screen.setting.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
@@ -37,20 +38,23 @@ fun ImportPasswordDialog(
         onDismissRequest = onDismiss,
         title = { Text(text = stringResource(R.string.import_password_title)) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(text = stringResource(R.string.import_password_description))
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                item { Text(text = stringResource(R.string.import_password_description)) }
 
-                PasswordTextField(
-                    state = password,
-                    isError = showPasswordError,
-                    onKeyboardAction = {
-                        showPasswordError = password.text.isBlank()
-                        if (!showPasswordError) {
-                            autofillManager?.commit()
-                            onConfirm(password.text.toString())
-                        }
-                    },
-                )
+                item {
+                    PasswordTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        state = password,
+                        isError = showPasswordError,
+                        onKeyboardAction = {
+                            showPasswordError = password.text.isBlank()
+                            if (!showPasswordError) {
+                                autofillManager?.commit()
+                                onConfirm(password.text.toString())
+                            }
+                        },
+                    )
+                }
             }
         },
         confirmButton = {

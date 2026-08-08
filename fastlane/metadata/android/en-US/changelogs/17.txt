@@ -1,0 +1,3 @@
+- Added system default language option
+- Fixed broken ExportDialog and ImportPasswordDialog UI on small screens
+- Added Arabic (ar) localization

@@ -2,7 +2,9 @@ package io.github.wifi_password_manager.ui.screen.setting.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.AlertDialog
@@ -10,15 +12,18 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenu
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -77,15 +82,25 @@ fun ExportDialog(
                         ExposedDropdownMenu(
                             expanded = expanded,
                             onDismissRequest = { expanded = false },
+                            containerColor = MaterialTheme.colorScheme.background,
                         ) {
                             ExportOption.entries.forEach { option ->
+                                if (ExportOption.entries.first() != option) {
+                                    Spacer(modifier = Modifier.height(MenuDefaults.GroupSpacing))
+                                }
+
                                 DropdownMenuItem(
+                                    selected = option == selectedOption,
                                     onClick = {
                                         selectedOption = option
                                         expanded = false
                                     },
                                     text = { Text(text = stringResource(option.titleResId)) },
-                                    shape = MenuDefaults.standaloneItemShape,
+                                    shapes = MenuDefaults.itemShapes(),
+                                    colors = MenuDefaults.selectableItemColors(
+                                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                        selectedTextColor = contentColorFor(MaterialTheme.colorScheme.primaryContainer),
+                                    ),
                                 )
                             }
                         }

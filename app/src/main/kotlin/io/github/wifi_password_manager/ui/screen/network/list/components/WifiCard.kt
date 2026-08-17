@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -136,7 +137,11 @@ private fun SSIDItem(
                 positioning = TooltipAnchorPosition.Below,
             )
 
-            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                containerColor = MaterialTheme.colorScheme.background,
+            ) {
                 DropdownMenuItem(
                     onClick = {},
                     text = {
@@ -144,7 +149,7 @@ private fun SSIDItem(
                     },
                     shape = MenuDefaults.standaloneItemShape,
                     enabled = false,
-                    colors = MenuDefaults.itemColors(disabledTextColor = MaterialTheme.colorScheme.primary),
+                    colors = MenuDefaults.selectableItemColors(disabledTextColor = MaterialTheme.colorScheme.primary),
                 )
 
                 HorizontalDivider(modifier = Modifier.padding(MenuDefaults.HorizontalDividerPadding))
@@ -184,6 +189,7 @@ private fun SSIDItem(
                 )
 
                 if (network.note != null) {
+                    Spacer(modifier = Modifier.height(MenuDefaults.GroupSpacing))
                     DropdownMenuItem(
                         onClick = {
                             expanded = false
@@ -197,7 +203,7 @@ private fun SSIDItem(
                                 contentDescription = stringResource(R.string.delete_note),
                             )
                         },
-                        colors = MenuDefaults.itemColors(
+                        colors = MenuDefaults.selectableItemColors(
                             textColor = MaterialTheme.colorScheme.error,
                             leadingIconColor = MaterialTheme.colorScheme.error,
                         ),

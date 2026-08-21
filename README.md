@@ -11,7 +11,7 @@ An Android application for managing saved WiFi network passwords using privilege
 
 - **View Saved Networks**: Display all configured WiFi networks with their passwords
 - **Show Connected WiFi**: Display the currently connected WiFi network, highlighted and pinned to the top of the list
-- **Connect/Disconnect WiFi**: Connect/disconnect WiFi networks directly from the app
+- **Connect/Disconnect/Forget WiFi**: Connect/disconnect/forget WiFi networks directly from the app
 - **Search & Copy**: Find networks with real-time search and securely copy passwords
 - **Network Notes**: Add custom notes to WiFi networks
 - **Import/Export**: Export/import WiFi configurations as JSON, with optional GZip compression and encryption

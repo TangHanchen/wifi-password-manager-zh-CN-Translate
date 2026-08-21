@@ -38,6 +38,7 @@ fun WifiCardDropdownMenu(
     connectionStatus: WifiConnectionStatus,
     isCacheMode: Boolean = false,
     onShowWifiQrRequest: () -> Unit,
+    onForgetRequest: () -> Unit,
     onAction: (NetworkListViewModel.Action) -> Unit,
 ) {
     val navBackStack = LocalNavBackStack.current
@@ -64,6 +65,24 @@ fun WifiCardDropdownMenu(
 
         DropdownMenuGroup(shapes = MenuDefaults.groupShapes(shape = MenuDefaults.middleGroupShape)) {
             if (!isCacheMode) {
+                DropdownMenuItem(
+                    onClick = {
+                        onDismissRequest()
+                        onForgetRequest()
+                    },
+                    text = { Text(text = stringResource(R.string.forget_action)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Delete,
+                            contentDescription = stringResource(R.string.forget_action),
+                        )
+                    },
+                    colors = MenuDefaults.itemColors(
+                        textColor = MaterialTheme.colorScheme.error,
+                        leadingIconColor = MaterialTheme.colorScheme.error,
+                    ),
+                )
+
                 DropdownMenuItem(
                     onClick = {
                         onDismissRequest()
@@ -149,6 +168,7 @@ private fun WifiCardDropdownMenuPreview() {
         network = WifiNetwork.MOCK.random(),
         connectionStatus = WifiConnectionStatus.Disconnected,
         onShowWifiQrRequest = {},
+        onForgetRequest = {},
         onAction = {},
     )
 }
@@ -164,6 +184,7 @@ private fun ConnectingWifiCardDropdownMenuPreview() {
         network = network,
         connectionStatus = WifiConnectionStatus.Connecting(network.ssid),
         onShowWifiQrRequest = {},
+        onForgetRequest = {},
         onAction = {},
     )
 }
@@ -179,6 +200,7 @@ private fun ConnectedWifiCardDropdownMenuPreview() {
         network = network,
         connectionStatus = WifiConnectionStatus.Connected(network.ssid),
         onShowWifiQrRequest = {},
+        onForgetRequest = {},
         onAction = {},
     )
 }

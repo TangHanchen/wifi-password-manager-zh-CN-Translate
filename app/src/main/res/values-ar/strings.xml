@@ -128,6 +128,8 @@
     <string name="edit_note">تعديل الملاحظة</string>
     <string name="delete_note">حذف الملاحظة</string>
     <string name="note_deleted">تم حذف الملاحظة</string>
+    <string name="forget_action">نسيان</string>
+    <string name="forgot_message">تم نسيان %1$s</string>
 
     <!-- WiFi Connection -->
     <string name="connecting_status">جارٍ الاتصال…</string>
@@ -186,6 +188,10 @@
     <!-- Forget All Networks Confirmation Dialog -->
     <string name="forget_all_confirmation_title">نسيان جميع الشبكات؟</string>
     <string name="forget_all_confirmation_message">سيؤدي هذا إلى إزالة جميع شبكات WiFi المحفوظة بشكل دائم من هذا الجهاز. لا يمكن التراجع عن هذا الإجراء.</string>
+
+    <!-- Forget Network Confirmation Dialog -->
+    <string name="forget_confirmation_title">نسيان هذه الشبكة؟</string>
+    <string name="forget_confirmation_message">سيؤدي هذا إلى إزالة \"%1$s\" بشكل دائم من هذا الجهاز.</string>
 
     <!-- Import Password Dialog -->
     <string name="import_password_title">إدخال كلمة المرور</string>

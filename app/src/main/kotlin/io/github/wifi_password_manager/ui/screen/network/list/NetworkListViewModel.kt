@@ -12,6 +12,7 @@ import io.github.wifi_password_manager.domain.repository.WifiRepository
 import io.github.wifi_password_manager.manager.PrivilegedManager
 import io.github.wifi_password_manager.utils.UiText
 import io.github.wifi_password_manager.utils.groupAndSortedBySsid
+import io.github.wifi_password_manager.utils.toWifiConfigurations
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
@@ -66,6 +67,8 @@ class NetworkListViewModel(
         data object Disconnect : Action
 
         data class Connect(val network: WifiNetwork) : Action
+
+        data class Forget(val network: WifiNetwork) : Action
     }
 
     sealed interface Event {
@@ -139,6 +142,7 @@ class NetworkListViewModel(
             is Action.DismissMethodInspectorError -> _showMethodSignatureError.update { false }
             is Action.Disconnect -> onDisconnect()
             is Action.Connect -> onConnect(action.network)
+            is Action.Forget -> onForget(action.network)
         }
     }
 
@@ -208,6 +212,17 @@ class NetworkListViewModel(
                         network.ssid,
                     ),
                 ),
+            )
+        }
+    }
+
+    private fun onForget(network: WifiNetwork) {
+        viewModelScope.launch {
+            network.toWifiConfigurations().map { it.networkId }.toSet().forEach {
+                wifiRepository.removeNetwork(it)
+            }
+            _event.send(
+                Event.ShowMessage(UiText.StringResource(R.string.forgot_message, network.ssid)),
             )
         }
     }

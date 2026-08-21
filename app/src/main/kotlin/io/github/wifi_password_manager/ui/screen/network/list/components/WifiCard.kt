@@ -48,6 +48,7 @@ import io.github.wifi_password_manager.ui.icons.ContentCopy
 import io.github.wifi_password_manager.ui.icons.MoreVert
 import io.github.wifi_password_manager.ui.screen.network.list.NetworkListViewModel
 import io.github.wifi_password_manager.ui.shared.TooltipIconButton
+import io.github.wifi_password_manager.ui.shared.WarningConfirmDialog
 import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
 import io.github.wifi_password_manager.utils.MOCK
 import io.github.wifi_password_manager.utils.getSecurity
@@ -56,6 +57,7 @@ import kotlinx.coroutines.launch
 
 private sealed interface OptionState {
     data object WifiQR : OptionState
+    data object ForgetConfirm : OptionState
 }
 
 @Composable
@@ -103,7 +105,22 @@ fun WifiCard(
     }
 
     when (optionState) {
-        OptionState.WifiQR -> WifiQRDialog(network = network, onDismiss = { optionState = null })
+        OptionState.WifiQR -> {
+            WifiQRDialog(network = network, onDismiss = { optionState = null })
+        }
+
+        OptionState.ForgetConfirm -> {
+            WarningConfirmDialog(
+                title = stringResource(R.string.forget_confirmation_title),
+                message = stringResource(R.string.forget_confirmation_message, network.ssid),
+                onDismiss = { optionState = null },
+                onConfirm = {
+                    optionState = null
+                    onAction(NetworkListViewModel.Action.Forget(network))
+                },
+            )
+        }
+
         null -> Unit
     }
 }
@@ -158,6 +175,7 @@ private fun SSIDItem(
                 connectionStatus = connectionStatus,
                 isCacheMode = isCacheMode,
                 onShowWifiQrRequest = { onOptionStateChange(OptionState.WifiQR) },
+                onForgetRequest = { onOptionStateChange(OptionState.ForgetConfirm) },
                 onAction = onAction,
             )
         },

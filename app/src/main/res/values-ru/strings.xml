@@ -128,6 +128,8 @@
     <string name="edit_note">Изменить заметку</string>
     <string name="delete_note">Удалить заметку</string>
     <string name="note_deleted">Заметка удалена</string>
+    <string name="forget_action">Забыть</string>
+    <string name="forgot_message">Забыто: %1$s</string>
 
     <!-- WiFi Connection -->
     <string name="connecting_status">Подключение…</string>
@@ -184,6 +186,10 @@
     <!-- Forget All Networks Confirmation Dialog -->
     <string name="forget_all_confirmation_title">Забыть все сети?</string>
     <string name="forget_all_confirmation_message">Это безвозвратно удалит все сохранённые сети WiFi с этого устройства. Это действие нельзя отменить.</string>
+
+    <!-- Forget Network Confirmation Dialog -->
+    <string name="forget_confirmation_title">Забыть эту сеть?</string>
+    <string name="forget_confirmation_message">Это безвозвратно удалит сеть «%1$s» с этого устройства.</string>
 
     <!-- Import Password Dialog -->
     <string name="import_password_title">Введите пароль</string>

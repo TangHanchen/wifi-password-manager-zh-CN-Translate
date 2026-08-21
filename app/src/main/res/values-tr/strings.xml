@@ -128,6 +128,8 @@
     <string name="edit_note">Notu düzenle</string>
     <string name="delete_note">Notu sil</string>
     <string name="note_deleted">Not silindi</string>
+    <string name="forget_action">Unut</string>
+    <string name="forgot_message">%1$s unutuldu</string>
 
     <!-- WiFi Connection -->
     <string name="connecting_status">Bağlanıyor…</string>
@@ -182,6 +184,10 @@
     <!-- Forget All Networks Confirmation Dialog -->
     <string name="forget_all_confirmation_title">Tüm ağlar unutulsun mu?</string>
     <string name="forget_all_confirmation_message">Bu, cihazdaki tüm kayıtlı WiFi ağlarını kalıcı olarak silecektir. Bu işlem geri alınamaz.</string>
+
+    <!-- Forget Network Confirmation Dialog -->
+    <string name="forget_confirmation_title">Bu ağ unutulsun mu?</string>
+    <string name="forget_confirmation_message">Bu, cihazdaki \"%1$s\" ağını kalıcı olarak silecektir.</string>
 
     <!-- Import Password Dialog -->
     <string name="import_password_title">Parolayı girin</string>

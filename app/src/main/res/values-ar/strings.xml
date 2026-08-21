@@ -9,6 +9,10 @@
     <string name="on">تشغيل</string>
     <string name="off">إيقاف</string>
     <string name="warning">تحذير</string>
+    <string name="expand_description">توسيع</string>
+    <string name="collapse_description">طي</string>
+    <string name="state_expanded">تم التوسيع</string>
+    <string name="state_collapsed">تم الطي</string>
 
     <!-- Theme Mode -->
     <string name="theme_mode_light">فاتح</string>

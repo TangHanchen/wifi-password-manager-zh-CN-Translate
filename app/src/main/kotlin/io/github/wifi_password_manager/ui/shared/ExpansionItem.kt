@@ -23,9 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.ui.icons.KeyboardArrowDown
 import io.github.wifi_password_manager.ui.theme.ThemeWrapper
 
@@ -35,6 +40,8 @@ fun ExpansionItem(
     content: @Composable () -> Unit,
     itemsContent: @Composable ColumnScope.() -> Unit
 ) {
+    val resources = LocalResources.current
+
     var isExpanded by retain { mutableStateOf(false) }
     val rotationAngle by animateFloatAsState(
         targetValue = if (isExpanded) 180f else 0f,
@@ -42,11 +49,22 @@ fun ExpansionItem(
     )
 
     ListItem(
-        modifier = modifier, onClick = { isExpanded = !isExpanded },
+        modifier = modifier.semantics {
+            stateDescription = if (isExpanded) {
+                resources.getString(R.string.state_expanded)
+            } else {
+                resources.getString(R.string.state_collapsed)
+            }
+        },
+        onClick = { isExpanded = !isExpanded },
         trailingContent = {
             Icon(
                 imageVector = KeyboardArrowDown,
-                contentDescription = "Dropdown Arrow",
+                contentDescription = if (isExpanded) {
+                    stringResource(R.string.collapse_description)
+                } else {
+                    stringResource(R.string.expand_description)
+                },
                 modifier = Modifier.graphicsLayer { rotationZ = rotationAngle },
             )
         },

@@ -9,6 +9,10 @@
     <string name="on">Вкл.</string>
     <string name="off">Выкл.</string>
     <string name="warning">Внимание</string>
+    <string name="expand_description">Развернуть</string>
+    <string name="collapse_description">Свернуть</string>
+    <string name="state_expanded">Развернуто</string>
+    <string name="state_collapsed">Сворачивается</string>
 
     <!-- Theme Mode -->
     <string name="theme_mode_light">Светлая</string>

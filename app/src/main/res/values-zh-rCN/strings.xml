@@ -9,6 +9,10 @@
     <string name="on">开</string>
     <string name="off">关</string>
     <string name="warning">警告</string>
+    <string name="expand_description">展开</string>
+    <string name="collapse_description">折叠</string>
+    <string name="state_expanded">已展开</string>
+    <string name="state_collapsed">已折叠</string>
 
     <!-- 主题模式 -->
     <string name="theme_mode_light">浅色</string>

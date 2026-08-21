@@ -9,6 +9,10 @@
     <string name="on">Açık</string>
     <string name="off">Kapalı</string>
     <string name="warning">Uyarı</string>
+    <string name="expand_description">Genişlet</string>
+    <string name="collapse_description">Daralt</string>
+    <string name="state_expanded">Geniştirilmiş</string>
+    <string name="state_collapsed">Daralmış</string>
 
     <!-- Theme Mode -->
     <string name="theme_mode_light">Açık</string>

@@ -9,6 +9,10 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="warning">Warning</string>
+    <string name="expand_description">Expand</string>
+    <string name="collapse_description">Collapse</string>
+    <string name="state_expanded">Expanded</string>
+    <string name="state_collapsed">Collapsed</string>
 
     <!-- Theme Mode -->
     <string name="theme_mode_light">Light</string>

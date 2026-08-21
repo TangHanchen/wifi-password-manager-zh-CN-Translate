@@ -26,4 +26,8 @@ interface WifiRepository {
     suspend fun persistEphemeralNetworks()
 
     suspend fun updateNote(ssid: String, note: String?)
+
+    suspend fun disconnect(): Boolean
+
+    suspend fun connect(network: WifiNetwork)
 }

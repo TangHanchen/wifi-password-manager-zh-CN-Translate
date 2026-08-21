@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
+import io.github.wifi_password_manager.domain.model.WifiConnectionStatus
 import io.github.wifi_password_manager.domain.model.WifiNetwork
 import io.github.wifi_password_manager.ui.screen.network.list.NetworkListViewModel
 import io.github.wifi_password_manager.ui.theme.SurfaceWrapper
@@ -26,7 +27,8 @@ fun NetworkList(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     networks: List<WifiNetwork>,
-    connectedSsid: String = "",
+    connectionStatus: WifiConnectionStatus,
+    isCacheMode: Boolean = false,
     onAction: (NetworkListViewModel.Action) -> Unit,
 ) {
     val windowSizeClass = currentWindowAdaptiveInfoV2().windowSizeClass
@@ -44,7 +46,8 @@ fun NetworkList(
                 ) { network ->
                     WifiCard(
                         network = network,
-                        connected = network.ssid == connectedSsid,
+                        connectionStatus = connectionStatus,
+                        isCacheMode = isCacheMode,
                         onAction = onAction,
                     )
                 }
@@ -70,7 +73,8 @@ fun NetworkList(
                 ) { network ->
                     WifiCard(
                         network = network,
-                        connected = network.ssid == connectedSsid,
+                        connectionStatus = connectionStatus,
+                        isCacheMode = isCacheMode,
                         expanded = true,
                         onAction = onAction,
                     )
@@ -84,12 +88,20 @@ fun NetworkList(
 @Composable
 @PreviewWrapper(SurfaceWrapper::class)
 private fun NetworkListPreview() {
-    NetworkList(networks = WifiNetwork.MOCK, onAction = {})
+    NetworkList(
+        networks = WifiNetwork.MOCK,
+        connectionStatus = WifiConnectionStatus.Disconnected,
+        onAction = {},
+    )
 }
 
 @PreviewScreenSizes
 @Composable
 @PreviewWrapper(SurfaceWrapper::class)
 private fun AdaptiveNetworkListPreview() {
-    NetworkList(networks = WifiNetwork.MOCK, onAction = {})
+    NetworkList(
+        networks = WifiNetwork.MOCK,
+        connectionStatus = WifiConnectionStatus.Disconnected,
+        onAction = {},
+    )
 }

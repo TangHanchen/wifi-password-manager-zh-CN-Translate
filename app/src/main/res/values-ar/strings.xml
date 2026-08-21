@@ -129,6 +129,15 @@
     <string name="delete_note">حذف الملاحظة</string>
     <string name="note_deleted">تم حذف الملاحظة</string>
 
+    <!-- WiFi Connection -->
+    <string name="connecting_status">جارٍ الاتصال…</string>
+    <string name="connect_action">اتصال</string>
+    <string name="disconnect_action">قطع الاتصال</string>
+    <string name="connected_to_message">تم الاتصال بـ %1$s</string>
+    <string name="disconnected_from_message">تم قطع الاتصال بـ %1$s</string>
+    <string name="connecting_to_message">جارٍ الاتصال بـ %1$s</string>
+    <string name="connect_failed_message">فشل الاتصال بـ %1$s</string>
+
     <!-- Note Screen -->
     <string name="note_hint">أدخل ملاحظتك هنا…</string>
     <string name="note_title">ملاحظة لـ %1$s</string>

@@ -129,6 +129,15 @@
     <string name="delete_note">メモを削除</string>
     <string name="note_deleted">メモを削除しました</string>
 
+    <!-- WiFi Connection -->
+    <string name="connecting_status">接続中…</string>
+    <string name="connect_action">接続</string>
+    <string name="disconnect_action">切断</string>
+    <string name="connected_to_message">%1$s に接続しました</string>
+    <string name="disconnected_from_message">%1$s から切断しました</string>
+    <string name="connecting_to_message">%1$s に接続中…</string>
+    <string name="connect_failed_message">%1$s への接続に失敗しました</string>
+
     <!-- Note Screen -->
     <string name="note_hint">ここにメモを入力…</string>
     <string name="note_title">%1$s のメモ</string>

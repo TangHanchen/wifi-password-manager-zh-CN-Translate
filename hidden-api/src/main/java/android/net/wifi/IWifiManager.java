@@ -2,6 +2,7 @@ package android.net.wifi;
 
 import android.os.Binder;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.IInterface;
 
@@ -28,4 +29,21 @@ public interface IWifiManager extends IInterface {
     WifiInfo getConnectionInfo(String callingPackage, String callingFeatureId);
 
     int getWifiEnabledState();
+
+    boolean disconnect(String packageName);
+
+    //Android 14+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    void connect(WifiConfiguration config, int netId, IActionListener listener, String packageName, Bundle extras);
+
+    //Android 13
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    void connect(WifiConfiguration config, int netId, IActionListener listener, String packageName);
+
+    //Android 12 & 12L
+    @RequiresApi(Build.VERSION_CODES.S)
+    void connect(WifiConfiguration config, int netId, IActionListener listener);
+
+    //Android 11
+    void connect(WifiConfiguration config, int netId, IBinder binder, IActionListener listener, int callbackIdentifier);
 }

@@ -1,5 +1,6 @@
 package io.github.wifi_password_manager;
 
+import android.net.wifi.IActionListener;
 import io.github.wifi_password_manager.ipc.WifiNetworkParcel;
 import io.github.wifi_password_manager.ipc.WifiInfoParcel;
 
@@ -13,5 +14,9 @@ interface IWifiRootService {
     WifiInfoParcel getConnectionInfo();
 
     void persistEphemeralNetworks();
+
+    boolean disconnect();
+
+    oneway void connect(in WifiNetworkParcel config, in IActionListener listener);
 }
 

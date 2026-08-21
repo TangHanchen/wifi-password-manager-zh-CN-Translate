@@ -129,6 +129,15 @@
     <string name="delete_note">删除备注</string>
     <string name="note_deleted">备注已删除</string>
 
+    <!-- WiFi Connection -->
+    <string name="connecting_status">正在连接…</string>
+    <string name="connect_action">连接</string>
+    <string name="disconnect_action">断开连接</string>
+    <string name="connected_to_message">已连接到 %1$s</string>
+    <string name="disconnected_from_message">已断开与 %1$s 的连接</string>
+    <string name="connecting_to_message">正在连接到 %1$s</string>
+    <string name="connect_failed_message">连接到 %1$s 失败</string>
+
     <!-- 备注界面 -->
     <string name="note_hint">在此输入备注…</string>
     <string name="note_title">%1$s 的备注</string>

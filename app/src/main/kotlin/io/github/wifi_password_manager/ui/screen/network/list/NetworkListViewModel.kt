@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.wifi_password_manager.R
 import io.github.wifi_password_manager.domain.model.PrivilegedMode
+import io.github.wifi_password_manager.domain.model.WifiConnectionStatus
 import io.github.wifi_password_manager.domain.model.WifiNetwork
 import io.github.wifi_password_manager.domain.repository.WifiRepository
 import io.github.wifi_password_manager.manager.PrivilegedManager
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
@@ -27,6 +29,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
@@ -43,7 +46,7 @@ class NetworkListViewModel(
     data class State(
         val savedNetworks: List<WifiNetwork> = emptyList(),
         val showingSearch: Boolean = false,
-        val connectedSsid: String = "",
+        val connectionStatus: WifiConnectionStatus = WifiConnectionStatus.Disconnected,
         val searchText: String = "",
         val isCacheMode: Boolean = false,
         val showMethodSignatureError: Boolean = false,
@@ -59,12 +62,17 @@ class NetworkListViewModel(
         data class DeleteNote(val ssid: String) : Action
 
         data object DismissMethodInspectorError : Action
+
+        data object Disconnect : Action
+
+        data class Connect(val network: WifiNetwork) : Action
     }
 
     sealed interface Event {
         data class ShowMessage(val message: UiText) : Event
     }
 
+    private val _pendingNetwork = MutableStateFlow<WifiNetwork?>(null)
     private val _showingSearch = MutableStateFlow(false)
     private val _searchText = MutableStateFlow("")
     private val _showMethodSignatureError = MutableStateFlow(false)
@@ -85,6 +93,7 @@ class NetworkListViewModel(
         privilegedManager.mode.map { it == PrivilegedMode.NONE },
         wifiRepository.getConnectedWifiSsidFlow(),
         _showMethodSignatureError,
+        _pendingNetwork,
     ) { args ->
         @Suppress("UNCHECKED_CAST") val networks = args[0] as List<WifiNetwork>
         val connectedSsid = args[4] as String
@@ -95,13 +104,20 @@ class NetworkListViewModel(
                 grouped
             }
         }
+        val pendingNetwork = args[6] as WifiNetwork?
 
         State(
             savedNetworks = sortedNetworks,
             searchText = args[1] as String,
             showingSearch = args[2] as Boolean,
             isCacheMode = args[3] as Boolean,
-            connectedSsid = connectedSsid,
+            connectionStatus = if (connectedSsid.isNotBlank()) {
+                WifiConnectionStatus.Connected(connectedSsid)
+            } else if (pendingNetwork != null) {
+                WifiConnectionStatus.Connecting(pendingNetwork.ssid)
+            } else {
+                WifiConnectionStatus.Disconnected
+            },
             showMethodSignatureError = args[5] as Boolean,
         )
     }.onStart { refresh() }.stateIn(
@@ -121,6 +137,8 @@ class NetworkListViewModel(
             is Action.SearchTextChanged -> _searchText.update { action.text }
             is Action.DeleteNote -> onDeleteNote(action.ssid)
             is Action.DismissMethodInspectorError -> _showMethodSignatureError.update { false }
+            is Action.Disconnect -> onDisconnect()
+            is Action.Connect -> onConnect(action.network)
         }
     }
 
@@ -151,6 +169,46 @@ class NetworkListViewModel(
         viewModelScope.launch {
             wifiRepository.updateNote(ssid, null)
             _event.send(Event.ShowMessage(UiText.StringResource(R.string.note_deleted)))
+        }
+    }
+
+    private fun onDisconnect() {
+        viewModelScope.launch {
+            val status = state.value.connectionStatus
+            if (status is WifiConnectionStatus.Connected) {
+                if (!wifiRepository.disconnect()) return@launch
+                _event.send(
+                    Event.ShowMessage(
+                        UiText.StringResource(R.string.disconnected_from_message, status.ssid),
+                    ),
+                )
+            }
+        }
+    }
+
+    private fun onConnect(network: WifiNetwork) {
+        viewModelScope.launch {
+            _pendingNetwork.update { network }
+            _event.send(
+                Event.ShowMessage(
+                    UiText.StringResource(R.string.connecting_to_message, network.ssid),
+                ),
+            )
+
+            val connected = withTimeoutOrNull(10.seconds) {
+                wifiRepository.connect(network)
+                wifiRepository.getConnectedWifiSsidFlow().first { it == network.ssid }
+            } != null
+
+            _pendingNetwork.update { null }
+            _event.send(
+                Event.ShowMessage(
+                    UiText.StringResource(
+                        if (connected) R.string.connected_to_message else R.string.connect_failed_message,
+                        network.ssid,
+                    ),
+                ),
+            )
         }
     }
 }

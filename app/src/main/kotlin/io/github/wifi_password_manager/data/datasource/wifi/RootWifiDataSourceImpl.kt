@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.net.wifi.IActionListener
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiInfo
 import android.os.IBinder
@@ -116,5 +117,26 @@ class RootWifiDataSourceImpl(context: Context) : WifiDataSource {
             return
         }
         service.persistEphemeralNetworks()
+    }
+
+    override suspend fun disconnect(): Boolean {
+        val service = getService()
+        if (service == null) {
+            Log.w(TAG, "Root service not available, cannot disconnect")
+            return false
+        }
+        return service.disconnect()
+    }
+
+
+    override suspend fun connect(config: WifiConfiguration, listener: IActionListener) {
+        val service = getService()
+        if (service == null) {
+            Log.w(TAG, "Root service not available, cannot connect to network")
+            listener.onFailure(0)
+            return
+        }
+        val parcel = WifiNetworkParcel.fromWifiConfiguration(config)
+        return service.connect(parcel, listener)
     }
 }

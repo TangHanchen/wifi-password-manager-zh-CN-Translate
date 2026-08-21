@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import android.net.wifi.IActionListener
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiInfo
 import android.net.wifi.WifiManager
@@ -23,7 +24,9 @@ import io.github.wifi_password_manager.domain.model.WifiNetwork
 import io.github.wifi_password_manager.domain.repository.WifiRepository
 import io.github.wifi_password_manager.manager.PrivilegedManager
 import io.github.wifi_password_manager.utils.fromWifiConfiguration
+import io.github.wifi_password_manager.utils.toWifiConfigurations
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -31,6 +34,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.invoke
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 class WifiRepositoryImpl(
     private val context: Context,
@@ -91,6 +96,23 @@ class WifiRepositoryImpl(
 
         val systemSsids = networks.map { it.ssid }
         wifiNetworkDao.deleteNetworks(systemSsids)
+    }
+
+    private suspend fun connectInternal(config: WifiConfiguration): Boolean {
+        return suspendCancellableCoroutine { continuation ->
+            CoroutineScope(continuation.context).launch {
+                val listener = object : IActionListener.Stub() {
+                    override fun onSuccess() {
+                        if (continuation.isActive) continuation.resume(true)
+                    }
+
+                    override fun onFailure(reason: Int) {
+                        if (continuation.isActive) continuation.resume(false)
+                    }
+                }
+                dataSource.connect(config, listener)
+            }
+        }
     }
 
     override fun getConnectedWifiSsidFlow(): Flow<String> {
@@ -188,5 +210,15 @@ class WifiRepositoryImpl(
 
     override suspend fun updateNote(ssid: String, note: String?) {
         wifiNetworkDao.updateNote(ssid, note)
+    }
+
+    override suspend fun disconnect(): Boolean {
+        return dataSource.disconnect()
+    }
+
+    override suspend fun connect(network: WifiNetwork) {
+        for (config in network.toWifiConfigurations()) {
+            if (connectInternal(config)) return
+        }
     }
 }

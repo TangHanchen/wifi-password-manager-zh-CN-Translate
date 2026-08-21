@@ -3,11 +3,13 @@ package io.github.wifi_password_manager.data.datasource.wifi
 import android.content.AttributionSource
 import android.content.AttributionSourceHidden
 import android.content.Context
+import android.net.wifi.IActionListener
 import android.net.wifi.IWifiManager
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiConfigurationHidden
 import android.net.wifi.WifiInfo
 import android.net.wifi.WifiManager
+import android.os.Binder
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -114,6 +116,43 @@ class ShizukuWifiDataSourceImpl(private val context: Context) : WifiDataSource {
             }
             val wifiConfig = Refine.unsafeCast<WifiConfiguration>(hiddenConfig)
             addOrUpdateNetworkPrivileged(wifiConfig)
+        }
+    }
+
+    override suspend fun disconnect(): Boolean {
+        if (!context.hasShizukuPermission) {
+            Log.w(TAG, "Shizuku permission not available, cannot disconnect")
+            return false
+        }
+        return wifiManager.disconnect(SHELL_PACKAGE)
+    }
+
+    override suspend fun connect(config: WifiConfiguration, listener: IActionListener) {
+        if (!context.hasShizukuPermission) {
+            Log.w(TAG, "Shizuku permission not available, cannot connect to network")
+            listener.onFailure(0)
+            return
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            wifiManager.connect(
+                config,
+                -1,
+                listener,
+                SHELL_PACKAGE,
+                Bundle(),
+            )
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            wifiManager.connect(config, -1, listener, SHELL_PACKAGE)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            wifiManager.connect(config, -1, listener)
+        } else {
+            wifiManager.connect(
+                config,
+                -1,
+                Binder(),
+                listener,
+                listener.hashCode(),
+            )
         }
     }
 }

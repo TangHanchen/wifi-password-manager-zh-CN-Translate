@@ -4,10 +4,12 @@ import android.content.AttributionSource
 import android.content.AttributionSourceHidden
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.wifi.IActionListener
 import android.net.wifi.IWifiManager
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiConfigurationHidden
 import android.net.wifi.WifiManager
+import android.os.Binder
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
@@ -104,6 +106,34 @@ class WiFiRootService : RootService() {
                     fromWifiNetworkSuggestion = false
                 }
                 addOrUpdateNetwork(Refine.unsafeCast(hiddenConfig))
+            }
+        }
+
+        override fun disconnect(): Boolean {
+            return wifiManager.disconnect(packageName)
+        }
+
+        override fun connect(config: WifiNetworkParcel, listener: IActionListener) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                wifiManager.connect(
+                    config.toWifiConfiguration(),
+                    -1,
+                    listener,
+                    packageName,
+                    Bundle(),
+                )
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                wifiManager.connect(config.toWifiConfiguration(), -1, listener, packageName)
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                wifiManager.connect(config.toWifiConfiguration(), -1, listener)
+            } else {
+                wifiManager.connect(
+                    config.toWifiConfiguration(),
+                    -1,
+                    Binder(),
+                    listener,
+                    listener.hashCode(),
+                )
             }
         }
     }

@@ -1,5 +1,6 @@
 package io.github.wifi_password_manager.data.datasource.wifi
 
+import android.net.wifi.IActionListener
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiInfo
 import io.github.wifi_password_manager.data.local.dao.WifiNetworkDao
@@ -25,4 +26,12 @@ class CachedWifiDataSourceImpl(private val wifiNetworkDao: WifiNetworkDao) : Wif
     }
 
     override suspend fun persistEphemeralNetworks() {}
+
+    override suspend fun disconnect(): Boolean {
+        return false
+    }
+
+    override suspend fun connect(config: WifiConfiguration, listener: IActionListener) {
+        listener.onFailure(0)
+    }
 }

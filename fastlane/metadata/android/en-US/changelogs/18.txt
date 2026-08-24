@@ -1,0 +1,2 @@
+- Added wifi connect/disconnect/forget functionality
+- Improved dropdown components UI

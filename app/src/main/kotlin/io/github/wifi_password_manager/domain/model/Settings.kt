@@ -59,7 +59,7 @@ data class Settings(
             }
 
         val displayName: String
-            @Composable get() = when (this) {
+            @Composable @ReadOnlyComposable get() = when (this) {
                 SYSTEM -> stringResource(R.string.language_system_default)
                 ENGLISH -> "English"
                 RUSSIAN -> "Русский"

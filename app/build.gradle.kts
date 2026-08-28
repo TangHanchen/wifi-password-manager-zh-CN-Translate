@@ -87,6 +87,10 @@ android {
         includeInApk = false
         includeInBundle = false
     }
+    androidResources {
+        @Suppress("UnstableApiUsage")
+        generateLocaleConfig = true
+    }
 }
 
 composeCompiler {

@@ -42,7 +42,10 @@ fun LanguageItem(language: Settings.Language, onLanguageChange: (Settings.Langua
         LanguageSelectionDialog(
             onDismiss = { showDialog = false },
             language = language,
-            onLanguageChange = onLanguageChange,
+            onLanguageChange = {
+                showDialog = false
+                onLanguageChange(it)
+            },
         )
     }
 }
